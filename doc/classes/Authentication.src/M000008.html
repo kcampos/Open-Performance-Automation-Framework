@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>login (Authentication)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/utility/authentication.rb, line 20</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">login</span>(<span class="ruby-identifier">opts</span>={})
+    
+    <span class="ruby-identifier">defaults</span> = {
+      <span class="ruby-identifier">:user</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'admin'</span>,
+      <span class="ruby-identifier">:password</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'admin'</span>,
+      <span class="ruby-identifier">:thinktime</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">5</span>
+    }
+    
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">opts</span>)
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/'</span>)
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/spring_security_login'</span>)
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add_thinktime</span>(<span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:thinktime</span>])
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/j_spring_security_check'</span>, {<span class="ruby-value str">&quot;contents&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;j_username=#{opts[:user]}&amp;amp;j_password=#{opts[:password]}&amp;amp;submit=Submit&quot;</span>,
+      <span class="ruby-value str">&quot;content_type&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;application/x-www-form-urlencoded&quot;</span>, <span class="ruby-value str">&quot;method&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;POST&quot;</span>})
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/index.html'</span>)
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'kru_banner2.jpg'</span>)
+    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

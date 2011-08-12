@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>setup (AutoConfig)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/config.rb, line 35</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Let's setup your test run config...&quot;</span>
+    
+    <span class="ruby-comment cmt"># Output file</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;What do you want to name your output xml file? &quot;</span>
+    <span class="ruby-identifier">xml_fn</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp</span>
+    <span class="ruby-comment cmt"># If they specify a path then store that, otherwise stick it in config dir</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">output</span> = (<span class="ruby-identifier">xml_fn</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^(\.|\/)/</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">xml_fn</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{self.log_dir}/#{xml_fn}&quot;</span>)
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">log</span>.<span class="ruby-identifier">info_msg</span> <span class="ruby-node">&quot;Your xml file will be here: #{self.output}&quot;</span>
+  
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-comment cmt"># Clients</span>
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;What clients are you driving your tests from? [hostname1,hostname2,...] &quot;</span>
+    <span class="ruby-identifier">clients</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp!</span>
+    <span class="ruby-keyword kw">while</span>(<span class="ruby-identifier">clients</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp re">/^([^\,]+)(\,[^\,]+)*?$/</span>) <span class="ruby-comment cmt"># validate format</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Please use correct csv format [hostname1,hostname2,...] &quot;</span>
+      <span class="ruby-identifier">clients</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp!</span>
+    <span class="ruby-keyword kw">end</span>
+  
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">clients</span> = <span class="ruby-identifier">clients</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/,/</span>)
+  
+  
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-comment cmt"># Servers</span>
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;What servers do you want to test? [hostname1:port,hostname2:port,...] &quot;</span>
+    <span class="ruby-identifier">servers</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp!</span>
+    <span class="ruby-keyword kw">while</span>(<span class="ruby-identifier">servers</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp re">/^([^:]+:\d+)(\,[^:]+:\d+)*?$/</span>) <span class="ruby-comment cmt"># validate format</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Please use correct format [hostname1:port,hostname2:port,...] &quot;</span>
+      <span class="ruby-identifier">servers</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp!</span>
+    <span class="ruby-keyword kw">end</span>
+  
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">servers</span> = <span class="ruby-identifier">servers</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/,/</span>)
+  
+  
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-comment cmt"># Phases</span>
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">phases</span> = {}
+    <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Let's setup your test scenario or phases, you can define multiple phases&quot;</span>
+    <span class="ruby-identifier">phase</span> = <span class="ruby-value">0</span>
+    <span class="ruby-keyword kw">begin</span>
+      <span class="ruby-identifier">phase</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">phases</span>[<span class="ruby-identifier">phase</span>] = {}
+    
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Phase #{phase}: How many minutes? &quot;</span>
+      <span class="ruby-identifier">min_duration</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp!</span>
+      <span class="ruby-keyword kw">while</span>(<span class="ruby-identifier">min_duration</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\D/</span>) <span class="ruby-comment cmt"># validate only digits</span>
+        <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Please specify only numeric entry: &quot;</span>
+        <span class="ruby-identifier">min_duration</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp!</span>
+      <span class="ruby-keyword kw">end</span>
+    
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">phases</span>[<span class="ruby-identifier">phase</span>][<span class="ruby-identifier">:duration</span>] = <span class="ruby-identifier">min_duration</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">phases</span>[<span class="ruby-identifier">phase</span>][<span class="ruby-identifier">:unit</span>] = <span class="ruby-value str">'minute'</span> <span class="ruby-comment cmt"># hardcoded for now for simplicity</span>
+      
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;At what interval should users be created at this phase? (x seconds per user) &quot;</span>
+      <span class="ruby-identifier">users</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp!</span>
+      <span class="ruby-keyword kw">while</span>(<span class="ruby-identifier">users</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp re">/^\d+(\.\d+)?$/</span>)
+        <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Please user correct float or numeric value. 1 or 1.0 for example: &quot;</span>
+        <span class="ruby-identifier">users</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp!</span>
+      <span class="ruby-keyword kw">end</span>
+      
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">phases</span>[<span class="ruby-identifier">phase</span>][<span class="ruby-identifier">:user_interval</span>] = <span class="ruby-identifier">users</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">phases</span>[<span class="ruby-identifier">phase</span>][<span class="ruby-identifier">:user_unit</span>] = <span class="ruby-value str">&quot;second&quot;</span> <span class="ruby-comment cmt"># hardcoded now for simplicity</span>
+    
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Do you want to add another phase? [y/n] &quot;</span>
+      <span class="ruby-identifier">add_phase</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp!</span>
+    <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">while</span> (<span class="ruby-identifier">add_phase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'y'</span>)
+  
+  
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-comment cmt"># User Agent</span>
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Let's setup what user agents you'd like to test with&quot;</span>
+    <span class="ruby-identifier">probability_total</span> = <span class="ruby-value">0</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">agents</span> = {}
+    <span class="ruby-identifier">agent_list</span> = []
+  
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-node">&quot;#{self.config_dir}/agent_list&quot;</span>, <span class="ruby-value str">&quot;r&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">agent_file</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">while</span>(<span class="ruby-identifier">line</span> = <span class="ruby-identifier">agent_file</span>.<span class="ruby-identifier">gets</span>)
+        <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\#/</span>) <span class="ruby-comment cmt"># skip if it's a comment</span>
+        <span class="ruby-identifier">agent_list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">chomp</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+  
+    <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Here are the agents you can specify...&quot;</span>
+    <span class="ruby-identifier">option</span> = <span class="ruby-value">0</span>
+    <span class="ruby-identifier">agent_list</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">agent</span><span class="ruby-operator">|</span> <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{option+=1}: #{agent}&quot;</span>}
+    <span class="ruby-identifier">available_perc</span> = <span class="ruby-value">100</span>
+  
+    <span class="ruby-comment cmt"># Loop over collecting agents until we have 100%</span>
+    <span class="ruby-keyword kw">begin</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Specify the number of the agent you'd like to use: &quot;</span>
+      <span class="ruby-identifier">agent_num</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp</span>
+      <span class="ruby-keyword kw">while</span>(<span class="ruby-identifier">agent_num</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\D/</span>) <span class="ruby-comment cmt"># validate only digits</span>
+        <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Please specify only numeric entry: &quot;</span>
+        <span class="ruby-identifier">agent_num</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp</span>
+      <span class="ruby-keyword kw">end</span>
+    
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Specify the probability that this agent will be used: [1-100] &quot;</span>
+      <span class="ruby-identifier">agent_prob</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp</span>
+    
+      <span class="ruby-comment cmt"># validate only digits and doesn't exceed available probability</span>
+      <span class="ruby-keyword kw">while</span>(<span class="ruby-identifier">agent_prob</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\D/</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">agent_prob</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">available_perc</span>) 
+        <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Please specify only numeric entry that doesn't exceed #{available_perc}: &quot;</span>
+        <span class="ruby-identifier">agent_prob</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp</span>
+      <span class="ruby-keyword kw">end</span>
+    
+      <span class="ruby-comment cmt"># Subtract specified probability from remaining available</span>
+      <span class="ruby-identifier">available_perc</span><span class="ruby-operator">-=</span><span class="ruby-identifier">agent_prob</span>.<span class="ruby-identifier">to_i</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">agents</span>[<span class="ruby-identifier">agent_list</span>[<span class="ruby-identifier">agent_num</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>]] = <span class="ruby-identifier">agent_prob</span>
+  
+      <span class="ruby-comment cmt"># See if we need another agent</span>
+      <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">available_perc</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;You have #{available_perc}% remaining in agent probability. Please add another agent.&quot;</span>
+        <span class="ruby-identifier">add_agent</span> = <span class="ruby-value str">'y'</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">add_agent</span> = <span class="ruby-value str">'n'</span>
+      <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">while</span> (<span class="ruby-identifier">add_agent</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'y'</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

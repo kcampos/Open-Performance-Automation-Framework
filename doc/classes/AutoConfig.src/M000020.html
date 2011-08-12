@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>parse_suite (AutoConfig)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/config.rb, line 188</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_suite</span>(<span class="ruby-identifier">suite</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">suite</span>)
+    
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tests</span> = {}
+    
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-node">&quot;#{self.suite_dir}/#{suite}&quot;</span>, <span class="ruby-value str">&quot;r&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">suite_file</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">while</span>(<span class="ruby-identifier">line</span> = <span class="ruby-identifier">suite_file</span>.<span class="ruby-identifier">gets</span>)
+        <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\#/</span>) <span class="ruby-comment cmt"># skip if it's a comment</span>
+        <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^(\w+\.rb)\,(\d+)$/</span>
+        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tests</span>[<span class="ruby-identifier">$1</span>] = <span class="ruby-identifier">$2</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

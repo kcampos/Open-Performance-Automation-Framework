@@ -1,0 +1,6 @@
+# Format: test_name,probability
+# Example: login.rb,100
+login.rb,100
+#org_search.rb,50
+#create_proposal.rb,70
+#doc_search.rb,30

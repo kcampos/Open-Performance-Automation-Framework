@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>add (Requests)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/tsung-api.rb, line 137</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">opts</span>={})
+    
+    <span class="ruby-identifier">defaults</span> = {
+      <span class="ruby-value str">&quot;method&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'GET'</span>,
+      <span class="ruby-value str">&quot;version&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'1.1'</span>,
+      <span class="ruby-value str">&quot;url&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">url</span>
+      <span class="ruby-comment cmt">#:content_type =&gt; nil,</span>
+      <span class="ruby-comment cmt">#:contents =&gt; nil</span>
+    }
+  
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">opts</span>)
+    
+    <span class="ruby-comment cmt"># Make sure requests begins with app context</span>
+    <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">url</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp re">/^\/self.config.context/</span>) 
+      <span class="ruby-identifier">new_url</span> = <span class="ruby-value str">'/'</span> <span class="ruby-operator">+</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">context</span>
+      <span class="ruby-identifier">new_url</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">'/'</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">url</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp re">/^\//</span>)
+      <span class="ruby-identifier">url</span> = <span class="ruby-identifier">new_url</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">url</span>
+      <span class="ruby-identifier">opts</span>[<span class="ruby-value str">&quot;url&quot;</span>] = <span class="ruby-identifier">url</span>
+    <span class="ruby-keyword kw">end</span>
+        
+    <span class="ruby-comment cmt"># Building request string soley for list method</span>
+    <span class="ruby-identifier">req_str</span> = <span class="ruby-node">&quot;&lt;http url='#{url}' version='#{opts[:version]}' method='#{opts[:method]}'&quot;</span>
+    <span class="ruby-identifier">req_str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot; content_type='#{opts[:content_type]}'&quot;</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:content_type</span>])
+    <span class="ruby-identifier">req_str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot; contents='#{opts[:contents]}'&quot;</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:contents</span>])
+    <span class="ruby-identifier">req_str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&gt;&quot;</span>
+
+    <span class="ruby-identifier">req</span> = <span class="ruby-ivar">@xml_element</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'request'</span>)
+    <span class="ruby-identifier">req</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'http'</span>, <span class="ruby-identifier">opts</span>)
+    
+    <span class="ruby-ivar">@list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">req_str</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
