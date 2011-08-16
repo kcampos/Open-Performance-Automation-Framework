@@ -41,9 +41,9 @@ class AutoConfig
     # Output file
     if(!self.output)
       print "What do you want to name your output xml file? "
-      log_name = gets.strip
+      xml_name = gets.strip
       # If they specify a path then store that, otherwise stick it in config dir
-      self.output = (log_name =~ /^(\.|\/)/ ? log_name : "#{self.log_dir}/#{log_name}")
+      self.output = (xml_name =~ /^(\.|\/)/ ? xml_name : "#{self.config_dir}/tests/#{xml_name}")
     end
       
     self.log.info_msg "Your xml file will be here: #{self.output}"
