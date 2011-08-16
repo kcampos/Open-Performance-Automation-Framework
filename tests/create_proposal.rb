@@ -24,11 +24,7 @@ config.log.info_msg("Probability: #{config.tests[test]}")
 # Create session
 sesh = Session.new(config, 'create_proposal', probability)
 
-# Login is department COC
-#username = config.directory["department_coc"]["member"]["username"]
-#password = config.directory["department_coc"]["member"]["password"]
-#username = 'admin'
-#password = 'admin'
+# Login
 username = '%%_username%%'
 password = '%%_user_password%%'
 
@@ -48,8 +44,8 @@ Curriculum.new(cp_req).create_proposal(
   #config.directory["department_coc"]["name"],
   #config.directory["department"]["name"],
   #config.directory["department"]["name"],,
-  'Psychology Dept',
-  'The College of Arts and Humanities',
+  'Biology Dept',
+  'Botany Dept',
   {:submit => true}
 )
 
