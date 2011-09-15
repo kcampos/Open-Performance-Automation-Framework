@@ -80,7 +80,15 @@ class Authentication
           'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|5002099C37B5D013EC8762ACCBD03E69|org.kuali.student.common.ui.client.service.ServerPropertiesRpcService|get|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|ks.rice.actionList.serviceAddress|1|2|3|4|1|5|6|7|1|8|"
         }
       )
-          
+      
+      @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SecurityRpcService',
+        {
+          'method' => 'POST',
+          'content_type' => 'text/x-gwt-rpc; charset=utf-8',
+          'contents' => "5|0|7|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|13BFCB3640903B473D12816447D1469D|org.kuali.student.common.ui.client.service.SecurityRpcService|checkAdminPermission|java.lang.String/2004016611|#{opts[:user]}|useCurriculumReview|1|2|3|4|2|5|5|6|7|"
+        }
+      )
+      
       
       # Rice
       @request.add('/kew/ActionList.do', {}, {:rice_req => true, :external => true})

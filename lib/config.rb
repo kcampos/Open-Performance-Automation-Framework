@@ -379,7 +379,7 @@ class AutoConfig
   
   # Dump out config object
   def to_s
-    self.inspect
+    #self.inspect
   end
 
   private
