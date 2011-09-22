@@ -47,7 +47,7 @@
 #
 
 require 'optparse'
-require 'rdoc/usage'
+#require 'rdoc/usage'
 require File.dirname(__FILE__) + '/lib/common.rb'
 require File.dirname(__FILE__) + '/lib/config.rb'
 require 'drb'
