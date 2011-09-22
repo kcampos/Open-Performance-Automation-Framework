@@ -46,12 +46,16 @@
 #
 #
 
+require 'rubygems'
 require 'optparse'
 #require 'rdoc/usage'
 require File.dirname(__FILE__) + '/lib/common.rb'
 require File.dirname(__FILE__) + '/lib/config.rb'
 require 'drb'
 include Common
+
+puts "patchlevel: #{RUBY_PATCHLEVEL}, release_date: #{RUBY_RELEASE_DATE}, ruby_version: #{RUBY_VERSION}, ruby_platform: #{RUBY_PLATFORM}"
+
 
 ########
 
