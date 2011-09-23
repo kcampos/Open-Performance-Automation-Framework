@@ -30,7 +30,7 @@ class Utility
     opts = defaults.merge(opts)
   
     # Doc search link
-    @request.add('/kew/DocumentSearch.do', {}, {:rice_req => true})
+    @request.add('/kew/DocumentSearch.do', {}, {:secondary_server_req => @request.config.secondary_servers['rice'], :external => true})
     
     # Login as admin
     @request.add('/kew/DocumentSearch.do', 
@@ -39,11 +39,11 @@ class Utility
         'content_type' => 'application/x-www-form-urlencoded',
         'contents' => "__login_user=admin"
       }, 
-      {:rice_req => true}
+      {:secondary_server_req => @request.config.secondary_servers['rice'], :external => true}
     )
     
-    @request.add('/dwr/interface/DocumentTypeService.js', {}, {:rice_req => true})
-    @request.add('/dwr/interface/PersonService.js', {}, {:rice_req => true})
+    @request.add('/dwr/interface/DocumentTypeService.js', {}, {:secondary_server_req => @request.config.secondary_servers['rice'], :external => true})
+    @request.add('/dwr/interface/PersonService.js', {}, {:secondary_server_req => @request.config.secondary_servers['rice'], :external => true})
     
     # Criteria
     
@@ -54,11 +54,11 @@ class Utility
         'content_type' => 'application/x-www-form-urlencoded',
         'contents' => "backLocation=&amp;formKey=&amp;lookupableImplServiceName=docSearchCriteriaDTOLookupable&amp;businessObjectClassName=org.kuali.rice.kew.docsearch.DocSearchCriteriaDTO&amp;conversionFields=&amp;hideReturnLink=No&amp;suppressActions=No&amp;multipleValues=No&amp;lookupAnchor=&amp;readOnlyFields=&amp;referencesToRefresh=&amp;hasReturnableRow=No&amp;docNum=#{opts[:doc_id]}&amp;showMaintenanceLinks=No&amp;savedSearchName=#{opts[:saved_search_name]}&amp;docTypeFullName=&amp;initiator=#{opts[:initiator]}&amp;routeHeaderId=&amp;fromDateCreated=#{opts[:date_created_from]}&amp;toDateCreated=#{opts[:date_created_to]}&amp;namedSearch=&amp;isAdvancedSearch=NO&amp;superUserSearch=NO&amp;methodToCall.search.x=39&amp;methodToCall.search.y=8&amp;methodToCall.search=search&amp;tabStatesSize=-1&amp;oldDocTypeFieldName="
       }, 
-      {:rice_req => true}
+      {:secondary_server_req => @request.config.secondary_servers['rice'], :external => true}
     )
     
-    @request.add('/dwr/interface/PersonService.js', {}, {:rice_req => true})
-    @request.add('/dwr/interface/DocumentTypeService.js', {}, {:rice_req => true})
+    @request.add('/dwr/interface/PersonService.js', {}, {:secondary_server_req => @request.config.secondary_servers['rice'], :external => true})
+    @request.add('/dwr/interface/DocumentTypeService.js', {}, {:secondary_server_req => @request.config.secondary_servers['rice'], :external => true})
     
       
   end

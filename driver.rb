@@ -3,11 +3,11 @@
 # 
 # == Synopsis
 #
-# tsung-driver: used to generate tsung XML from api test branch and initiate load
+# driver: used to generate tsung XML from api test branch and initiate load
 #
 # == Usage
 #
-# driver.rb [OPTIONS] ... SUITE_FILE_NAME KS_CONTEXT RICE_CONTEXT
+# driver.rb [OPTIONS] ... SUITE_FILE_NAME PRIMARY_SERVER_CONTEXT SECONDARY_SERVER_CONTEXT
 #
 # -h, --help:
 #     show help
@@ -36,11 +36,11 @@
 # SUITE_FILE_NAME:
 #     suite file name containg list of tests. File must exist in suites directory
 #
-# KS_CONTEXT:
-#     context for the KS app , e.g. ks-embedded
+# PRIMARY_SERVER_CONTEXT:
+#     context for the main app , e.g. ks-embedded
 #
-# RICE_CONTEXT:
-#     context for the RICE app , e.g. ks-rice
+# SECONDARY_SERVER_CONTEXT:
+#     context for the secondary app , e.g. ks-rice
 #
 # == Examples
 #
@@ -68,8 +68,10 @@ option = false
 # Get cmd line options
 optparse = OptionParser.new do |opts|
   
+  puts "opts trip"
+  
   # Banner
-  opts.banner = "Usage: driver.rb [OPTIONS] ... SUITE_FILE_NAME APP_CONTEXT RICE_CONTEXT"
+  opts.banner = "Usage: driver.rb [OPTIONS] ... SUITE_FILE_NAME"
   
   # Definition of options
   opts.on('-h', '--help', 'Display help screen') do
@@ -87,6 +89,13 @@ optparse = OptionParser.new do |opts|
   # Output xml file
   opts.on('-o', '--output FILE', 'path to xml output') do |file|
     config.output = file
+  end
+  
+  # App contexts
+  config.context = ''
+  config.secondary_context = ''
+  opts.on('--contexts PRIMARY_CONTEXT,SECONDARY_CONTEXT', Array, 'contexts for both primary and secondary servers') do |context|
+    (config.context, config.secondary_context) = context
   end
   
   # Log file
@@ -150,15 +159,13 @@ if(!errors.empty?)
   exit
 end
 
-if(ARGV.length != 3)
-  puts "Must specify test suite and app contexts"
+if(ARGV.length != 1)
+  puts "Must specify test suite [#{ARGV.to_s}]"
   exit 2
 end
 
 # Validate suite file in suites dir
 config.suite = ARGV.shift
-config.context = ARGV.shift
-config.rice_context = ARGV.shift
 
 exit 3 if(!config.validate_suite)
 config.parse_suite

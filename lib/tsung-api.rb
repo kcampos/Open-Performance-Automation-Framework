@@ -173,7 +173,7 @@ class Requests < Transaction
         # "name"
         # "regexp"
       },
-      :rice_req => false,
+      :secondary_server_req => nil,
       :external => false
     }
   
@@ -183,7 +183,7 @@ class Requests < Transaction
     # Split the hashes to take our dyn_variable
     #dyn_variables = req_opts.reject{|k,v| k == "subst"}[:dyn_variables]
     dyn_variables = req_opts[:dyn_variables]
-    rice_req = req_opts[:rice_req]
+    secondary_server_req = req_opts[:secondary_server_req]
     external = req_opts[:external]
     req_opts.delete_if{|k,v| k != "subst"}
     
@@ -191,8 +191,8 @@ class Requests < Transaction
     # Make sure requests begins with app context
     self.config.log.debug_msg("URL: #{url}\nLast Req External - Beg: #{@@last_req_external}")
     
-    if(rice_req)
-      new_url = "http://#{self.config.rice_server}/#{self.config.rice_context}"
+    if(!secondary_server_req.nil?)
+      new_url = "http://#{secondary_server_req}/#{self.config.secondary_context}"
       new_url << '/' if(url !~ /^\//)
     elsif(url !~ /^\/self.config.context/ and url !~ /^http/)   
       new_url = (@@last_req_external ? self.url : '/' + self.config.context)

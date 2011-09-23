@@ -91,12 +91,12 @@ class Authentication
       
       
       # Rice
-      @request.add('/kew/ActionList.do', {}, {:rice_req => true, :external => true})
+      @request.add('/kew/ActionList.do', {}, {:secondary_server_req => @request.config.secondary_servers['rice'], :external => true})
       @request.add("/j_spring_security_check?j_username=#{opts[:user]}&amp;j_password=#{opts[:password]}", 
-        {}, {'subst' => 'true', :rice_req => true, :external => true})
+        {}, {'subst' => 'true', :secondary_server_req => @request.config.secondary_servers['rice'], :external => true})
 
       # this may be a dupe since it redirects here...check the logs
-      @request.add('/kew/ActionList.do', {}, {:rice_req => true, :external => true})
+      @request.add('/kew/ActionList.do', {}, {:secondary_server_req => @request.config.secondary_servers['rice'], :external => true})
       
     else
       ks_url_escaped = URI.escape("#{@request.url}/j_spring_cas_security_check", Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))

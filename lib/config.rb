@@ -17,9 +17,9 @@ include Common
 
 class AutoConfig
 
-  attr_accessor :config_dir, :suite_dir, :test_dir, :log_dir, :output, :clients, :servers, :phases, :agents,
+  attr_accessor :config_dir, :suite_dir, :test_dir, :log_dir, :output, :clients, :servers, :secondary_servers, :phases, :agents,
     :debug, :execute, :intro_xml, :suite, :tests, :drb_port, :log, :log_path, :xml_writer, :xml_obj, :context, :verbose,
-    :tsung_log_level, :directory, :rice_server, :rice_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files
+    :tsung_log_level, :directory, :secondary_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files
 
   
   def initialize
@@ -63,9 +63,9 @@ class AutoConfig
   
   
     #
-    # Servers
+    # Primary servers
     #
-    print "What servers do you want to test? [hostname1:port,hostname2:port,...] "
+    print "What primary servers do you want to test? [hostname1:port,hostname2:port,...] "
     servers = gets.chomp!
     while(servers !~ /^([^:]+:\d+)(\,[^:]+:\d+)*?$/) # validate format
       print "Please use correct format [hostname1:port,hostname2:port,...] "
@@ -75,17 +75,21 @@ class AutoConfig
     self.servers = servers.split(/,/)
     
     #
-    # Rice Host
+    # Secondary servers
     #
-    print "Rice server location? [hostname:port] "
-    rice_server = gets.chomp!
-    while(rice_server !~ /^([^:]+:\d+)$/) # validate format
-      print "Please use correct format [hostname1:port,hostname2:port,...] "
-      rice_server = gets.chomp!
+    print "Secondary servers? [reference_name1:hostname1:port,reference_name2:hostname2:port,...] "
+    secondary_servers = gets.chomp!
+    while(secondary_servers !~ /^([^:]+:[^:]+:\d+)$/) # validate format
+      print "Please use correct format [reference_name1:hostname1:port,reference_name2:hostname2:port,...] "
+      secondary_servers = gets.chomp!
     end
     
-    self.rice_server = rice_server
-  
+    self.secondary_servers = {}
+    secondary_servers.split(/,/).each do |secondary_serv|
+      (ref_name, host, port) = secondary_serv.split(/:/)
+      self.secondary_servers[ref_name] = "#{host}:#{port}"
+    end
+    
     #
     # Phases
     #
@@ -265,7 +269,7 @@ class AutoConfig
     self.xml_writer = XmlWriter.new(self)
   end
   
-  # This will load config object with date from xml file
+  # This will load config object with data from xml file
   def parse_intro_xml
     
     xml_doc = Document.new File.open(self.intro_xml, 'r')
@@ -378,9 +382,9 @@ class AutoConfig
   end
   
   # Dump out config object
-  def to_s
+  #def to_s
     #self.inspect
-  end
+  #end
 
   private
   
