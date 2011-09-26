@@ -19,25 +19,22 @@ class AutoConfig
 
   attr_accessor :config_dir, :suite_dir, :test_dir, :log_dir, :products, :output, :clients, :servers, :secondary_servers, 
     :phases, :agents, :debug, :execute, :intro_xml, :tests, :drb_port, :log, :log_path, :xml_writer, :xml_obj, :context, :verbose,
-    :tsung_log_level, :directory, :secondary_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files
+    :tsung_log_level, :secondary_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files
     
-  attr_reader :product, :suite
+  attr_reader :product, :suite, :directory, :config_setup
 
   
   def initialize
     
-    config_setup = YAML.load_file(File.expand_path(File.dirname(__FILE__)) + '/../config/config.yaml')
-    @products    = config_setup[:products].keys
+    @config_setup = YAML.load_file(File.expand_path(File.dirname(__FILE__)) + '/../config/config.yaml')
+    @products     = @config_setup[:products].keys
     
-    @config_dir  = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../config')
-    @suite_dir   = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../suites')
-    @test_dir    = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../tests')
-    @log_dir     = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../log')
-    @debug       = false
-    @execute     = false
-    @directory   = YAML.load_file(File.expand_path(File.dirname(__FILE__)) + '/../config/directory.yaml')
-    
-    
+    @config_dir   = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../config')
+    @suite_dir    = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../suites')
+    @test_dir     = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../tests')
+    @log_dir      = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../log')
+    @debug        = false
+    @execute      = false
     
   end
 
@@ -191,14 +188,7 @@ class AutoConfig
     puts "Let's setup what user agents you'd like to test with"
     probability_total = 0
     self.agents = {}
-    agent_list = []
-  
-    File.open("#{self.config_dir}/agent_list", "r") do |agent_file|
-      while(line = agent_file.gets)
-        next if(line =~ /^\#/) # skip if it's a comment
-        agent_list << line.chomp
-      end
-    end
+    agent_list = @config_setup[:agents]
   
     puts "Here are the agents you can specify..."
     option = 0
@@ -268,11 +258,18 @@ class AutoConfig
   # Set product for this particular run
   def product=(name)
     @product = (self.products.index(name).nil? ? nil : name)  
+    self.directory = @product
+    @product
   end
   
   # Set suite for this particular run
   def suite=(name)
     @suite = (validate_suite(name) ? name : nil)
+  end
+  
+  # Set directory data based on product
+  def directory=(product)
+    @directory = @config_setup[:directory][product]
   end
 
   # Validate the suite exists and has proper format
