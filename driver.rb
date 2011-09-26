@@ -60,7 +60,7 @@ option = false
 optparse = OptionParser.new do |opts|
     
   # Banner
-  opts.banner = "Usage: driver.rb [OPTIONS] ... PRODUCT SUITE_FILE_NAME"
+  opts.banner = "Usage: driver.rb [OPTIONS]"
   
   # Definition of options
   opts.on('-h', '--help', 'Display help screen') do
