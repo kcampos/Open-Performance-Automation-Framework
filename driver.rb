@@ -30,17 +30,8 @@
 # -o, --output:
 #     filename(path) that you want to use for output XML
 #
-# -s, --sso [cas URL]:
-#     CAS login URL : NOT CURRENTLY SUPPORTED
-#
-# SUITE_FILE_NAME:
-#     suite file name containg list of tests. File must exist in suites directory
-#
-# PRIMARY_SERVER_CONTEXT:
-#     context for the main app , e.g. ks-embedded
-#
-# SECONDARY_SERVER_CONTEXT:
-#     context for the secondary app , e.g. ks-rice
+# -s, --suite [suite file]:
+#     suite file for performance run
 #
 # == Examples
 #
@@ -67,11 +58,9 @@ option = false
 
 # Get cmd line options
 optparse = OptionParser.new do |opts|
-  
-  puts "opts trip"
-  
+    
   # Banner
-  opts.banner = "Usage: driver.rb [OPTIONS] ... SUITE_FILE_NAME"
+  opts.banner = "Usage: driver.rb [OPTIONS] ... PRODUCT SUITE_FILE_NAME"
   
   # Definition of options
   opts.on('-h', '--help', 'Display help screen') do
@@ -86,14 +75,22 @@ optparse = OptionParser.new do |opts|
     option = true
   end
   
+  # Product
+  opts.on('-p', '--product PRODUCT', "supported products: #{config.products}" ) do |product|
+    config.product = product.downcase
+  end
+  
+  # Suite
+  opts.on('-s', '--suite SUITE', 'suite file') do |suite|
+    config.suite = suite
+  end
+  
   # Output xml file
   opts.on('-o', '--output FILE', 'path to xml output') do |file|
     config.output = file
   end
   
   # App contexts
-  config.context = ''
-  config.secondary_context = ''
   opts.on('--contexts PRIMARY_CONTEXT,SECONDARY_CONTEXT', Array, 'contexts for both primary and secondary servers') do |context|
     (config.context, config.secondary_context) = context
   end
@@ -138,13 +135,6 @@ optparse = OptionParser.new do |opts|
     config.thinktime = true
   end
   
-  # SSO
-  config.sso = false
-  opts.on('-s', '--sso URL', 'CAS login URL: NOT CURRENTLY SUPPORTED') do |url|
-    config.sso = url
-  end
-  
-  
 end
 
 optparse.parse!
@@ -159,20 +149,12 @@ if(!errors.empty?)
   exit
 end
 
-if(ARGV.length != 1)
-  puts "Must specify test suite [#{ARGV.to_s}]"
-  exit 2
-end
-
-# Validate suite file in suites dir
-config.suite = ARGV.shift
-
-exit 3 if(!config.validate_suite)
-config.parse_suite
 
 # If no options are passed then we'll use interactive setup
 config.initialize_logs
-config.setup if(!option)
+config.setup if(!option) # Currently this always evaluates to true ... need to think about this
+config.parse_suite
+
 
 # write initial config XML here before we get to tests if no -c option was secified
 config.initialize_output_xml

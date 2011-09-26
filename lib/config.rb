@@ -17,26 +17,63 @@ include Common
 
 class AutoConfig
 
-  attr_accessor :config_dir, :suite_dir, :test_dir, :log_dir, :output, :clients, :servers, :secondary_servers, :phases, :agents,
-    :debug, :execute, :intro_xml, :suite, :tests, :drb_port, :log, :log_path, :xml_writer, :xml_obj, :context, :verbose,
+  attr_accessor :config_dir, :suite_dir, :test_dir, :log_dir, :products, :output, :clients, :servers, :secondary_servers, 
+    :phases, :agents, :debug, :execute, :intro_xml, :tests, :drb_port, :log, :log_path, :xml_writer, :xml_obj, :context, :verbose,
     :tsung_log_level, :directory, :secondary_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files
+    
+  attr_reader :product, :suite
 
   
   def initialize
     
-    @config_dir = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../config')
-    @suite_dir  = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../suites')
-    @test_dir   = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../tests')
-    @log_dir    = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../log')
-    @debug      = false
-    @execute    = false
-    @directory  = YAML.load_file(File.expand_path(File.dirname(__FILE__)) + '/../config/directory.yaml')
+    config_setup = YAML.load_file(File.expand_path(File.dirname(__FILE__)) + '/../config/config.yaml')
+    @products    = config_setup[:products].keys
+    
+    @config_dir  = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../config')
+    @suite_dir   = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../suites')
+    @test_dir    = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../tests')
+    @log_dir     = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../log')
+    @debug       = false
+    @execute     = false
+    @directory   = YAML.load_file(File.expand_path(File.dirname(__FILE__)) + '/../config/directory.yaml')
+    
+    
     
   end
 
   # interactive prompt to capture all the config settings
   def setup
     puts "Let's setup your test run config..."
+    
+    # Product
+    if(self.product.nil?)
+      print "What product are we testing? #{self.products} "
+      self.product = gets.strip.downcase
+      
+      while(self.product.nil?) # Catch if improper value given
+        puts "Please choose a product to test that we currently support."
+        print "Choices are: #{self.products} "
+        self.product = gets.strip.downcase
+      end
+    end
+      
+    self.log.debug_msg "We are testing product: #{self.product}"
+    
+    
+    # Suite
+    if(self.suite.nil?)
+      print "What suite are we testing? "
+      self.suite = gets.strip.downcase
+      
+      while(self.suite.nil?) # Catch if improper value given
+        puts "Please choose a suite to test: "
+        self.suite = gets.strip.downcase
+      end
+    end
+      
+    self.log.debug_msg "We are using suite: #{self.suite}"
+    self.parse_suite
+    
     
     # Output file
     if(!self.output)
@@ -74,6 +111,7 @@ class AutoConfig
   
     self.servers = servers.split(/,/)
     
+    
     #
     # Secondary servers
     #
@@ -89,6 +127,28 @@ class AutoConfig
       (ref_name, host, port) = secondary_serv.split(/:/)
       self.secondary_servers[ref_name] = "#{host}:#{port}"
     end
+    
+    
+    #
+    # Contexts
+    # 
+    
+    # Primary
+    if(self.context.nil?)
+      print "What is the primary server context? "
+      self.context = gets.strip
+    end
+    
+    self.log.debug_msg "Your primary server context is: #{self.context}"
+      
+    # Secondary
+    if(self.secondary_context.nil?)
+      print "What is the secondary server context? "
+      self.secondary_context = gets.strip
+    end
+    
+    self.log.debug_msg "Your secondary server context is: #{self.secondary_context}"
+    
     
     #
     # Phases
@@ -198,6 +258,21 @@ class AutoConfig
       self.verbose = (gets.chomp == 'y' ? true : false)
     end
     
+    #
+    # SSO - Not supported yet so turn it off
+    #
+    
+    self.sso = false
+  end
+  
+  # Set product for this particular run
+  def product=(name)
+    @product = (self.products.index(name).nil? ? nil : name)  
+  end
+  
+  # Set suite for this particular run
+  def suite=(name)
+    @suite = (validate_suite(name) ? name : nil)
   end
 
   # Validate the suite exists and has proper format
@@ -207,7 +282,7 @@ class AutoConfig
     prob_total = 0
     
     # Parse file for proper format
-    #begin
+    begin
       File.open("#{self.suite_dir}/#{suite}", "r") do |suite_file|
         while(line = suite_file.gets)
           if(line !~ /^\w+\.rb\,(\d+)$/) #should be in format: testname.rb,100
@@ -217,10 +292,10 @@ class AutoConfig
           prob_total+=$1.to_i
         end
       end
-    #rescue
-    #  puts "#{suite} suite does not exist"
-    #  return false
-    #end
+    rescue
+      puts "#{suite} suite does not exist"
+      return false
+    end
     
     errors << "Probability does not add up to 100" if(prob_total != 100)
     puts errors if(errors)
