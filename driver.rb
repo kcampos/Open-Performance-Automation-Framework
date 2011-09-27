@@ -55,6 +55,7 @@ option = false
 
 # Default config values
 config.tsung_log_level = 'notice'
+config.execute = nil
 
 
 # Get cmd line options
