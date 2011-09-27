@@ -12,9 +12,6 @@
 # -h, --help:
 #     show help
 #
-# -c, --config [file.xml]:
-#     path to xml config file for everything after <tsung> and before <sessions> : NOT CURRENTLY SUPPORTED
-#
 # -d, --debug:
 #     enable debug logging
 #
@@ -22,7 +19,7 @@
 #     enable thinktime sleeps (simulates user input delays)
 #
 # -v, --verbose:
-#     will dump http traffic from tsung, only is in effect in -x is used
+#     will dump http traffic from tsung
 #
 # -x, --execute:
 #     start the load after generating the XML. If not specified, only XML will be generated.
@@ -55,6 +52,10 @@ errors = [] # Gather arg validation errors
 # Initialize true/false vars
 config = AutoConfig.new
 option = false
+
+# Default config values
+config.tsung_log_level = 'notice'
+
 
 # Get cmd line options
 optparse = OptionParser.new do |opts|
@@ -101,19 +102,16 @@ optparse = OptionParser.new do |opts|
   end
   
   # Execute tests after generating xml
-  config.execute = nil
   opts.on('-x', '--execute', 'start the load after generating the XML') do
     config.execute = true
   end
   
   # Verbose option for tsung
-  config.verbose = nil
   opts.on('-v', '--verbose', 'dumps http traffic from tsung') do
     config.verbose = true
   end
   
   # Log level for Tsung
-  config.tsung_log_level = 'notice'
   opts.on('-t', '--tsung_log_level LEVEL', 'sets the log level for tsung. Available levels: emergency, critical, error, warning, notice (default), info, debug') do |level|
     if(level != 'emergency' and level != 'critical' and level != 'error' and level != 'warning' and level != 'notice' and level != 'info' and level != 'debug')
       puts "Invalid setting for -t"
@@ -130,7 +128,6 @@ optparse = OptionParser.new do |opts|
   end
   
   # Enable thinktime
-  config.thinktime = nil
   opts.on('-t', '--thinktime', 'enable thinktime sleeps') do
     config.thinktime = true
   end
@@ -152,17 +149,16 @@ end
 
 # If no options are passed then we'll use interactive setup
 config.initialize_logs
-config.setup if(!option) # Currently this always evaluates to true ... need to think about this
-config.parse_suite
+config.setup
 
-
-# write initial config XML here before we get to tests if no -c option was secified
+# write initial config XML here before we get to tests
 config.initialize_output_xml
 
 
 config.log.debug_msg("----------CONFIG----------")
 config.log.debug_msg(config.inspect)
 config.log.debug_msg("--------------------------")
+
 #
 # EXECUTE TESTS
 #

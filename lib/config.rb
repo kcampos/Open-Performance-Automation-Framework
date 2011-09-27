@@ -319,7 +319,7 @@ class AutoConfig
   def initialize_logs
     
     # Output path
-    self.log_path = "#{self.log_dir}/#{Time.now.to_i}_#{self.suite}.log" if(!self.log_path)
+    self.log_path = "#{self.log_dir}/#{Time.now.to_i}.log" if(!self.log_path)
     self.log        = LogWriter.new(self)
     self.log.info_msg("Your log file is here: #{self.log_path}")
     
