@@ -17,24 +17,24 @@ include Common
 
 class AutoConfig
 
-  attr_accessor :config_dir, :suite_dir, :test_dir, :log_dir, :products, :output, :clients, :servers, :secondary_servers, 
+  attr_accessor :log_dir, :products, :output, :clients, :servers, :secondary_servers, 
     :phases, :agents, :debug, :execute, :intro_xml, :tests, :drb_port, :log, :log_path, :xml_writer, :xml_obj, :context, :verbose,
     :tsung_log_level, :secondary_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files
     
-  attr_reader :product, :suite, :directory, :config_setup
+  attr_reader :product, :suite, :directory, :config_setup, :config_dir, :suite_base_dir, :suite_dir, :test_base_dir, :test_dir, :lib_base_dir
 
   
   def initialize
     
-    @config_setup = YAML.load_file(File.expand_path(File.dirname(__FILE__)) + '/../config/config.yaml')
-    @products     = @config_setup[:products].keys
-    
-    @config_dir   = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../config')
-    @suite_dir    = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../suites')
-    @test_dir     = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../tests')
-    @log_dir      = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)) + '/../log')
-    @debug        = false
-    @execute      = false
+    @config_setup   = YAML.load_file(File.expand_path(File.dirname(__FILE__)) + '/../config/config.yaml')
+    @products       = @config_setup[:products].keys
+    @lib_base_dir   = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)))
+    @config_dir     = Common.dir_simplify(@lib_base_dir + '/../config')
+    @suite_base_dir = Common.dir_simplify(@lib_base_dir + '/../suites')
+    @test_base_dir  = Common.dir_simplify(@lib_base_dir + '/../tests')
+    @log_dir        = Common.dir_simplify(@lib_base_dir + '/../log')
+    @debug          = false
+    @execute        = false
     
   end
 
@@ -63,7 +63,7 @@ class AutoConfig
       self.suite = gets.strip.downcase
       
       while(self.suite.nil?) # Catch if improper value given
-        puts "Please choose a suite to test: "
+        print "Please choose a suite to test: "
         self.suite = gets.strip.downcase
       end
     end
@@ -255,10 +255,12 @@ class AutoConfig
     self.sso = false
   end
   
-  # Set product for this particular run
+  # Set product for this particular run as well as the dependent instance variables
   def product=(name)
     @product = (self.products.index(name).nil? ? nil : name)  
     self.directory = @product
+    self.suite_dir = @product
+    self.test_dir  = @product
     @product
   end
   
@@ -270,6 +272,16 @@ class AutoConfig
   # Set directory data based on product
   def directory=(product)
     @directory = @config_setup[:directory][product]
+  end
+  
+  # Set suite dir based on product
+  def suite_dir=(product)
+    @suite_dir = "#{self.suite_base_dir}/#{product}"
+  end
+  
+  # Set test dir based on product
+  def test_dir=(product)
+    @test_dir = "#{self.test_base_dir}/#{product}"
   end
 
   # Validate the suite exists and has proper format
