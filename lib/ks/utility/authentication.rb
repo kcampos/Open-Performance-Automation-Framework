@@ -86,7 +86,8 @@ class Authentication
           'method' => 'POST',
           'content_type' => 'text/x-gwt-rpc; charset=utf-8',
           'contents' => "5|0|7|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|13BFCB3640903B473D12816447D1469D|org.kuali.student.common.ui.client.service.SecurityRpcService|checkAdminPermission|java.lang.String/2004016611|#{opts[:user]}|useCurriculumReview|1|2|3|4|2|5|5|6|7|"
-        }
+        }, 
+          {'subst' => 'true'}
       )
       
       
