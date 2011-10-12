@@ -114,7 +114,7 @@ class AutoConfig
     #
     print "Secondary servers? [reference_name1:hostname1:port,reference_name2:hostname2:port,...] "
     secondary_servers = gets.chomp!
-    while(secondary_servers !~ /^([^:]+:[^:]+:\d+)$/) # validate format
+    while(!secondary_servers.empty? and secondary_servers !~ /^([^:]+:[^:]+:\d+)$/) # validate format
       print "Please use correct format [reference_name1:hostname1:port,reference_name2:hostname2:port,...] "
       secondary_servers = gets.chomp!
     end
