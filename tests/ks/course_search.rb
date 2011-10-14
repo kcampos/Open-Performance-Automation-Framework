@@ -9,10 +9,12 @@
 #
 # Jira 1234 - Fake jira issue
 
-require File.dirname(__FILE__) + '/../lib/tsung-api.rb'
-require File.dirname(__FILE__) + '/../lib/utility/authentication.rb'
-require File.dirname(__FILE__) + '/../lib/curriculum/curriculum.rb'
 require 'drb'
+config = DRbObject.new nil, "druby://localhost:#{ENV['DRB_PORT']}"
+
+require config.lib_base_dir + "/tsung-api.rb"
+require config.lib_base_dir + "/#{config.product}/utility/authentication.rb"
+require config.lib_base_dir + "/#{config.product}/curriculum/curriculum.rb"
 
 # Test info - default test case setup
 test = File.basename(__FILE__)
@@ -37,8 +39,17 @@ auth.login({:user => username, :password => password})
 # Search for various courses
 cp_req = sesh.add_transaction("course_nav").add_requests
 curr_obj = Curriculum.new(cp_req)
+
+course_code = "BSCI"
+transaction = "full_match"
+course_name = "Insects"
 curr_obj.homepage
 
+config.log.info_msg("#{test}: Search for course '#{course_code}'")
+req_obj = sesh.add_transaction(transaction).add_requests
+curr_obj.find('course', course_code, course_name, username, {:nav_homepage => false})
+
+=begin
 searches = {
   "wilcard" => '',
   "partial_match" => 'AM',
@@ -51,6 +62,9 @@ searches.each_pair do |transaction, search|
   req_obj = sesh.add_transaction(transaction).add_requests
   Curriculum.new(req_obj).find('course', search, {:nav_homepage => false})
 end
+=end  
+  
+
 
 # Logout
 config.log.info_msg("#{test}: Logging out")
