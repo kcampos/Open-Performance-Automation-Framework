@@ -1,0 +1,102 @@
+KS example
+
+Interactive Shell
+---------------
+When you initiate the Driver Utility you will enter the interactive shell to setup your configuration. Example:
+
+./driver.rb
+Your log file is here: /../Kuali-Sakai-Performance-Test-Automation-Framework/log/1318879134.log
+Let's setup your test run config...
+
+#What product are we testing?
+What product are we testing? ["ks", "oae"]
+
+What suite are we testing?
+
+#Enter the name of the suite you want to test
+
+What suite are we testing? proposal
+
+What do you want to name your output xml file?
+
+#Name your output xml file
+
+What do you want to name your output xml file? demo.xml
+Your xml file will be here: /../Kuali-Sakai-Performance-Test-Automation-Framework/config/tests/demo.xml
+
+#Specify your clients. Must be comma separated
+
+What clients are you driving your tests from? [hostname1,hostname2,...] localhost
+
+#Specify the KS host you want to test
+
+What primary servers do you want to test? [hostname1:port,hostname2:port,...] ks-host.com:80
+
+#Specify the Rice host that is configured for KS
+
+Secondary servers? [reference_name1:hostname1:port,reference_name2:hostname2:port,...] rice:rice-host.com:80
+
+#Specify the primary server context
+
+What is the primary server context? ks-standalone
+
+#Specify the secondary  server context
+
+What is the secondary server context? ks-rice
+
+Let's setup your test scenario or phases, you can define multiple phases
+Phase 1: How many minutes?
+
+#A load test is made up of one or more test phases. The total duration of your load test will be the total duration of all of your phases. Specify how many minutes you want your first (and #possibly only) test phase to be. You will have the option of adding more phases shortly.
+
+Phase 1: How many minutes? 5
+At what interval should users be created at this phase? (x seconds per user) 
+
+For this phase specify at what rate user sessions should be created. Any float value will do. To generate 1 user a second you'd specify 1, to generate 5 users every second you'd specify 0.2
+
+At what interval should users be created at this phase? (x seconds per user) 0.2
+Do you want to add another phase? [y/n]
+
+Specify whether you want to add another phase or not. If y you'll be prompted with same steps as in phase 1.
+
+Do you want to add another phase? [y/n] n
+Let's setup what user agents you'd like to test with
+Here are the agents you can specify...
+1: Mozilla/5.0 (Windows; MSIE 7.0; Windows NT 6.0; en-US)
+2: Mozilla/4.0 (Windows; MSIE 6.0; Windows NT 6.0)
+3: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US)
+4: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6
+Specify the number of the agent you'd like to use:
+
+#Agent list is read in from the Agents List section of the config.yaml file in the config directory. Choose which agent you'd like to use. You'll be able to specify multiple agents and #probability of their usage.
+
+Specify the number of the agent you'd like to use: 1
+Specify the probability that this agent will be used: [1-100] 
+
+#Specify the probability this agent will be used. Any value less than 100 will prompt you to add another agent. This will repeat until your total probability equals 100.
+
+Specify the probability that this agent will be used: [1-100] 100
+Do you want to insert user thinktime? [y/n]
+
+#Thinktime causes the test to insert "sleeps" that simulate a real life user session.
+
+Do you want to insert user thinktime? [y/n] y
+Do you want to execute tsung now? [y/n] 
+
+#Specify whether you want to run tsung now or not.
+
+Do you want to execute tsung now? [y/n] y
+Do you want to dump http traffic from tsung? [y/n] 
+
+#Specify whether or not you want to dump http traffic. Only select yes if this is a debug run. This will greatly reduce performance.
+
+Do you want to dump http traffic from tsung? [y/n] n
+
+Test: login.rb
+Probability: 100
+login.rb: Logging in as admin/admin
+login.rb: Logging out
+
+Starting tsung with command [tsung -f /Users/test/work/Kuali-Sakai-Performance-Test-Automation-Framework/config/tests/demo.xml start]
+Starting Tsung
+"Log directory is: /Users/test/.tsung/log/20111017-19:55"
