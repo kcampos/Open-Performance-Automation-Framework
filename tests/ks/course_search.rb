@@ -37,8 +37,8 @@ auth = Authentication.new(li_req)
 auth.login({:user => username, :password => password})
 
 # Search for various courses
-cp_req = sesh.add_transaction("course_nav").add_requests
-curr_obj = Curriculum.new(cp_req)
+cs_req = sesh.add_transaction("course_nav").add_requests
+curr_obj = Curriculum.new(cs_req)
 
 course_code = "BSCI"
 transaction = "full_match"
@@ -48,23 +48,6 @@ curr_obj.homepage
 config.log.info_msg("#{test}: Search for course '#{course_code}'")
 req_obj = sesh.add_transaction(transaction).add_requests
 curr_obj.find('course', course_code, course_name, username, {:nav_homepage => false})
-
-=begin
-searches = {
-  "wilcard" => '',
-  "partial_match" => 'AM',
-  "full_match" => 'Film Analysis',
-  "no_match" => 'Never find this madeup course'
-}
-
-searches.each_pair do |transaction, search|
-  config.log.info_msg("#{test}: Search for course '#{search}'")
-  req_obj = sesh.add_transaction(transaction).add_requests
-  Curriculum.new(req_obj).find('course', search, {:nav_homepage => false})
-end
-=end  
-  
-
 
 # Logout
 config.log.info_msg("#{test}: Logging out")
