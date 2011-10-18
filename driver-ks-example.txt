@@ -8,8 +8,12 @@ When you initiate the Driver Utility you will enter the interactive shell to set
 Your log file is here: /../Kuali-Sakai-Performance-Test-Automation-Framework/log/1318879134.log
 Let's setup your test run config...
 
-#What product are we testing?
+
 What product are we testing? ["ks", "oae"]
+
+#Enter the product we are testing
+
+What product are we testing? ["ks", "oae"] ks
 
 What suite are we testing?
 
