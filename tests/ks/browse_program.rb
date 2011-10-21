@@ -3,7 +3,7 @@
 #
 # == Description
 #
-# Login as a member and do various course searches
+# Login as a member and browse and view programs (drill in REQUISITES)
 #
 # === Issues
 #
@@ -24,7 +24,7 @@ config.log.info_msg("Test: #{test}")
 config.log.info_msg("Probability: #{config.tests[test]}")
 
 # Create session
-sesh = Session.new(config, 'course_search', probability)
+sesh = Session.new(config, 'browse_program', probability)
 
 # Login is department COC
 username = config.directory["department_coc"]["member"]["username"]
@@ -36,18 +36,19 @@ config.log.info_msg("#{test}: Logging in as: #{username}/#{password}")
 auth = Authentication.new(li_req)
 auth.login({:user => username, :password => password})
 
-# Search for various courses
-cs_req = sesh.add_transaction("course_search").add_requests
-curr_obj = Curriculum.new(cs_req)
+# Browse for program
+bp_req = sesh.add_transaction("browse_program").add_requests
+curr_obj = Curriculum.new(bp_req)
 
-course_code = "BSCI"
-#transaction = "full_match"
-course_name = "Insects"
+program_name = "Biological Sciences"
+program_specialization = "General Biology"
+requisite1 = "BSCI106"
+requisite2 = "BSCI222"
 curr_obj.homepage
 
-config.log.info_msg("#{test}: Search for course '#{course_code}'")
-curr_obj.find('course', course_code, course_name, username, {:nav_homepage => false})
-
+config.log.info_msg("#{test}: Browse for program '#{program_name}'")
+#req_obj = sesh.add_transaction(transaction).add_requests
+curr_obj.browse(program_name, program_specialization, requisite1, requisite2, username, {:nav_homepage => false})
 # Logout
 config.log.info_msg("#{test}: Logging out")
 lo_txn = sesh.add_transaction("logout")
