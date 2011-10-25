@@ -25,9 +25,9 @@ config.log.info_msg("Probability: #{config.tests[test]}")
 # Create session
 sesh = Session.new(config, 'course_search', probability)
 
-# Login is department COC
-username = config.directory["department_coc"]["member"]["username"]
-password = config.directory["department_coc"]["member"]["password"]
+# Login
+username = '%%_username%%'
+password = '%%_user_password%%'
 
 li_txn = sesh.add_transaction("login")
 li_req = li_txn.add_requests
