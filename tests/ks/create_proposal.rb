@@ -48,7 +48,10 @@ Curriculum.new(cp_req).create_proposal(
   #config.directory["department"]["name"],,
   'Biology Dept',
   'Botany Dept',
-  {:submit => true}
+  {
+    :submit => true,
+    :propose_person => username
+  }
 )
 
 # Logout
