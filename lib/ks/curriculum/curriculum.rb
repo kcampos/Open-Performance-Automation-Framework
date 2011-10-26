@@ -2634,18 +2634,28 @@ class Curriculum
     # AJAX popup while typing in item text box
     for i in 1..opts[:item].length
       itr = i-1
-      @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService',
-        {
-          'method' => 'POST',
-          'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-          'contents' => "5|0|14|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|search|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.lang.Boolean/476441737|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|lu.queryParam.luOptionalCode|222|lu.queryParam.luOptionalType|kuali.lu.type.CreditCourse|lu.search.mostCurrent.union||1|2|3|4|1|5|5|0|6|0|7|2|8|9|0|10|8|11|0|12|13|14|0|0|"
-        },
-        {
-          :dyn_variables => [
-            {"name" => opts[:item_name_dyn_var], "regexp" => opts[:item_name_var_regexp]}
-          ]
-        }
-      )
+      if(i == opts[:item].length)
+        @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService',
+          {
+            'method' => 'POST',
+            'content_type' => 'text/x-gwt-rpc; charset=utf-8',
+            'contents' => "5|0|14|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|search|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.lang.Boolean/476441737|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|lu.queryParam.luOptionalCode|#{opts[:item][0..itr]}|lu.queryParam.luOptionalType|kuali.lu.type.CreditCourse|lu.search.mostCurrent.union||1|2|3|4|1|5|5|0|6|0|7|2|8|9|0|10|8|11|0|12|13|14|0|0|"
+          },
+          {
+            :dyn_variables => [
+              {"name" => opts[:item_name_dyn_var], "regexp" => opts[:item_name_var_regexp]}
+            ]
+          }
+        )
+      else
+        @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService',
+          {
+            'method' => 'POST',
+            'content_type' => 'text/x-gwt-rpc; charset=utf-8',
+            'contents' => "5|0|14|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|search|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.lang.Boolean/476441737|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|lu.queryParam.luOptionalCode|#{opts[:item][0..itr]}|lu.queryParam.luOptionalType|kuali.lu.type.CreditCourse|lu.search.mostCurrent.union||1|2|3|4|1|5|5|0|6|0|7|2|8|9|0|10|8|11|0|12|13|14|0|0|"
+          }
+        )
+      end
     end
 
     # The next 18 HTTP Requests happen after selecting BSCI122 and clicking Go
