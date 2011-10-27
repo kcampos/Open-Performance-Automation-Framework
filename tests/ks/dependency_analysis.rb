@@ -3,7 +3,7 @@
 #
 # == Description
 #
-# Login as a member and do various course searches
+# Login as a member and browse and view programs (drill in REQUISITES)
 #
 # === Issues
 #
@@ -18,12 +18,13 @@ require config.lib_base_dir + "/#{config.product}/curriculum/curriculum.rb"
 
 # Test info - default test case setup
 test = File.basename(__FILE__)
+config = DRbObject.new nil, "druby://localhost:#{ENV['DRB_PORT']}"
 probability = config.tests[test]
 config.log.info_msg("Test: #{test}")
 config.log.info_msg("Probability: #{config.tests[test]}")
 
 # Create session
-sesh = Session.new(config, 'course_search', probability)
+sesh = Session.new(config, 'dependency_analysis', probability)
 
 # Login
 username = '%%_username%%'
@@ -35,25 +36,21 @@ config.log.info_msg("#{test}: Logging in as: #{username}/#{password}")
 auth = Authentication.new(li_req)
 auth.login({:user => username, :password => password})
 
-# Search for various courses
-cs_req = sesh.add_transaction("course_search").add_requests
-curr_obj = Curriculum.new(cs_req)
+# Browse for program
+da_req = sesh.add_transaction("dependency_analysis").add_requests
+curr_obj = Curriculum.new(da_req)
 
-course_code = "BSCI"
-course_name = "Insects"
+coursename = "BSCI222"
 curr_obj.homepage
 
-config.log.info_msg("#{test}: Search for course '#{course_code}'")
-curr_obj.find(
-  'course',
-  course_code,
-  course_name,
+config.log.info_msg("#{test}: Dependency analysis '#{coursename}'")
+curr_obj.dependency(
+  coursename,
   {
     :nav_homepage => false,
-    :find_person => username
+    :dependency_person => username
   }
 )
-
 # Logout
 config.log.info_msg("#{test}: Logging out")
 lo_txn = sesh.add_transaction("logout")
