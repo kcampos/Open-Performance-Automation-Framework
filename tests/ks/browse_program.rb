@@ -48,7 +48,16 @@ curr_obj.homepage
 
 config.log.info_msg("#{test}: Browse for program '#{program_name}'")
 #req_obj = sesh.add_transaction(transaction).add_requests
-curr_obj.browse(program_name, program_specialization, requisite1, requisite2, username, {:nav_homepage => false})
+curr_obj.browse(
+  program_name,
+  program_specialization,
+  requisite1,
+  requisite2,
+  {
+    :nav_homepage => false,
+    :browse_person => username
+  }
+)
 # Logout
 config.log.info_msg("#{test}: Logging out")
 lo_txn = sesh.add_transaction("logout")
