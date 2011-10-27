@@ -2587,7 +2587,7 @@ class Curriculum
       #NOTE: The following regexp returns the Program. NOTE: This regular expression will only work for the undergraduate Biological Sciences Program that has a Degree Type of Bachelor Science.
       # Due to the fact of duplicate programs of the same name; e.g.,Biological Sciences with a Degree Type of Bachelor of Science and Biological Sciences with a Degree Type of 
       # Doctor of Philosophy exist, a regular expression would have to be created to handle the programs that share the same Program Title; i.e., Biological Sciences
-      :item_name_var_regexp => '\([^\"]+\)\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"' + coursename
+      :item_name_var_regexp => '\([^\"]+\)\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"' + coursename
     }
 
     opts = defaults.merge(opts)
