@@ -1764,6 +1764,8 @@ class Curriculum
       
       #Click Detailed View tab -- NOTE: no HTTP Request is sent
 
+      @request.add_thinktime(15)
+
     end
     
   end
@@ -2055,7 +2057,7 @@ class Curriculum
       }
     )
 
-    @request.add_thinktime(3)
+    @request.add_thinktime(15)
     
     # The next 15 HTTP Requests happen after clicking on "Program Requirements"
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/statementRpcService',
@@ -2181,7 +2183,7 @@ class Curriculum
       }
     )
 
-    @request.add_thinktime(3)
+    @request.add_thinktime(15)
     
     # The next 24 HTTP Requests happen after clicking on "BSCI106 PRIN BIOL II 4.0 Credits"
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/ServerPropertiesRpcService',
@@ -2382,7 +2384,7 @@ class Curriculum
       }, {'subst' => 'true'}
     )
 
-    @request.add_thinktime(3)
+    @request.add_thinktime(15)
     
     # The next 24 HTTP Requests happen after clicking on "BSCI122 PRIN GENETICS 4.0 Credits" 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/ServerPropertiesRpcService',
@@ -2584,7 +2586,7 @@ class Curriculum
       }, {'subst' => 'true'}
     )
 
-    @request.add_thinktime(3)
+    @request.add_thinktime(15)
     
     # The next HTTP Request happens after clicking the "Detailed View" tab
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/CluSetManagementRpcService',
@@ -2594,6 +2596,7 @@ class Curriculum
         'contents' => "5|0|6|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|5BE133251BBD52A0E2D3AED463070079|org.kuali.student.lum.common.client.widgets.CluSetManagementRpcService|getCluSetInformation|java.lang.String/2004016611|6f7421b8-2fe6-4b42-90c8-cbe29dc503be|1|2|3|4|1|5|6|"
       }
     )
+      @request.add_thinktime(15)
 
   end
 
@@ -2822,7 +2825,7 @@ class Curriculum
       }
     )
 
-    @request.add_thinktime(3)
+    @request.add_thinktime(15)
     
     # The next 18 HTTP Requests happen after clicking the View Course Set button
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/ServerPropertiesRpcService',
@@ -2978,7 +2981,7 @@ class Curriculum
       }
     )
 
-    @request.add_thinktime(3)
+    @request.add_thinktime(15)
 
     # The next HTTP Request happens after clicking "Export Summary to File" button and then clicking the "Export" button
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/GwtExportRpcService',
@@ -2989,7 +2992,7 @@ class Curriculum
       }
     )
 
-    @request.add_thinktime(3)
+    @request.add_thinktime(15)
          
     # NOTE: There is not an HTTP Request sent after clicking "OK" with the "Open with 'Preview (default)" radio button selected
 
