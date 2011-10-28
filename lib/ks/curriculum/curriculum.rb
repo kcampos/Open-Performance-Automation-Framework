@@ -1566,7 +1566,9 @@ class Curriculum
     # Navigate to Curriculum Mgmt
     self.homepage() unless(!opts[:nav_homepage])
     
+    @request.add_thinktime(3)
 
+    # Enter Course Code BSCI and click Search
     # Search Criteria
     if(type == "proposal")
       @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService',
@@ -1596,7 +1598,10 @@ class Curriculum
           ]
         }
       )
-    
+
+      @request.add_thinktime(3)
+      
+      # Click on Name=Insects - Code=BSCI 120 and click Select
       @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/CourseRpcService',
         {
           'method' => 'POST',
@@ -1755,6 +1760,12 @@ class Curriculum
         },{'subst' => 'true'}
       )
 
+      @request.add_thinktime(3)
+      
+      #Click Detailed View tab -- NOTE: no HTTP Request is sent
+
+      @request.add_thinktime(15)
+
     end
     
   end
@@ -1784,6 +1795,8 @@ class Curriculum
 
     # Navigate to Curriculum Mgmt
     self.homepage() unless(!opts[:nav_homepage])
+
+    @request.add_thinktime(3)
     
     # The next 7 HTTP Requests happen after clicking Browse Academic Programs
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/MetadataRpcService',
@@ -1847,6 +1860,8 @@ class Curriculum
       }
     )
 
+    @request.add_thinktime(3)
+    
     # The next 23 HTTP Requests happen after clicking on the Undergraduate check box and then clicking on Biological Sciences and then clicking Select
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/majorDisciplineRpcService',
       {
@@ -2042,6 +2057,8 @@ class Curriculum
       }
     )
 
+    @request.add_thinktime(15)
+    
     # The next 15 HTTP Requests happen after clicking on "Program Requirements"
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/statementRpcService',
       {
@@ -2166,6 +2183,8 @@ class Curriculum
       }
     )
 
+    @request.add_thinktime(15)
+    
     # The next 24 HTTP Requests happen after clicking on "BSCI106 PRIN BIOL II 4.0 Credits"
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/ServerPropertiesRpcService',
       {
@@ -2365,6 +2384,8 @@ class Curriculum
       }, {'subst' => 'true'}
     )
 
+    @request.add_thinktime(15)
+    
     # The next 24 HTTP Requests happen after clicking on "BSCI122 PRIN GENETICS 4.0 Credits" 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/ServerPropertiesRpcService',
       {
@@ -2565,6 +2586,8 @@ class Curriculum
       }, {'subst' => 'true'}
     )
 
+    @request.add_thinktime(15)
+    
     # The next HTTP Request happens after clicking the "Detailed View" tab
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/CluSetManagementRpcService',
       {
@@ -2573,6 +2596,7 @@ class Curriculum
         'contents' => "5|0|6|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|5BE133251BBD52A0E2D3AED463070079|org.kuali.student.lum.common.client.widgets.CluSetManagementRpcService|getCluSetInformation|java.lang.String/2004016611|6f7421b8-2fe6-4b42-90c8-cbe29dc503be|1|2|3|4|1|5|6|"
       }
     )
+      @request.add_thinktime(15)
 
   end
 
@@ -2594,6 +2618,8 @@ class Curriculum
 
     # Navigate to Curriculum Mgmt
     self.homepage() unless(!opts[:nav_homepage])
+
+    @request.add_thinktime(3)
     
     # The next 4 HTTP Requests happen after clicking the Dependency Analysis button
 
@@ -2629,6 +2655,8 @@ class Curriculum
       }
     )
 
+    @request.add_thinktime(3)
+    
     # The next HTTP Request happens after clicking the Dependency Analysis button
     # Item
     # AJAX popup while typing in item text box
@@ -2658,6 +2686,8 @@ class Curriculum
       end
     end
 
+    @request.add_thinktime(3)
+    
     # The next 18 HTTP Requests happen after selecting BSCI122 and clicking Go
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService',
       {
@@ -2795,6 +2825,8 @@ class Curriculum
       }
     )
 
+    @request.add_thinktime(15)
+    
     # The next 18 HTTP Requests happen after clicking the View Course Set button
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/ServerPropertiesRpcService',
       {
@@ -2949,6 +2981,8 @@ class Curriculum
       }
     )
 
+    @request.add_thinktime(15)
+
     # The next HTTP Request happens after clicking "Export Summary to File" button and then clicking the "Export" button
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/GwtExportRpcService',
       {
@@ -2957,7 +2991,9 @@ class Curriculum
         'contents' => "5|0|38|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|65DEC1FAFBA453825B5B95A0C63006C1|org.kuali.student.common.ui.client.service.GwtExportRpcService|reportExport|java.util.List|org.kuali.student.common.assembly.data.Data/3184510345|java.lang.String/2004016611|java.util.ArrayList/3821976829|org.kuali.student.common.ui.client.util.ExportElement/3779793473|BSCI222 - Principles of Genetics||Dependency Analysis|Course Dependencies|<b>BSCI222</b> is a/an <b>Student Eligibility + Prerequisite</b> for the following course(16):|BSCI360 - Principles of Animal Behavior|BSCI380 - Bioinformatics and Integrated Genomics|BSCI410 - Molecular Genetics|BSCI412 - Microbial Genetics|BSCI414 - Recombinant DNA Laboratory|BSCI416 - Biology of the Human Genome|BSCI417 - Microbial Pathogenesis|BSCI420 - Cell Biology Lectures|BSCI421 - Cell Biology|BSCI422 - Principles of Immunology|BSCI423 - Immunology Laboratory|BSCI430 - Developmental Biology|BSCI433 - Biology of Cancer|BSCI437 - General Virology|BSCI465 - Behavioral Ecology|BSCI471 - Molecular Evolution|Program Dependencies|<b>BSCI222</b> is a/an <b>Completion Requirements</b> for the following program(1):|BSCI - Biological Sciences |Course Set Inclusions|<b>BSCI222</b> is a/an <b>Course Set</b> for the following courseSet(1):|BSOS Supporting Sequence Lower-level Courses|analysis.template|PDF|1|2|3|4|5|5|6|7|7|7|8|11|9|0|10|0|0|1|11|0|12|9|0|11|0|0|-1|11|0|12|9|0|13|0|0|1|11|0|12|9|0|14|0|0|2|11|8|16|9|0|15|0|0|4|11|0|12|9|0|16|0|0|4|11|0|12|9|0|17|0|0|4|11|0|12|9|0|18|0|0|4|11|0|12|9|0|19|0|0|4|11|0|12|9|0|20|0|0|4|11|0|12|9|0|21|0|0|4|11|0|12|9|0|22|0|0|4|11|0|12|9|0|23|0|0|4|11|0|12|9|0|24|0|0|4|11|0|12|9|0|25|0|0|4|11|0|12|9|0|26|0|0|4|11|0|12|9|0|27|0|0|4|11|0|12|9|0|28|0|0|4|11|0|12|9|0|29|0|0|4|11|0|12|9|0|30|0|0|4|11|0|12|12|9|0|11|0|0|-1|11|0|12|9|0|31|0|0|1|11|0|12|9|0|32|0|0|2|11|8|1|9|0|33|0|0|4|11|0|12|12|9|0|11|0|0|-1|11|0|12|9|0|34|0|0|1|11|0|12|9|0|35|0|0|2|11|8|1|9|0|36|0|0|4|11|0|12|12|9|0|11|0|0|-1|11|0|12|0|37|38|12|"
       }
     )
-     
+
+    @request.add_thinktime(15)
+         
     # NOTE: There is not an HTTP Request sent after clicking "OK" with the "Open with 'Preview (default)" radio button selected
 
   end
