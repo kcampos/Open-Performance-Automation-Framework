@@ -2611,7 +2611,7 @@ class Curriculum
       #NOTE: The following regexp returns the Program. NOTE: This regular expression will only work for the undergraduate Biological Sciences Program that has a Degree Type of Bachelor Science.
       # Due to the fact of duplicate programs of the same name; e.g.,Biological Sciences with a Degree Type of Bachelor of Science and Biological Sciences with a Degree Type of 
       # Doctor of Philosophy exist, a regular expression would have to be created to handle the programs that share the same Program Title; i.e., Biological Sciences
-      :item_name_var_regexp => '\([^\"]+\)\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"' + coursename
+      :item_name_var_regexp => '\([^\"]+\)\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"' + coursename
     }
 
     opts = defaults.merge(opts)
@@ -2620,7 +2620,7 @@ class Curriculum
     self.homepage() unless(!opts[:nav_homepage])
 
     @request.add_thinktime(3)
-    
+      
     # The next 4 HTTP Requests happen after clicking the Dependency Analysis button
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/MetadataRpcService',
@@ -2654,7 +2654,7 @@ class Curriculum
         'contents' => "5|0|11|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|search|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|enumeration.queryParam.enumerationType|kuali.dependency.courseSet.types|enumeration.management.search|enumeration.resultColumn.sortKey|1|2|3|4|1|5|5|0|0|6|1|7|8|0|9|10|11|0|0|"
       }
     )
-
+     
     @request.add_thinktime(3)
     
     # The next HTTP Request happens after clicking the Dependency Analysis button
