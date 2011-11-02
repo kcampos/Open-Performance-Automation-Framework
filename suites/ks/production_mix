@@ -1,5 +1,11 @@
 # Format: test_name,probability
-course_search.rb,27
-create_proposal.rb,27
-dependency_analysis.rb,26
-browse_program.rb,20
+course_search.rb,34
+create_proposal.rb,33
+dependency_analysis.rb,33
+#
+#
+#The following will include browse
+#course_search.rb,27
+#create_proposal.rb,27
+#dependency_analysis.rb,26
+#browse_program.rb,20
