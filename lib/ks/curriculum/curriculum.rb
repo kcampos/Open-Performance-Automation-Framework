@@ -1780,7 +1780,7 @@ class Curriculum
       #NOTE: The following regexp returns the Program. NOTE: This regular expression will only work for the undergraduate Biological Sciences Program that has a Degree Type of Bachelor Science.
       # Due to the fact of duplicate programs of the same name; e.g.,Biological Sciences with a Degree Type of Bachelor of Science and Biological Sciences with a Degree Type of 
       # Doctor of Philosophy exist, a regular expression would have to be created to handle the programs that share the same Program Title; i.e., Biological Sciences
-      :program_name_var_regexp => '\(REFERENCEPROG-[^\"]+\)\",\"' + program_specialization + '\"',
+      :program_name_var_regexp => '\(REFERENCEPROG-[^\"]+\)\"\,\"[^\"]+\"\,\"' + program_specialization + '\"',
       :reqref1_name_dyn_var => 'reqref1_name_dyn_var',
       #NOTE: The following regular expression will only work if requisite1 is BSCI106 in the "Transfer Student Entry" section. There is also a BSCI106 in the Basic Program section.
       # Also, if it is a different course, the HTTP response must be viewed to help create the regular expression.
