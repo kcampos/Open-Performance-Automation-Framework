@@ -21,21 +21,23 @@ class AutoConfig
     :phases, :agents, :debug, :execute, :intro_xml, :tests, :drb_port, :log, :log_path, :xml_writer, :xml_obj, :context, :verbose,
     :tsung_log_level, :secondary_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files, :ssl
     
-  attr_reader :product, :suite, :directory, :config_setup, :config_dir, :suite_base_dir, :suite_dir, :test_base_dir, :test_dir, :lib_base_dir
+  attr_reader :product, :suite, :directory, :config_setup, :config_dir, :suite_base_dir, :suite_dir, :test_base_dir, :test_dir, :lib_base_dir,
+    :import_base_dir, :import_dir
 
   
   def initialize
     
-    @config_setup   = YAML.load_file(File.expand_path(File.dirname(__FILE__)) + '/../config/config.yaml')
-    @products       = @config_setup[:products].keys
-    @lib_base_dir   = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)))
-    @config_dir     = Common.dir_simplify(@lib_base_dir + '/../config')
-    @suite_base_dir = Common.dir_simplify(@lib_base_dir + '/../suites')
-    @test_base_dir  = Common.dir_simplify(@lib_base_dir + '/../tests')
-    @log_dir        = Common.dir_simplify(@lib_base_dir + '/../log')
-    @debug          = false
-    @execute        = false
-    @ssl            = nil
+    @config_setup     = YAML.load_file(File.expand_path(File.dirname(__FILE__)) + '/../config/config.yaml')
+    @products         = @config_setup[:products].keys
+    @lib_base_dir     = Common.dir_simplify(File.expand_path(File.dirname(__FILE__)))
+    @config_dir       = Common.dir_simplify(@lib_base_dir + '/../config')
+    @suite_base_dir   = Common.dir_simplify(@lib_base_dir + '/../suites')
+    @test_base_dir    = Common.dir_simplify(@lib_base_dir + '/../tests')
+    @import_base_dir  = Common.dir_simplify(@lib_base_dir + '/../config/import')
+    @log_dir          = Common.dir_simplify(@lib_base_dir + '/../log')
+    @debug            = false
+    @execute          = false
+    @ssl              = nil
     
   end
 
@@ -268,9 +270,10 @@ class AutoConfig
   # Set product for this particular run as well as the dependent instance variables
   def product=(name)
     @product = (self.products.index(name).nil? ? nil : name)  
-    self.directory = @product
-    self.suite_dir = @product
-    self.test_dir  = @product
+    self.directory  = @product
+    self.suite_dir  = @product
+    self.test_dir   = @product
+    self.import_dir = @product
     @product
   end
   
@@ -292,6 +295,11 @@ class AutoConfig
   # Set test dir based on product
   def test_dir=(product)
     @test_dir = "#{self.test_base_dir}/#{product}"
+  end
+  
+  # Set import dir based on product
+  def import_dir=(product)
+    @import_dir = "#{self.import_base_dir}/#{product}"
   end
 
   # Validate the suite exists and has proper format
@@ -453,10 +461,9 @@ class AutoConfig
     end
     
     # BUG -HARDCODED
-    #options.add_element('option', {"name" => "file_server", "id" => "userdb", "value" => "#{@config_dir}/import/users.csv"})
     parse_import_files
     self.import_files.each_key do |import_file|
-      options.add_element('option', {"name" => "file_server", "id" => self.import_files[import_file][:id], "value" => "#{@config_dir}/import/#{import_file}"})
+      options.add_element('option', {"name" => "file_server", "id" => self.import_files[import_file][:id], "value" => "#{@import_dir}/#{import_file}"})
     end
     
     # DEBUG
@@ -501,7 +508,7 @@ class AutoConfig
     
     self.import_files = {}
     
-    Dir.foreach("#{@config_dir}/import") do |file|
+    Dir.foreach(@import_dir) do |file|
       next if (file !~ /.+\.format$/) #skip if anything other than a format file
       
       csv_file = file.sub('.format', '.csv')
@@ -512,7 +519,7 @@ class AutoConfig
       # Read/store format of file, which should be first 2 lines of .format file
       # variables
       # 
-      file_info = `head -n 2 #{@config_dir}/import/#{file}`
+      file_info = `head -n 2 #{@import_dir}/#{file}`
       file_info =~ /(.+)\n(.+)/
       format = $1
       self.import_files[csv_file][:order] = $2.gsub(' ','')
