@@ -9,13 +9,13 @@
 #
 # Jira 1234 - Fake jira issue
 
-require File.dirname(__FILE__) + '/../lib/tsung-api.rb'
-require File.dirname(__FILE__) + '/../lib/utility/authentication.rb'
 require 'drb'
 
 # Test info - default test case setup
 test = File.basename(__FILE__)
 tconfig = DRbObject.new nil, "druby://localhost:#{ENV['DRB_PORT']}"
+require tconfig.lib_base_dir + '/../lib/tsung-api.rb'
+require tconfig.lib_base_dir + "/#{tconfig.product}/utility/authentication.rb"
 probability = tconfig.tests[test]
 tconfig.log.info_msg("Test: #{test}")
 tconfig.log.info_msg("Probability: #{tconfig.tests[test]}")
@@ -29,6 +29,8 @@ req = txn.add_requests
 tconfig.log.info_msg("#{test}: Logging in as admin")
 auth = Authentication.new(req)
 auth.login
+
+req.add_thinktime(60)
 
 # Logout
 tconfig.log.info_msg("#{test}: Logging out")
