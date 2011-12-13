@@ -143,7 +143,8 @@ class Requests < Transaction
     
     # Create request URL for rpc hack
     # Only works with 1 server BUG
-    @url = "http://#{config.servers[0]}/#{config.context}"
+    @url = "http://#{config.servers[0]}"
+    @url << "/#{config.context}" if(!config.context.empty?)
     config.log.debug_msg("Request base URL: #{@url}")
     config.log.debug_msg("Created Request container")
   end
@@ -161,9 +162,8 @@ class Requests < Transaction
     defaults = {
       "method" => 'GET',
       "version" => '1.1',
-      "url" => url
-      #:content_type => nil,
-      #:contents => nil
+      "url" => url,
+      :auth => {} #accepts {:username => 'user_id', :password => 'pass'} hash
     }
     
     # This is used to tell Tsung if we want a dynamic substitution
@@ -176,30 +176,45 @@ class Requests < Transaction
       :secondary_server_req => nil,
       :external => false
     }
-  
+
     opts = defaults.merge(opts)
     req_opts = req_defaults.merge(req_opts)
-    
+        
     # Split the hashes to take our dyn_variable
     #dyn_variables = req_opts.reject{|k,v| k == "subst"}[:dyn_variables]
+    auth_opt = opts.select{|k,v| k == :auth}
+    opts.reject!{|k,v| k == :auth}
     dyn_variables = req_opts[:dyn_variables]
     secondary_server_req = req_opts[:secondary_server_req]
     external = req_opts[:external]
     req_opts.delete_if{|k,v| k != "subst"}
     
-    new_url = ''
-    # Make sure requests begins with app context
+    
+    # Make sure we have a proper URL format
+    base_url = ''
     self.config.log.debug_msg("URL: #{url}\nLast Req External - Beg: #{@@last_req_external}")
     
+    # Secondary server request
     if(!secondary_server_req.nil?)
-      new_url = "http://#{secondary_server_req}/#{self.config.secondary_context}"
-      new_url << '/' if(url !~ /^\//)
-    elsif(url !~ /^\/self.config.context/ and url !~ /^http/)   
-      new_url = (@@last_req_external ? self.url : '/' + self.config.context)
-      new_url << '/' if(url !~ /^\//)
+      # Secondary server, just set it to fully qualified hostname
+      base_url = "http://#{secondary_server_req}"
+      base_url << "/#{self.config.secondary_context}" if(!self.config.secondary_context.empty?)
+      base_url << '/' if(url !~ /^\//)
+    
+    elsif(url !~ /^http/)
+      
+      # Take care of last request external
+      if(@@last_req_external)
+        # We need to make the request fully qualified
+        base_url = self.url
+      end
+      
+      base_url << "/#{self.config.context}" if(url !~ /^\/#{self.config.context}/ and !self.config.context.empty?)
+      base_url << '/' if(url !~ /^\//)
+      
     end
     
-    url = new_url + url
+    url = base_url + url
     opts["url"] = url
     
     self.config.log.debug_msg("New URL: #{url}")
@@ -214,7 +229,10 @@ class Requests < Transaction
     dyn_variables.each do |dyn_var|
       req.add_element('dyn_variable', dyn_var)
     end
-    req.add_element('http', opts)
+    http = req.add_element('http', opts)
+    
+    # Write basic authentication for request if necessary
+    http.add_element('www_authenticate', {'userid' => auth_opt[:auth][:username], 'passwd' => auth_opt[:auth][:password]}) if(!auth_opt[:auth].empty?)
     
     # Set external flag if necessary
     @@last_req_external = (external ? true : false)
@@ -293,3 +311,22 @@ class LogWriter < Writer
   end
   
 end
+
+
+private
+
+def validate_url(url)
+  
+  new_url = ''
+  
+  if(!secondary_server_req.nil?)
+    new_url = "http://#{secondary_server_req}/#{self.config.secondary_context}"
+    new_url << '/' if(url !~ /^\//)
+  elsif(url !~ /^\/self.config.context/ and url !~ /^http/)   
+    new_url = (@@last_req_external ? self.url : '/' + self.config.context)
+    new_url << '/' if(url !~ /^\//)
+  end
+  
+  
+end
+
