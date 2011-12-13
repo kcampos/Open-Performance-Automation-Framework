@@ -102,6 +102,11 @@ optparse = OptionParser.new do |opts|
     config.log_path = file
   end
   
+  # SSL
+  opts.on('--ssl', 'set ssl to true or false to set default ssl behavior') do |ssl|
+    config.ssl = ssl
+  end
+  
   # Execute tests after generating xml
   opts.on('-x', '--execute', 'start the load after generating the XML') do
     config.execute = true

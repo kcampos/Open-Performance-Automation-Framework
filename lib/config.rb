@@ -19,7 +19,7 @@ class AutoConfig
 
   attr_accessor :log_dir, :products, :output, :clients, :servers, :secondary_servers, 
     :phases, :agents, :debug, :execute, :intro_xml, :tests, :drb_port, :log, :log_path, :xml_writer, :xml_obj, :context, :verbose,
-    :tsung_log_level, :secondary_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files
+    :tsung_log_level, :secondary_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files, :ssl
     
   attr_reader :product, :suite, :directory, :config_setup, :config_dir, :suite_base_dir, :suite_dir, :test_base_dir, :test_dir, :lib_base_dir
 
@@ -35,6 +35,7 @@ class AutoConfig
     @log_dir        = Common.dir_simplify(@lib_base_dir + '/../log')
     @debug          = false
     @execute        = false
+    @ssl            = nil
     
   end
 
@@ -234,6 +235,15 @@ class AutoConfig
       print "Do you want to insert user thinktime? [y/n] "
       self.thinktime = (gets.chomp == 'y' ? true : false)
     end
+    
+    #
+    # SSL
+    #
+    if(self.ssl.nil?)
+      print "ssl on? [y/n] "
+      self.ssl = (gets.chomp == 'y' ? true : false)
+    end
+    
     
     #
     # Execute

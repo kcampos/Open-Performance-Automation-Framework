@@ -19,6 +19,8 @@ require 'rubygems'
 # Flag controlling if latest request pointed to an external server
 # Need to give FQ reuest next to get it back
 @@last_req_external = false
+# Force https write if config.ssl == true and last request wasn't FQ'd
+@@last_req_fq = false
 
 # Main Sessions class, most often called from creating Session object
 # This will write the 'sessions' xml elements
@@ -132,8 +134,8 @@ end
 # Object container for all requests inside the transaction
 class Requests < Transaction
   
-  attr_accessor :list
-  attr_reader :xml_element, :url
+  attr_accessor :list, :http_mode
+  attr_reader :xml_element
   
   def initialize(txn_name, config, session_name, probability='100%', type='ts_http')
     config.log.debug_msg("Requests-> entering initialize...")
@@ -143,10 +145,20 @@ class Requests < Transaction
     
     # Create request URL for rpc hack
     # Only works with 1 server BUG
-    @url = "http://#{config.servers[0]}"
-    @url << "/#{config.context}" if(!config.context.empty?)
-    config.log.debug_msg("Request base URL: #{@url}")
+    @http_mode = (config.ssl ? 'https' : 'http')
+    #@url = "#{http_mode}://#{config.servers[0]}"
+    #@url << "/#{config.context}" if(!config.context.empty?)
+    #config.log.debug_msg("Request base URL: #{@url}")
     config.log.debug_msg("Created Request container")
+  end
+  
+  # Custom accessor so we pull in the new http_mode value on every request
+  # This allows for mixed http/https sessions
+  def url
+    @url = "#{@http_mode}://#{self.config.servers[0]}"
+    @url << "/#{self.config.context}" if(!self.config.context.empty?)
+    self.config.log.debug_msg("Request base URL: #{@url}")
+    @url
   end
   
   # Add a request to the container
@@ -169,6 +181,7 @@ class Requests < Transaction
     # This is used to tell Tsung if we want a dynamic substitution
     req_defaults = {
       "subst" => 'false',
+      :ssl => self.config.ssl,
       :dyn_variables => {
         # "name"
         # "regexp"
@@ -179,6 +192,7 @@ class Requests < Transaction
 
     opts = defaults.merge(opts)
     req_opts = req_defaults.merge(req_opts)
+    @http_mode = (req_opts[:ssl] ? 'https' : 'http')
         
     # Split the hashes to take our dyn_variable
     #dyn_variables = req_opts.reject{|k,v| k == "subst"}[:dyn_variables]
@@ -197,16 +211,18 @@ class Requests < Transaction
     # Secondary server request
     if(!secondary_server_req.nil?)
       # Secondary server, just set it to fully qualified hostname
-      base_url = "http://#{secondary_server_req}"
+      base_url = "#{@http_mode}://#{secondary_server_req}"
       base_url << "/#{self.config.secondary_context}" if(!self.config.secondary_context.empty?)
       base_url << '/' if(url !~ /^\//)
+      @@last_req_fq = true
     
-    elsif(url !~ /^http/)
+    elsif(url !~ /^#{http_mode}/)
       
       # Take care of last request external
-      if(@@last_req_external)
+      if(@@last_req_external or (@http_mode and !@@last_req_fq))
         # We need to make the request fully qualified
         base_url = self.url
+        @@last_req_fq = true
       end
       
       base_url << "/#{self.config.context}" if(url !~ /^\/#{self.config.context}/ and !self.config.context.empty?)
