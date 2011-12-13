@@ -37,7 +37,10 @@ class Authentication
     
     @request.add('/') if(opts[:load_homepage])
     
+    @request.add_thinktime(5)
+    
     @request.add('/register')
+    
     @request.add("http://rsmart.app11.hubspot.com/salog.js.aspx",
       {}, {:external => true})
     
@@ -57,6 +60,8 @@ class Authentication
       }
     )
     
+    @request.add_thinktime(5)
+    
     # Filling out - forward lookup
     #giving 404 - if using dyn variable substitution we have to parse out the part of user ID that's not dynamic
     lookup = username.match('^([^%%]+)').to_s
@@ -66,6 +71,8 @@ class Authentication
         {}, { 'subst' => 'true' }
       )    
     end
+    
+    @request.add_thinktime(25)
     
     # Submit form
     @request.add('/system/userManager/user.create.html',
@@ -114,8 +121,8 @@ class Authentication
       {
         'method' => 'POST',
         'content_type' => 'application/x-www-form-urlencoded; charset=UTF-8',
-        'contents' => "_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2F~kyle_test2%2Fpublic%2Fauthprofile%2Fbasic%22%2C%22method%22%3A%22POST%22%2C%22parameters%22%3A%7B%22init%22%3Atrue%2C%22_charset_%22%3A%22utf-8%22%7D%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2F~kyle_test2%2Fpublic%2Fauthprofile%2Faboutme%22%2C%22method%22%3A%22POST%22%2C%22parameters%22%3A%7B%22init%22%3Atrue%2C%22_charset_%22%3A%22utf-8%22%7D%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2F~kyle_test2%2Fpublic%2Fauthprofile%2Flocations%22%2C%22method%22%3A%22POST%22%2C%22parameters%22%3A%7B%22init%22%3Atrue%2C%22_charset_%22%3A%22utf-8%22%7D%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2F~kyle_test2%2Fpublic%2Fauthprofile%2Fpublications%22%2C%22method%22%3A%22POST%22%2C%22parameters%22%3A%7B%22init%22%3Atrue%2C%22_charset_%22%3A%22utf-8%22%7D%2C%22_charset_%22%3A%22utf-8%22%7D%5D"
-      }
+        'contents' => "_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2F~#{username}%2Fpublic%2Fauthprofile%2Fbasic%22%2C%22method%22%3A%22POST%22%2C%22parameters%22%3A%7B%22init%22%3Atrue%2C%22_charset_%22%3A%22utf-8%22%7D%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2F~#{username}%2Fpublic%2Fauthprofile%2Faboutme%22%2C%22method%22%3A%22POST%22%2C%22parameters%22%3A%7B%22init%22%3Atrue%2C%22_charset_%22%3A%22utf-8%22%7D%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2F~#{username}%2Fpublic%2Fauthprofile%2Flocations%22%2C%22method%22%3A%22POST%22%2C%22parameters%22%3A%7B%22init%22%3Atrue%2C%22_charset_%22%3A%22utf-8%22%7D%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2F~#{username}%2Fpublic%2Fauthprofile%2Fpublications%22%2C%22method%22%3A%22POST%22%2C%22parameters%22%3A%7B%22init%22%3Atrue%2C%22_charset_%22%3A%22utf-8%22%7D%2C%22_charset_%22%3A%22utf-8%22%7D%5D"
+      }, { 'subst' => 'true' }
     )
     
     # Giving 404 - Jira: https://jira.rsmart.com/browse/OAE-80
@@ -131,6 +138,7 @@ class Authentication
       }, { 'subst' => 'true' }
     )
     
+    # Giving 404 - Jira: https://jira.rsmart.com/browse/OAE-80
     @request.add("/~#{username}/public/privspace",
       {
         'method' => 'POST',
