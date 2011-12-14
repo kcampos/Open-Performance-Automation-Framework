@@ -250,6 +250,11 @@ class Requests < Transaction
     # Write basic authentication for request if necessary
     http.add_element('www_authenticate', {'userid' => auth_opt[:auth][:username], 'passwd' => auth_opt[:auth][:password]}) if(!auth_opt[:auth].empty?)
     
+    # BUG - need a way to dynamically ingest custome headers per product
+    # BUG - hardcoded to first app server
+    http.add_element('http_header', {'name' => 'Referer', 'value' => "#{@http_mode}://#{self.config.servers[0].split(/:/)[0]}"}) if(self.config.product == 'oae')
+    
+    
     # Set external flag if necessary
     @@last_req_external = (external ? true : false)
     external ? self.config.log.debug_msg("EXTERNAL: true") : self.config.log.debug_msg("EXTERNAL: false")
