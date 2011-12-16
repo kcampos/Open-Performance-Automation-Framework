@@ -219,13 +219,14 @@ class Requests < Transaction
     elsif(url !~ /^#{http_mode}/)
       
       # Take care of last request external
-      if(@@last_req_external or (@http_mode and !@@last_req_fq))
+      if(@@last_req_external or (self.config.ssl and !@@last_req_fq))
         # We need to make the request fully qualified
         base_url = self.url
         @@last_req_fq = true
+      else
+        base_url << "/#{self.config.context}" if(url !~ /^\/#{self.config.context}/ and !self.config.context.empty?)
       end
       
-      base_url << "/#{self.config.context}" if(url !~ /^\/#{self.config.context}/ and !self.config.context.empty?)
       base_url << '/' if(url !~ /^\//)
       
     end
