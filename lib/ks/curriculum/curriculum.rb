@@ -2998,8 +2998,8 @@ class Curriculum
 
   end
   
-  # Propose Modification
-  def modification(course_title, course_name, course_number, new_course_title, new_description_addition, new_proposal_rationale, new_credit_value,  opts={})
+  # Propose Course Modification
+  def propose_course_modification(course_title, course_name, course_number, new_course_title, new_description_addition, new_proposal_rationale, new_credit_value,  opts={})
 
     defaults = {
       :modification_person => '%%_username%%', #user is the dynvar from users.csv
@@ -3014,7 +3014,7 @@ class Curriculum
       :description_dyn_var => 'description_dyn_var',
       :description_var_regexp => '\"descr\"\,\"formatted\"\,\"\([^\"]+\)',
       :new_credit_id_dyn_var => 'new_credit_dyn_var',
-      :new_credit_id_var_regexp => '\"fixedCreditValue\"\,\"[^\"]+\"\,\"[^\"]+\"\,"\([^\"]+\)',
+      :new_credit_id_var_regexp => '\"fixedCreditValue\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"\([^\"]+\)',
       :defaultEnrollmentEstimate_dyn_var => 'defaultEnrollmentEstimate_dyn_var',
       :defaultEnrollmentEstimate_var_regexp => 'defaultEnrollmentEstimate\"\,\"\([^\"]+\)',
       :lecture_dyn_var => 'lecture_dyn_var',
@@ -3475,7 +3475,7 @@ class Curriculum
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|7|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|5771428875B68D3E8EC7527EC8D18D40|org.kuali.student.core.document.ui.client.service.DocumentRpcService|getRefDocIdsForRef|java.lang.String/2004016611|kuali.org.RefObjectType.ProposalInfo|e5b1cc31-13b9-45d7-b90f-fc3f24fcf51d|1|2|3|4|2|5|5|6|7|"
+        'contents' => "5|0|7|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|5771428875B68D3E8EC7527EC8D18D40|org.kuali.student.core.document.ui.client.service.DocumentRpcService|getRefDocIdsForRef|java.lang.String/2004016611|kuali.org.RefObjectType.ProposalInfo|%%_#{opts[:preRoute_dyn_var]}%%|1|2|3|4|2|5|5|6|7|"
       }
     )
 
@@ -3727,7 +3727,7 @@ class Curriculum
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|7|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|5771428875B68D3E8EC7527EC8D18D40|org.kuali.student.core.document.ui.client.service.DocumentRpcService|getRefDocIdsForRef|java.lang.String/2004016611|kuali.org.RefObjectType.ProposalInfo|2d75394a-53cb-4ac1-a621-1645c5ebddf9|1|2|3|4|2|5|5|6|7|"
+        'contents' => "5|0|7|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|5771428875B68D3E8EC7527EC8D18D40|org.kuali.student.core.document.ui.client.service.DocumentRpcService|getRefDocIdsForRef|java.lang.String/2004016611|kuali.org.RefObjectType.ProposalInfo|%%_#{opts[:preRoute_dyn_var]}%%|1|2|3|4|2|5|5|6|7|"
       }
     )
 
