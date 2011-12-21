@@ -22,7 +22,7 @@ class AutoConfig
     :tsung_log_level, :secondary_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files, :ssl
     
   attr_reader :product, :suite, :directory, :config_setup, :config_dir, :suite_base_dir, :suite_dir, :test_base_dir, :test_dir, :lib_base_dir,
-    :import_base_dir, :import_dir
+    :import_base_dir, :import_dir, :data_base_dir, :data_dir
 
   
   def initialize
@@ -34,6 +34,7 @@ class AutoConfig
     @suite_base_dir   = Common.dir_simplify(@lib_base_dir + '/../suites')
     @test_base_dir    = Common.dir_simplify(@lib_base_dir + '/../tests')
     @import_base_dir  = Common.dir_simplify(@lib_base_dir + '/../config/import')
+    @data_base_dir    = Common.dir_simplify(@lib_base_dir + '/../config/data')
     @log_dir          = Common.dir_simplify(@lib_base_dir + '/../log')
     @debug            = false
     @execute          = false
@@ -274,6 +275,7 @@ class AutoConfig
     self.suite_dir  = @product
     self.test_dir   = @product
     self.import_dir = @product
+    self.data_dir = @product
     @product
   end
   
@@ -300,6 +302,11 @@ class AutoConfig
   # Set import dir based on product
   def import_dir=(product)
     @import_dir = "#{self.import_base_dir}/#{product}"
+  end
+  
+  # Set data dir based on product
+  def data_dir=(product)
+    @data_dir = "#{self.data_base_dir}/#{product}"
   end
 
   # Validate the suite exists and has proper format

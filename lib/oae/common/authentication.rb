@@ -229,12 +229,24 @@ class Authentication
       :uid_var_name => 'auth_login_uid',
       :uid_var_regex => '\"uid\":\"\([^\"]+\)',
       :dashboard_id_var_name => 'dashboard_id',
-      :dashboard_id_var_regex => '<div id=\'widget_dashboard_\([^\']+\)'
+      :dashboard_id_var_regex => '<div id=\'widget_dashboard_\([^\']+\)',
+      # Separating email into local and domain for URL escaping purposes
+      # Can't escapse dynamic variable values and need to escape the @
+      :email_local_var_name => 'auth_login_email_local',
+      :email_local_var_regex => '\"email\":\"\([^\@]+\)',
+      :email_domain_var_name => 'auth_login_email_domain',
+      :email_domain_var_regex => '\"email\":\"[^\@]+\@\([^\"]+\)',
+      :first_name_var_name => 'auth_login_first_name',
+      :first_name_var_regex => '\"firstName\":\"\([^\"]+\)',
+      :last_name_var_name => 'auth_login_last_name',
+      :last_name_var_regex => '\"lastName\":\"\([^\"]+\)'  
     }
     
     opts = defaults.merge(opts)
     
     self.homepage if(opts[:load_homepage])
+    
+    @request.add_thinktime(5)
     
     @request.add('/system/sling/formlogin',
       {
@@ -247,7 +259,23 @@ class Authentication
     @request.add('https://rsmart.app11.hubspot.com/salog.js.aspx', {},
       {:external => true})
       
-    @request.add('/system/me?_charset_=utf-8&_=1323968258852')
+    @request.add('/system/me?_charset_=utf-8&_=1323968258852', {},
+      {
+        :dyn_variables => [
+          {"name" => opts[:email_local_var_name], "regexp" => opts[:email_local_var_regex]},
+          {"name" => opts[:email_domain_var_name], "regexp" => opts[:email_domain_var_regex]},
+          {"name" => opts[:first_name_var_name], "regexp" => opts[:first_name_var_regex]},
+          {"name" => opts[:last_name_var_name], "regexp" => opts[:last_name_var_regex]}
+        ]
+      }
+    )
+    
+    #@request.add("/DEBUG/email_local_var_name/%%_#{opts[:email_local_var_name]}%%", {}, {'subst' => 'true'})
+    #@request.add("/DEBUG/email_domain_var_name/%%_#{opts[:email_domain_var_name]}%%", {}, {'subst' => 'true'})
+    #@request.add("/DEBUG/first_name_var_name/%%_#{opts[:first_name_var_name]}%%", {}, {'subst' => 'true'})
+    #@request.add("/DEBUG/last_name_var_name/%%_#{opts[:last_name_var_name]}%%", {}, {'subst' => 'true'})
+    
+    
     @request.add('/dev/lib/misc/l10n/cultures/globalize.culture.en-US.js?_charset_=utf-8&_=1323968259153')
     @request.add('/system/batch?_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2Fdev%2Fbundle%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdev%2Fbundle%2Fen_US.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D')
     
@@ -280,13 +308,13 @@ class Authentication
         'subst' => 'true',
         :dyn_variables => [
           {"name" => opts[:uid_var_name], "regexp" => opts[:uid_var_regex]},
-          {"name" => opts[:dashboard_id_var_name], "regexp" => opts[:dashboard_id_var_name]}
+          {"name" => opts[:dashboard_id_var_name], "regexp" => opts[:dashboard_id_var_regex]}
         ]
       }
     )
     
-    @request.add("/DEBUG/uid_var_name/%%_#{opts[:uid_var_name]}%%", {}, {'subst' => 'true'})
-    @request.add("/DEBUG/dashboard_id_var_name/%%_#{opts[:dashboard_id_var_name]}%%", {}, {'subst' => 'true'})
+    #@request.add("/DEBUG/uid_var_name/%%_#{opts[:uid_var_name]}%%", {}, {'subst' => 'true'})
+    #@request.add("/DEBUG/dashboard_id_var_name/%%_#{opts[:dashboard_id_var_name]}%%", {}, {'subst' => 'true'})
     
     @request.add('/system/batch?_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2Fdevwidgets%2Fsakaidocs%2Fsakaidocs.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fsakaidocs%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D&_=1323968262490')
     @request.add('/system/batch?_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2Fdevwidgets%2Fversions%2Fversions.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fversions%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D&_=1323968262934')
@@ -305,8 +333,13 @@ class Authentication
     @request.add('/var/contacts/find-all.json?page=0&items=100&_charset_=utf-8')
     
     # Return dynamic content that other methods in test may need
-    # UID
-    return [opts[:uid_var_name]]
+    return {
+      :uid => "%%_#{opts[:uid_var_name]}%%",
+      :dashboard_id => "%%_#{opts[:dashboard_id_var_name]}%%",
+      :email => "%%_#{opts[:email_local_var_name]}%%@%%_#{opts[:email_domain_var_name]}%%",
+      :first_name => "%%_#{opts[:first_name_var_name]}%%",
+      :last_name => "%%_#{opts[:last_name_var_name]}%%"
+    }
     
   end
   

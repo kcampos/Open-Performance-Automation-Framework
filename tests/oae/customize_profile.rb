@@ -3,7 +3,7 @@
 #
 # == Description
 #
-# Login as existing user and upload several content types
+# Login as existing user and customize profile
 #
 # === Issues
 #
@@ -14,7 +14,7 @@ config = DRbObject.new nil, "druby://localhost:#{ENV['DRB_PORT']}"
 
 require config.lib_base_dir + "/tsung-api.rb"
 require config.lib_base_dir + "/#{config.product}/common/authentication.rb"
-require config.lib_base_dir + "/#{config.product}/library/content.rb"
+require config.lib_base_dir + "/#{config.product}/common/profile.rb"
 
 
 # Test info - default test case setup
@@ -24,7 +24,7 @@ config.log.info_msg("Test: #{test}")
 config.log.info_msg("Probability: #{config.tests[test]}")
 
 # Create session
-sesh = Session.new(config, 'upload_content', probability)
+sesh = Session.new(config, 'customize_profile', probability)
 
 # Login
 username = '%%_username%%'
@@ -34,15 +34,30 @@ login_txn = sesh.add_transaction("login")
 login_req = login_txn.add_requests
 config.log.info_msg("#{test}: Loggin in as: #{username}")
 auth = Authentication.new(login_req)
-auth.login(username, password)
+
+user_data = auth.login(username, password)
 
 
-# Upload Content
-upload_txn = sesh.add_transaction("upload_text")
-upload_req = upload_txn.add_requests
-config.log.info_msg("#{test}: Uploading text")
-content = Content.new(upload_req)
-content.add(username)
+# Customize Profile
+profile_txn = sesh.add_transaction("customize_profile")
+profile_req = profile_txn.add_requests
+config.log.info_msg("#{test}: Customizing profile")
+profile = Profile.new(profile_req)
+
+profile.edit(username, user_data[:first_name], user_data[:last_name], user_data[:email],
+  {
+    :sections => {
+      :basic_information => {
+          :tags => ['winner']
+      },
+      :about_me => {
+        
+      }
+    }
+  }
+  
+)
+
 
 # Logout
 logout_txn = sesh.add_transaction("logout")

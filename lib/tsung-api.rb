@@ -186,6 +186,7 @@ class Requests < Transaction
         # "name"
         # "regexp"
       },
+      :custom_headers => {},
       :secondary_server_req => nil,
       :external => false
     }
@@ -199,6 +200,7 @@ class Requests < Transaction
     auth_opt = opts.select{|k,v| k == :auth}
     opts.reject!{|k,v| k == :auth}
     dyn_variables = req_opts[:dyn_variables]
+    custom_headers = req_opts[:custom_headers]
     secondary_server_req = req_opts[:secondary_server_req]
     external = req_opts[:external]
     req_opts.delete_if{|k,v| k != "subst"}
@@ -253,8 +255,13 @@ class Requests < Transaction
     
     # BUG - need a way to dynamically ingest custome headers per product
     # BUG - hardcoded to first app server
-    http.add_element('http_header', {'name' => 'Referer', 'value' => "#{@http_mode}://#{self.config.servers[0].split(/:/)[0]}"}) if(self.config.product == 'oae')
-    
+    custom_headers['Referer'] = self.url if(self.config.product == 'oae' and !custom_headers['Referer'])
+        
+    if(!custom_headers.empty?)
+      custom_headers.each_pair do |key, value|
+        http.add_element('http_header', {'name' => key, 'value' => value})
+      end
+    end
     
     # Set external flag if necessary
     @@last_req_external = (external ? true : false)
