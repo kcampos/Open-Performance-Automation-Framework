@@ -3216,7 +3216,7 @@ class Curriculum
 
     @request.add_thinktime(3)
 
-    # The next 42 HTTP Requests happen after clicking "Propose Course Modification" in the Course Actions dropdown list
+    # The next 41 HTTP Requests happen after clicking "Propose Course Modification" in the Course Actions dropdown list
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SecurityRpcService',
       {
         'method' => 'POST',
@@ -3295,6 +3295,14 @@ class Curriculum
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
         'contents' => "5|0|18|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|A239E8C5A2EDCD8BCE6061BF191A8095|org.kuali.student.lum.lu.ui.course.client.service.CreditCourseProposalRpcService|getMetadata|java.lang.String/2004016611|java.util.Map|%%_#{opts[:preRoute_dyn_var]}%%|java.util.HashMap/962170901|ID_TYPE|kualiStudentObjectWorkflowId|documentTypeName|kuali.proposal.type.course.modify|DtoState|Draft|DtoNextState||DtoWorkflowNode|PreRoute|1|2|3|4|2|5|6|7|8|5|5|9|5|10|5|11|5|12|5|13|5|14|5|15|5|16|5|17|5|18|"
+      }, {'subst' => 'true'}
+    )
+
+    @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/CourseRpcService',
+      {
+        'method' => 'POST',
+        'content_type' => 'text/x-gwt-rpc; charset=utf-8',
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|3C9BBAD14113E13A72476EEE8100687B|org.kuali.student.lum.lu.ui.course.client.service.CourseRpcService|getCourseStatements|java.lang.String/2004016611|%%_#{opts[:course_name_dyn_var]}%%|KUALI.RULE|en|1|2|3|4|3|5|5|5|6|7|8|"
       }, {'subst' => 'true'}
     )
 
