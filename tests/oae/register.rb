@@ -13,7 +13,7 @@ require 'drb'
 config = DRbObject.new nil, "druby://localhost:#{ENV['DRB_PORT']}"
 
 require config.lib_base_dir + "/tsung-api.rb"
-require config.lib_base_dir + "/#{config.product}/authentication.rb"
+require config.lib_base_dir + "/#{config.product}/common/authentication.rb"
 
 
 # Test info - default test case setup
@@ -33,3 +33,11 @@ reg_req = reg_txn.add_requests
 config.log.info_msg("#{test}: Registering as: #{username}")
 auth = Authentication.new(reg_req)
 auth.register(username)
+
+
+# Logout
+logout_txn = sesh.add_transaction("logout")
+logout_req = logout_txn.add_requests
+config.log.info_msg("#{test}: Logging out")
+auth = Authentication.new(logout_req)
+auth.logout
