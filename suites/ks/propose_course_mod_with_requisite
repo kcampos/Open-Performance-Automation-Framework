@@ -1,0 +1,3 @@
+# Format: test_name,probability
+# Example: login.rb,100
+propose_course_mod_with_requisite.rb,100
