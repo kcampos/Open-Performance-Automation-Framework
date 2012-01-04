@@ -141,6 +141,7 @@ class Authentication
     defaults = {
       :load_homepage => true,
       :thinktime => true,
+      :accept_terms => false,
       :uid_var_name => 'auth_login_uid',
       :uid_var_regex => '\"uid\":\"\([^\"]+\)',
       :dashboard_id_var_name => 'dashboard_id',
@@ -246,6 +247,17 @@ class Authentication
     
     # Dupe from above
     @request.add('/var/contacts/find-all.json?page=0&items=100&_charset_=utf-8')
+    
+    # Accept terms
+    if(opts[:accept_terms])
+      @request.add('https://qa.academic.rsmart.com/system/ucam/acceptterms?unchanged&_charset_=utf-8',
+        {
+          'method' => 'POST',
+          'content_type' => '',
+          'contents' => ""
+        }
+      )
+    end
     
     # Return dynamic content that other methods in test may need
     return {
