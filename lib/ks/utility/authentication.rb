@@ -34,7 +34,11 @@ class Authentication
     
     if(@request.config.sso == false)
       
-      @request.add("/j_spring_security_check?j_username=#{opts[:user]}&amp;j_password=#{opts[:password]}",
+#      @request.add("/j_spring_security_check?j_username=#{opts[:user]}&amp;j_password=#{opts[:password]}",
+#        {}, {'subst' => 'true'})
+
+# The following 2 lines replace the preceding 2 commented out lines to allow creation of a proposal in the ks-embedded environment
+      @request.add("/j_spring_security_check?j_username=#{opts[:user]}&j_password=#{opts[:password]}",
         {}, {'subst' => 'true'})
             
       @request.add('/index.html')
@@ -90,14 +94,14 @@ class Authentication
           {'subst' => 'true'}
       )
       
-      
-      # Rice
-      @request.add('/kew/ActionList.do', {}, {:secondary_server_req => @request.config.secondary_servers['rice'], :external => true})
-      @request.add("/j_spring_security_check?j_username=#{opts[:user]}&amp;j_password=#{opts[:password]}", 
-        {}, {'subst' => 'true', :secondary_server_req => @request.config.secondary_servers['rice'], :external => true})
-
-      # this may be a dupe since it redirects here...check the logs
-      @request.add('/kew/ActionList.do', {}, {:secondary_server_req => @request.config.secondary_servers['rice'], :external => true})
+# The following 7 lines have been commented out for ks-embedded      
+#      # Rice
+#      @request.add('/kew/ActionList.do', {}, {:secondary_server_req => @request.config.secondary_servers['rice'], :external => true})
+#      @request.add("/j_spring_security_check?j_username=#{opts[:user]}&amp;j_password=#{opts[:password]}", 
+#        {}, {'subst' => 'true', :secondary_server_req => @request.config.secondary_servers['rice'], :external => true})
+#
+#      # this may be a dupe since it redirects here...check the logs
+#      @request.add('/kew/ActionList.do', {}, {:secondary_server_req => @request.config.secondary_servers['rice'], :external => true})
       
     else
       ks_url_escaped = URI.escape("#{@request.url}/j_spring_cas_security_check", Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
