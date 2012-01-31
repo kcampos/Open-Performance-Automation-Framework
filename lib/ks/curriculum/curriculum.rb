@@ -393,10 +393,10 @@ class Curriculum
       },
       {
         :dyn_variables => [
-          {"name" => opts[:proposal_dyn_var_name], "regexp" => opts[:proposal_dyn_var_regexp]},
-          {"name" => opts[:clu_ref_dyn_var_name], "regexp" => opts[:clu_ref_dyn_var_regexp]},
-          {"name" => opts[:proposal_doc_id_var_name], "regexp" => opts[:proposal_doc_id_var_regexp]},
-          {"name" => opts[:version_ind_id_name], "regexp" => opts[:version_ind_id_regexp]}
+          {"name" => opts[:proposal_dyn_var_name], "re" => opts[:proposal_dyn_var_regexp]},
+          {"name" => opts[:clu_ref_dyn_var_name], "re" => opts[:clu_ref_dyn_var_regexp]},
+          {"name" => opts[:proposal_doc_id_var_name], "re" => opts[:proposal_doc_id_var_regexp]},
+          {"name" => opts[:version_ind_id_name], "re" => opts[:version_ind_id_regexp]}
         ]
       }
     )
@@ -466,7 +466,7 @@ class Curriculum
           },
           {
             :dyn_variables => [
-              {"name" => opts[:admin_dep_var_name], "regexp" => opts[:admin_dep_var_regexp]}
+              {"name" => opts[:admin_dep_var_name], "re" => opts[:admin_dep_var_regexp]}
             ]
           }
         )
@@ -580,9 +580,9 @@ class Curriculum
      {
        'subst' => 'true',
        :dyn_variables => [
-         {"name" => opts[:enroll_est_var_name], "regexp" => opts[:enroll_est_var_regexp]},
-         {"name" => opts[:lab_var_name], "regexp" => opts[:lab_var_regexp]},
-         {"name" => opts[:atp_duration_week_var_name], "regexp" => opts[:atp_duration_week_var_regexp]}
+         {"name" => opts[:enroll_est_var_name], "re" => opts[:enroll_est_var_regexp]},
+         {"name" => opts[:lab_var_name], "re" => opts[:lab_var_regexp]},
+         {"name" => opts[:atp_duration_week_var_name], "re" => opts[:atp_duration_week_var_regexp]}
        ]
      }
     )
@@ -646,7 +646,7 @@ class Curriculum
           },
           {
             :dyn_variables => [
-              {"name" => opts[:lo_category_id_var_name], "regexp" => opts[:lo_category_id_var_regexp]}
+              {"name" => opts[:lo_category_id_var_name], "re" => opts[:lo_category_id_var_regexp]}
             ]
           }
         )
@@ -696,7 +696,7 @@ class Curriculum
       {
         'subst' => 'true',
         :dyn_variables => [
-          {"name" => opts[:lo_category_var_name], "regexp" => opts[:lo_category_var_regexp]}
+          {"name" => opts[:lo_category_var_name], "re" => opts[:lo_category_var_regexp]}
         ]
       }
     )
@@ -910,7 +910,7 @@ class Curriculum
           },
           {
             :dyn_variables => [
-                {"name" => opts[:admin_dep_var_name], "regexp" => opts[:admin_dep_var_regexp]}
+                {"name" => opts[:admin_dep_var_name], "re" => opts[:admin_dep_var_regexp]}
               ]
           } 
         )
@@ -942,10 +942,10 @@ class Curriculum
       {
         'subst' => 'true',
         :dyn_variables => [
-          {"name" => opts[:affliated_orgs_id_name], "regexp" => opts[:affliated_orgs_id_regexp]},
-          {"name" => opts[:lab_fee_id_name], "regexp" => opts[:lab_fee_id_regexp]},
-          {"name" => opts[:revenues_id_name], "regexp" => opts[:revenues_id_regexp]},
-          {"name" => opts[:revenue_id_name], "regexp" => opts[:revenue_id_regexp]}
+          {"name" => opts[:affliated_orgs_id_name], "re" => opts[:affliated_orgs_id_regexp]},
+          {"name" => opts[:lab_fee_id_name], "re" => opts[:lab_fee_id_regexp]},
+          {"name" => opts[:revenues_id_name], "re" => opts[:revenues_id_regexp]},
+          {"name" => opts[:revenue_id_name], "re" => opts[:revenue_id_regexp]}
         ]
       }
     )
@@ -1067,7 +1067,7 @@ class Curriculum
       {
         'subst' => 'true',
         :dyn_variables => [
-          {"name" => opts[:action_request_id_name], "regexp" => opts[:action_request_id_regexp]}
+          {"name" => opts[:action_request_id_name], "re" => opts[:action_request_id_regexp]}
         ]
       }
     )
@@ -1342,7 +1342,7 @@ class Curriculum
       },
       {
         :dyn_variables => [
-          {"name" => opts[:proposal_id_dyn_var], "regexp" => opts[:proposal_id_regexp]}
+          {"name" => opts[:proposal_id_dyn_var], "re" => opts[:proposal_id_regexp]}
         ]
       }
     )
@@ -1378,28 +1378,28 @@ class Curriculum
       {
         'subst' => 'true',
         :dyn_variables => [
-          {"name" => opts[:workflow_id_dyn_var], "regexp" => opts[:workflow_id_regexp]},
-          {"name" => opts[:id_translation_id_dyn_var], "regexp" => opts[:id_translation_id_regexp]},
-          {"name" => opts[:code_dyn_var], "regexp" => opts[:code_regexp]},
-          {"name" => opts[:course_num_suffix_dyn_var], "regexp" => opts[:course_num_suffix_regexp]},
-          {"name" => opts[:lo_category_id_dyn_var], "regexp" => opts[:lo_category_id_regexp]},
-          {"name" => opts[:lo_category_dyn_var], "regexp" => opts[:lo_category_dyn_var]},
-          {"name" => opts[:lo_cat_text_dyn_var], "regexp" => opts[:lo_cat_text_regexp]},
-          {"name" => opts[:lo_cat_id_dyn_var], "regexp" => opts[:lo_cat_id_regexp]},
-          {"name" => opts[:create_id_dyn_var], "regexp" => opts[:create_id_regexp]},
-          {"name" => opts[:course_title_dyn_var], "regexp" => opts[:course_title_regexp]},
-          {"name" => opts[:oversight_org_dyn_var], "regexp" => opts[:oversight_org_regexp]},
-          {"name" => opts[:lab_fee_id_dyn_var], "regexp" => opts[:lab_fee_id_regexp]},
-          {"name" => opts[:atp_dur_week_id_dyn_var], "regexp" => opts[:atp_dur_week_id_regexp]},
-          {"name" => opts[:lab_id_dyn_var], "regexp" => opts[:lab_id_regexp]},
-          {"name" => opts[:grade_id_dyn_var], "regexp" => opts[:grade_id_regexp]},
-          {"name" => opts[:person_id_dyn_var], "regexp" => opts[:person_id_regexp]},
-          {"name" => opts[:joints_dyn_var], "regexp" => opts[:joints_regexp]},
-          {"name" => opts[:subject_area_dyn_var], "regexp" => opts[:subject_area_regexp]},
-          {"name" => opts[:proposal_dyn_var], "regexp" => opts[:proposal_regexp]},
-          {"name" => opts[:proposal_num_dyn_var], "regexp" => opts[:proposal_num_regexp]},
-          {"name" => opts[:title_dyn_var], "regexp" => opts[:title_regexp]},
-          {"name" => opts[:rationale_dyn_var], "regexp" => opts[:rationale_regexp]}
+          {"name" => opts[:workflow_id_dyn_var], "re" => opts[:workflow_id_regexp]},
+          {"name" => opts[:id_translation_id_dyn_var], "re" => opts[:id_translation_id_regexp]},
+          {"name" => opts[:code_dyn_var], "re" => opts[:code_regexp]},
+          {"name" => opts[:course_num_suffix_dyn_var], "re" => opts[:course_num_suffix_regexp]},
+          {"name" => opts[:lo_category_id_dyn_var], "re" => opts[:lo_category_id_regexp]},
+          {"name" => opts[:lo_category_dyn_var], "re" => opts[:lo_category_dyn_var]},
+          {"name" => opts[:lo_cat_text_dyn_var], "re" => opts[:lo_cat_text_regexp]},
+          {"name" => opts[:lo_cat_id_dyn_var], "re" => opts[:lo_cat_id_regexp]},
+          {"name" => opts[:create_id_dyn_var], "re" => opts[:create_id_regexp]},
+          {"name" => opts[:course_title_dyn_var], "re" => opts[:course_title_regexp]},
+          {"name" => opts[:oversight_org_dyn_var], "re" => opts[:oversight_org_regexp]},
+          {"name" => opts[:lab_fee_id_dyn_var], "re" => opts[:lab_fee_id_regexp]},
+          {"name" => opts[:atp_dur_week_id_dyn_var], "re" => opts[:atp_dur_week_id_regexp]},
+          {"name" => opts[:lab_id_dyn_var], "re" => opts[:lab_id_regexp]},
+          {"name" => opts[:grade_id_dyn_var], "re" => opts[:grade_id_regexp]},
+          {"name" => opts[:person_id_dyn_var], "re" => opts[:person_id_regexp]},
+          {"name" => opts[:joints_dyn_var], "re" => opts[:joints_regexp]},
+          {"name" => opts[:subject_area_dyn_var], "re" => opts[:subject_area_regexp]},
+          {"name" => opts[:proposal_dyn_var], "re" => opts[:proposal_regexp]},
+          {"name" => opts[:proposal_num_dyn_var], "re" => opts[:proposal_num_regexp]},
+          {"name" => opts[:title_dyn_var], "re" => opts[:title_regexp]},
+          {"name" => opts[:rationale_dyn_var], "re" => opts[:rationale_regexp]}
         ]
       }
     )
@@ -1594,7 +1594,7 @@ class Curriculum
         },
         {
           :dyn_variables => [
-            {"name" => opts[:course_name_dyn_var], "regexp" => opts[:course_name_var_regexp]}
+            {"name" => opts[:course_name_dyn_var], "re" => opts[:course_name_var_regexp]}
           ]
         }
       )
@@ -1815,7 +1815,7 @@ class Curriculum
       },
       {
         :dyn_variables => [
-          {"name" => opts[:program_name_dyn_var], "regexp" => opts[:program_name_var_regexp]}
+          {"name" => opts[:program_name_dyn_var], "re" => opts[:program_name_var_regexp]}
         ]
       }
     )
@@ -1967,7 +1967,7 @@ class Curriculum
       },
       {
         :dyn_variables => [
-          {"name" => opts[:reqref1_name_dyn_var], "regexp" => opts[:reqref1_name_var_regexp]}
+          {"name" => opts[:reqref1_name_dyn_var], "re" => opts[:reqref1_name_var_regexp]}
         ]
       },
     )
@@ -2036,7 +2036,7 @@ class Curriculum
       },
       {
         :dyn_variables => [
-          {"name" => opts[:reqref2_name_dyn_var], "regexp" => opts[:reqref2_name_var_regexp]}
+          {"name" => opts[:reqref2_name_dyn_var], "re" => opts[:reqref2_name_var_regexp]}
         ]
       }
     )
@@ -2671,7 +2671,7 @@ class Curriculum
           },
           {
             :dyn_variables => [
-              {"name" => opts[:item_name_dyn_var], "regexp" => opts[:item_name_var_regexp]}
+              {"name" => opts[:item_name_dyn_var], "re" => opts[:item_name_var_regexp]}
             ]
           }
         )
@@ -3046,7 +3046,7 @@ class Curriculum
       },
       {
         :dyn_variables => [
-          {"name" => opts[:course_name_dyn_var], "regexp" => opts[:course_name_var_regexp]}
+          {"name" => opts[:course_name_dyn_var], "re" => opts[:course_name_var_regexp]}
         ]
       }
     )
@@ -3177,7 +3177,7 @@ class Curriculum
         'contents' => "5|0|6|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|3C9BBAD14113E13A72476EEE8100687B|org.kuali.student.lum.lu.ui.course.client.service.CourseRpcService|getData|java.lang.String/2004016611|%%_#{opts[:course_name_dyn_var]}%%|1|2|3|4|1|5|6|"
       },{'subst' => 'true',
           :dyn_variables => [
-          {"name" => opts[:course_ind_dyn_var], "regexp" => opts[:course_ind_var_regexp]}
+          {"name" => opts[:course_ind_dyn_var], "re" => opts[:course_ind_var_regexp]}
         ]
       }
     )
@@ -3248,12 +3248,12 @@ class Curriculum
         'contents' => "5|0|17|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|A239E8C5A2EDCD8BCE6061BF191A8095|org.kuali.student.lum.lu.ui.course.client.service.CreditCourseProposalRpcService|saveData|org.kuali.student.common.assembly.data.Data/3184510345|org.kuali.student.common.assembly.data.Data|java.util.LinkedHashMap/1551059846|org.kuali.student.common.assembly.data.Data$StringKey/758802082|proposal|org.kuali.student.common.assembly.data.Data$DataValue/1692468409|type|org.kuali.student.common.assembly.data.Data$StringValue/3151113388|kuali.proposal.type.course.modify|versionInfo|versionIndId|%%_#{opts[:course_ind_dyn_var]}%%|versionComment|1|2|3|4|1|5|5|6|7|0|2|8|9|10|5|6|7|0|1|8|11|12|13|-1|-3|8|14|10|5|6|7|0|2|8|15|12|16|8|17|12|17|-1|-9|0|0|"
       }, {'subst' => 'true',
           :dyn_variables => [
-          {"name" => opts[:pass_fail_dyn_var], "regexp" => opts[:pass_fail_var_regexp]},
-          {"name" => opts[:description_dyn_var], "regexp" => opts[:description_var_regexp]},
-          {"name" => opts[:defaultEnrollmentEstimate_dyn_var], "regexp" => opts[:defaultEnrollmentEstimate_var_regexp]},
-          {"name" => opts[:lecture_dyn_var], "regexp" => opts[:lecture_var_regexp]},
-          {"name" => opts[:preRoute_dyn_var], "regexp" => opts[:preRoute_var_regexp]},
-          {"name" => opts[:workflowId_dyn_var], "regexp" => opts[:workflowId_var_regexp]}
+          {"name" => opts[:pass_fail_dyn_var], "re" => opts[:pass_fail_var_regexp]},
+          {"name" => opts[:description_dyn_var], "re" => opts[:description_var_regexp]},
+          {"name" => opts[:defaultEnrollmentEstimate_dyn_var], "re" => opts[:defaultEnrollmentEstimate_var_regexp]},
+          {"name" => opts[:lecture_dyn_var], "re" => opts[:lecture_var_regexp]},
+          {"name" => opts[:preRoute_dyn_var], "re" => opts[:preRoute_var_regexp]},
+          {"name" => opts[:workflowId_dyn_var], "re" => opts[:workflowId_var_regexp]}
         ]
       }
     )
@@ -3641,7 +3641,7 @@ class Curriculum
       {
         'subst' => 'true',
         :dyn_variables => [
-        {"name" => opts[:new_credit_id_dyn_var], "regexp" => opts[:new_credit_id_var_regexp]}
+        {"name" => opts[:new_credit_id_dyn_var], "re" => opts[:new_credit_id_var_regexp]}
         ]
       }
     )    
@@ -3699,7 +3699,7 @@ class Curriculum
         'contents' => "5|0|153|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|A239E8C5A2EDCD8BCE6061BF191A8095|org.kuali.student.lum.lu.ui.course.client.service.CreditCourseProposalRpcService|saveData|org.kuali.student.common.assembly.data.Data/3184510345|org.kuali.student.common.assembly.data.Data|java.util.LinkedHashMap/1551059846|org.kuali.student.common.assembly.data.Data$StringKey/758802082|passFail|org.kuali.student.common.assembly.data.Data$BooleanValue/4261226833|java.lang.Boolean/476441737|audit|finalExamStatus|org.kuali.student.common.assembly.data.Data$StringValue/3151113388|STD|campusLocations|org.kuali.student.common.assembly.data.Data$DataValue/1692468409|org.kuali.student.common.assembly.data.Data$IntegerKey/134469241|java.lang.Integer/3438268394|NO|_runtimeData|id-translation|North|code|#{course_number}|courseNumberSuffix|120|courseSpecificLOs|courseTitle|#{new_course_title}|creditOptions|fixedCreditValue|#{new_credit_value}|id|%%_#{opts[:new_credit_id_dyn_var]}%%|metaInfo|createId|#{opts[:modification_person]}|createTime|org.kuali.student.common.assembly.data.Data$DateValue/2929953165|java.util.Date/1659716317|updateId|updateTime|versionInd|0|resultValues|5.0|state|Draft|type|kuali.resultComponentType.credit.degree.fixed|Credits, Fixed|crossListings|descr|formatted|%%_#{opts[:description_dyn_var]}%%|plain|%%_#{opts[:description_dyn_var]}%%#{new_description_addition}|duration|atpDurationTypeKey|kuali.atp.duration.Semester|timeQuantity|org.kuali.student.common.assembly.data.Data$IntegerValue/3605481012|Semester|effectiveDate|java.sql.Timestamp/1769758459|expenditure|affiliatedOrgs|fees|formats|activities|activityType|kuali.lu.type.activity.Lecture|contactHours|unitQuantity|3|unitType|kuali.atp.duration.week|per week|defaultEnrollmentEstimate|%%_#{opts[:defaultEnrollmentEstimate_dyn_var]}%%|2|unitsContentOwner|Lecture|%%_#{opts[:lecture_dyn_var]}%%|termsOffered|kuali.lu.type.CreditCourseFormatShell|gradingOptions|kuali.resultComponent.grade.letter|kuali.resultComponent.grade.passFail|Letter|Pass-Fail|%%_#{opts[:pass_fail_dyn_var]}%%|instructors|joints|level|100|outOfClassHours|1|pilotCourse|revenues|specialTopicsCourse|subjectArea|#{opts[:course_code]}|kuali.atp.season.Winter|kuali.atp.season.Fall|kuali.atp.season.Spring|Winter|Fall|Spring|transcriptTitle|INSECTS|kuali.lu.type.CreditCourse|65|Biology Dept|unitsDeployment|variations|versionInfo|sequenceNumber|org.kuali.student.common.assembly.data.Data$LongValue/3784756947|java.lang.Long/4227064769|versionComment|versionIndId|%%_#{opts[:course_ind_dyn_var]}%%|versionedFromId|%%_#{opts[:course_name_dyn_var]}%%|Standard final Exam|dirty|startTerm|endTerm|proposal|prevStartTerm|kuali.atp.FA2007-2008|workflowNode|PreRoute|%%_#{opts[:preRoute_dyn_var]}%%|4|name|Modify: Insects|proposalReference|proposalReferenceType|kuali.proposal.referenceType.clu|proposerOrg|proposerPerson|rationale|#{new_proposal_rationale}|Saved|kuali.proposal.type.course.modify|workflowId|%%_#{opts[:workflowId_dyn_var]}%%|collaboratorInfo|collaborators|kuali.atp.FA2012-2013|1|2|3|4|1|5|5|6|7|0|40|8|9|10|11|1|8|12|10|-5|8|13|14|15|8|16|17|5|6|7|0|2|18|19|0|14|20|8|21|17|5|6|7|0|1|18|-15|17|5|6|7|0|1|8|22|14|23|-19|-21|-12|-17|-1|-10|8|24|14|25|8|26|14|27|8|28|17|5|6|7|0|0|-1|-31|8|29|14|30|8|31|17|5|6|7|0|1|18|-15|17|5|6|7|0|7|8|32|14|33|8|34|14|35|8|36|17|5|6|7|0|5|8|37|14|38|8|39|40|41|517712593|1322849927168|8|42|14|38|8|43|40|41|517712593|1322849927168|8|44|14|45|-43|-49|8|46|17|5|6|7|0|1|18|-15|14|47|-43|-65|8|48|14|49|8|50|14|51|8|21|17|5|6|7|0|1|8|50|17|5|6|7|0|1|8|22|14|52|-77|-79|-43|-75|-39|-41|-1|-37|8|53|17|5|6|7|0|0|-1|-85|8|54|17|5|6|7|0|2|8|55|14|56|8|57|14|58|-1|-89|8|59|17|5|6|7|0|3|8|60|14|61|8|62|63|19|1|8|21|17|5|6|7|0|1|8|60|17|5|6|7|0|1|8|22|14|64|-108|-110|-99|-106|-1|-97|8|65|40|66|3208226304|1185410973696|0|8|67|17|5|6|7|0|1|8|68|17|5|6|7|0|0|-121|-123|-1|-119|8|69|17|5|6|7|0|0|-1|-127|8|70|17|5|6|7|0|1|18|-15|17|5|6|7|0|6|8|71|17|5|6|7|0|1|18|-15|17|5|6|7|0|9|8|72|14|73|8|74|17|5|6|7|0|3|8|75|14|76|8|77|14|78|8|21|17|5|6|7|0|1|8|77|17|5|6|7|0|1|8|22|14|79|-159|-161|-151|-157|-145|-149|8|80|63|-15|8|59|17|5|6|7|0|3|8|60|14|61|8|62|63|-105|8|21|17|5|6|7|0|1|8|60|17|5|6|7|0|1|8|22|14|64|-179|-181|-171|-177|-145|-169|8|34|14|81|8|36|17|5|6|7|0|5|8|37|14|38|8|39|40|66|516257507|1322849927168|675000000|8|42|14|38|8|43|40|41|517712554|1322849927168|8|44|14|82|-145|-189|8|48|14|49|8|83|17|5|6|7|0|0|-145|-207|8|21|17|5|6|7|0|1|8|72|17|5|6|7|0|1|8|22|14|84|-213|-215|-145|-211|-141|-143|-137|-139|8|34|14|85|8|36|17|5|6|7|0|5|8|37|14|38|8|39|40|66|516257505|1322849927168|673000000|8|42|14|38|8|43|40|41|517712542|1322849927168|8|44|14|82|-137|-223|8|48|14|49|8|86|17|5|6|7|0|0|-137|-241|8|50|14|87|-133|-135|-1|-131|8|88|17|5|6|7|0|3|18|-15|14|89|18|-105|14|90|8|21|17|5|6|7|0|2|18|-15|17|5|6|7|0|1|8|22|14|91|-257|-259|18|-105|17|5|6|7|0|1|8|22|14|92|-257|-265|-249|-255|-1|-247|8|34|14|93|8|94|17|5|6|7|0|0|-1|-273|8|95|17|5|6|7|0|0|-1|-277|8|96|14|97|8|36|17|5|6|7|0|5|8|37|14|38|8|39|40|66|516257283|1322849927168|451000000|8|42|14|38|8|43|40|41|517712503|1322849927168|8|44|14|76|-1|-283|8|98|17|5|6|7|0|2|8|75|14|99|8|77|14|78|-1|-299|8|100|10|11|0|8|101|17|5|6|7|0|0|-1|-310|8|102|10|-309|8|48|14|49|8|103|14|104|8|86|17|5|6|7|0|4|18|-15|14|105|18|-105|14|106|18|19|2|14|107|8|21|17|5|6|7|0|3|18|-15|17|5|6|7|0|1|8|22|14|108|-333|-335|18|-105|17|5|6|7|0|1|8|22|14|109|-333|-341|18|-329|17|5|6|7|0|1|8|22|14|110|-333|-347|-322|-331|-1|-320|8|111|14|112|8|50|14|113|8|83|17|5|6|7|0|2|18|-15|14|114|8|21|17|5|6|7|0|1|18|-15|17|5|6|7|0|1|8|22|14|115|-365|-367|-359|-363|-1|-357|8|116|17|5|6|7|0|0|-1|-373|8|117|17|5|6|7|0|0|-1|-377|8|118|17|5|6|7|0|4|8|119|120|121|2|0|8|122|14|122|8|123|14|124|8|125|14|126|-1|-381|8|21|17|5|6|7|0|3|8|103|17|5|6|7|0|1|8|22|14|104|-396|-398|8|13|17|5|6|7|0|1|8|22|14|127|-396|-404|8|128|17|5|6|7|0|2|8|129|10|-5|8|130|10|-5|-396|-410|-1|-394|8|131|17|5|6|7|0|13|8|132|14|133|8|134|14|135|8|34|14|136|8|36|17|5|6|7|0|5|8|37|14|38|8|39|40|66|516257955|1322849927168|123000000|8|42|14|38|8|43|40|41|517713532|1322849927168|8|44|14|137|-420|-428|8|138|14|139|8|140|17|5|6|7|0|1|18|-15|14|93|-420|-446|8|141|14|142|8|143|17|5|6|7|0|0|-420|-454|8|144|17|5|6|7|0|0|-420|-458|8|145|14|146|8|48|14|147|8|50|14|148|8|149|14|150|-1|-418|8|151|17|5|6|7|0|1|8|152|17|5|6|7|0|0|-472|-474|-1|-470|-414|14|153|-416|14|0|0|0|"
       }, {'subst' => 'true',
           :dyn_variables => [
-          {"name" => opts[:new_active_date_dyn_var], "regexp" => opts[:new_active_date_var_regexp]}
+          {"name" => opts[:new_active_date_dyn_var], "re" => opts[:new_active_date_var_regexp]}
         ]
         }
     )
@@ -3863,7 +3863,7 @@ class Curriculum
       },
       {
         :dyn_variables => [
-          {"name" => opts[:course_name_dyn_var], "regexp" => opts[:course_name_var_regexp]}
+          {"name" => opts[:course_name_dyn_var], "re" => opts[:course_name_var_regexp]}
         ]
       }
     )
@@ -3994,7 +3994,7 @@ class Curriculum
         'contents' => "5|0|6|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|3C9BBAD14113E13A72476EEE8100687B|org.kuali.student.lum.lu.ui.course.client.service.CourseRpcService|getData|java.lang.String/2004016611|%%_#{opts[:course_name_dyn_var]}%%|1|2|3|4|1|5|6|"
       }, {'subst' => 'true',
           :dyn_variables => [
-          {"name" => opts[:course_ind_dyn_var], "regexp" => opts[:course_ind_var_regexp]}
+          {"name" => opts[:course_ind_dyn_var], "re" => opts[:course_ind_var_regexp]}
         ]
       }
     )
@@ -4065,13 +4065,13 @@ class Curriculum
         'contents' => "5|0|17|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|A239E8C5A2EDCD8BCE6061BF191A8095|org.kuali.student.lum.lu.ui.course.client.service.CreditCourseProposalRpcService|saveData|org.kuali.student.common.assembly.data.Data/3184510345|org.kuali.student.common.assembly.data.Data|java.util.LinkedHashMap/1551059846|org.kuali.student.common.assembly.data.Data$StringKey/758802082|proposal|org.kuali.student.common.assembly.data.Data$DataValue/1692468409|type|org.kuali.student.common.assembly.data.Data$StringValue/3151113388|kuali.proposal.type.course.modify|versionInfo|versionIndId|%%_#{opts[:course_ind_dyn_var]}%%|versionComment|1|2|3|4|1|5|5|6|7|0|2|8|9|10|5|6|7|0|1|8|11|12|13|-1|-3|8|14|10|5|6|7|0|2|8|15|12|16|8|17|12|17|-1|-9|0|0|"
       }, {'subst' => 'true',
           :dyn_variables => [
-          {"name" => opts[:pass_fail_dyn_var], "regexp" => opts[:pass_fail_var_regexp]},
-          {"name" => opts[:description_dyn_var], "regexp" => opts[:description_var_regexp]},
-          {"name" => opts[:defaultEnrollmentEstimate_dyn_var], "regexp" => opts[:defaultEnrollmentEstimate_var_regexp]},
-          {"name" => opts[:lecture_dyn_var], "regexp" => opts[:lecture_var_regexp]},
-          {"name" => opts[:lab_dyn_var], "regexp" => opts[:lab_var_regexp]},
-          {"name" => opts[:preRoute_dyn_var], "regexp" => opts[:preRoute_var_regexp]},
-          {"name" => opts[:workflowId_dyn_var], "regexp" => opts[:workflowId_var_regexp]}
+          {"name" => opts[:pass_fail_dyn_var], "re" => opts[:pass_fail_var_regexp]},
+          {"name" => opts[:description_dyn_var], "re" => opts[:description_var_regexp]},
+          {"name" => opts[:defaultEnrollmentEstimate_dyn_var], "re" => opts[:defaultEnrollmentEstimate_var_regexp]},
+          {"name" => opts[:lecture_dyn_var], "re" => opts[:lecture_var_regexp]},
+          {"name" => opts[:lab_dyn_var], "re" => opts[:lab_var_regexp]},
+          {"name" => opts[:preRoute_dyn_var], "re" => opts[:preRoute_var_regexp]},
+          {"name" => opts[:workflowId_dyn_var], "re" => opts[:workflowId_var_regexp]}
         ]
       }
     )
@@ -4474,7 +4474,7 @@ class Curriculum
       {
         'subst' => 'true',
         :dyn_variables => [
-        {"name" => opts[:new_credit_id_dyn_var], "regexp" => opts[:new_credit_id_var_regexp]}
+        {"name" => opts[:new_credit_id_dyn_var], "re" => opts[:new_credit_id_var_regexp]}
       ]
       }
     )
@@ -4571,7 +4571,7 @@ class Curriculum
         'contents' => "5|0|21|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|search|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.lang.Integer/3438268394|java.lang.Boolean/476441737|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|lu.queryParam.luOptionalCode|#{advanced_search_code}|lu.queryParam.luOptionalType|kuali.lu.type.CreditCourse|lu.queryParam.luOptionalState|java.lang.String/2004016611|Active|Approved|Retired|Suspended|lu.search.mostCurrent.union|lu.resultColumn.luOptionalCode|1|2|3|4|1|5|5|6|10|7|0|8|3|9|10|0|11|9|12|0|13|9|14|8|4|15|16|15|17|15|18|15|19|0|20|21|0|6|0|"
       }, {'subst' => 'true',
           :dyn_variables => [
-          {"name" => opts[:requisite_ind_dyn_var], "regexp" => opts[:requisite_ind_var_regexp]}
+          {"name" => opts[:requisite_ind_dyn_var], "re" => opts[:requisite_ind_var_regexp]}
         ]
       }
     )    
@@ -4586,7 +4586,7 @@ class Curriculum
         'contents' => "5|0|18|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|335FF062A700107AB2A642B325C6C5C5|org.kuali.student.lum.program.client.rpc.StatementRpcService|translateReqComponentToNLs|org.kuali.student.core.statement.ui.client.widgets.rules.ReqComponentInfoUi/1915746788|[Ljava.lang.String;/2600011424|java.lang.String/2004016611|org.kuali.student.common.dto.RichTextInfo/1518544421||NEWREQCOMP1000000|java.util.ArrayList/3821976829|org.kuali.student.core.statement.dto.ReqCompFieldInfo/57577190|kuali.reqComponent.field.type.course.clu.id|%%_#{opts[:requisite_ind_dyn_var]}%%|kuali.reqComponent.type.course.completed|KUALI.RULE|KUALI.RULE.PREVIEW|en|1|2|3|4|3|5|6|7|5|0|8|9|9|0|0|10|0|0|11|1|12|0|13|14|0|15|6|2|16|17|18|"
       }, {'subst' => 'true',
           :dyn_variables => [
-          {"name" => opts[:required_dyn_var], "regexp" => opts[:required_var_regexp]}
+          {"name" => opts[:required_dyn_var], "re" => opts[:required_var_regexp]}
         ]
       }
     )
@@ -4636,7 +4636,7 @@ class Curriculum
         'contents' => "5|0|156|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|A239E8C5A2EDCD8BCE6061BF191A8095|org.kuali.student.lum.lu.ui.course.client.service.CreditCourseProposalRpcService|saveData|org.kuali.student.common.assembly.data.Data/3184510345|org.kuali.student.common.assembly.data.Data|java.util.LinkedHashMap/1551059846|org.kuali.student.common.assembly.data.Data$StringKey/758802082|passFail|org.kuali.student.common.assembly.data.Data$BooleanValue/4261226833|java.lang.Boolean/476441737|audit|finalExamStatus|org.kuali.student.common.assembly.data.Data$StringValue/3151113388|STD|campusLocations|org.kuali.student.common.assembly.data.Data$DataValue/1692468409|org.kuali.student.common.assembly.data.Data$IntegerKey/134469241|java.lang.Integer/3438268394|NO|_runtimeData|id-translation|North|code|#{course_number}|courseNumberSuffix|122|courseSpecificLOs|courseTitle|#{new_course_title}|creditOptions|fixedCreditValue|#{new_credit_value}|id|%%_#{opts[:new_credit_id_dyn_var]}%%|metaInfo|createId|#{opts[:modification_person]}|createTime|org.kuali.student.common.assembly.data.Data$DateValue/2929953165|java.util.Date/1659716317|updateId|updateTime|versionInd|0|resultValues|5.0|state|Draft|type|kuali.resultComponentType.credit.degree.fixed|Credits, Fixed|crossListings|descr|formatted|%%_#{opts[:description_dyn_var]}%%|plain|%%_#{opts[:description_dyn_var]}%%#{new_description_addition}|duration|atpDurationTypeKey|kuali.atp.duration.Semester|timeQuantity|org.kuali.student.common.assembly.data.Data$IntegerValue/3605481012|Semester|effectiveDate|java.sql.Timestamp/1769758459|expenditure|affiliatedOrgs|fees|formats|activities|activityType|kuali.lu.type.activity.Lecture|contactHours|unitQuantity|3|unitType|kuali.atp.duration.week|per week|defaultEnrollmentEstimate|%%_#{opts[:defaultEnrollmentEstimate_dyn_var]}%%|2|unitsContentOwner|Lecture|kuali.lu.type.activity.Lab|%%_#{opts[:lecture_dyn_var]}%%|Lab|%%_#{opts[:lab_dyn_var]}%%|termsOffered|kuali.lu.type.CreditCourseFormatShell|gradingOptions|kuali.resultComponent.grade.letter|kuali.resultComponent.grade.passFail|Letter|Pass-Fail|%%_#{opts[:pass_fail_dyn_var]}%%|instructors|joints|level|100|outOfClassHours|1|pilotCourse|revenues|specialTopicsCourse|subjectArea|#{course_code}|kuali.atp.season.Fall|kuali.atp.season.Winter|kuali.atp.season.Spring|Fall|Winter|Spring|transcriptTitle|MICROBES AND SOCIETY|kuali.lu.type.CreditCourse|65|Biology Dept|unitsDeployment|variations|versionInfo|sequenceNumber|org.kuali.student.common.assembly.data.Data$LongValue/3784756947|java.lang.Long/4227064769|versionComment|versionIndId|%%_#{opts[:course_ind_dyn_var]}%%|versionedFromId|%%_#{opts[:course_name_dyn_var]}%%|Standard final Exam|dirty|startTerm|endTerm|proposal|prevStartTerm|kuali.atp.FA2007-2008|workflowNode|PreRoute|%%_#{opts[:preRoute_dyn_var]}%%|4|name|Modify: #{course_title}|proposalReference|proposalReferenceType|kuali.proposal.referenceType.clu|proposerOrg|proposerPerson|rationale|#{new_proposal_rationale}|Saved|kuali.proposal.type.course.modify|workflowId|%%_#{opts[:workflowId_dyn_var]}%%|collaboratorInfo|collaborators|kuali.atp.SP2011-2012|1|2|3|4|1|5|5|6|7|0|40|8|9|10|11|1|8|12|10|-5|8|13|14|15|8|16|17|5|6|7|0|2|18|19|0|14|20|8|21|17|5|6|7|0|1|18|-15|17|5|6|7|0|1|8|22|14|23|-19|-21|-12|-17|-1|-10|8|24|14|25|8|26|14|27|8|28|17|5|6|7|0|0|-1|-31|8|29|14|30|8|31|17|5|6|7|0|1|18|-15|17|5|6|7|0|7|8|32|14|33|8|34|14|35|8|36|17|5|6|7|0|5|8|37|14|38|8|39|40|41|1645031230|1322849927168|8|42|14|38|8|43|40|41|1645031230|1322849927168|8|44|14|45|-43|-49|8|46|17|5|6|7|0|1|18|-15|14|47|-43|-65|8|48|14|49|8|50|14|51|8|21|17|5|6|7|0|1|8|50|17|5|6|7|0|1|8|22|14|52|-77|-79|-43|-75|-39|-41|-1|-37|8|53|17|5|6|7|0|0|-1|-85|8|54|17|5|6|7|0|2|8|55|14|56|8|57|14|58|-1|-89|8|59|17|5|6|7|0|3|8|60|14|61|8|62|63|19|1|8|21|17|5|6|7|0|1|8|60|17|5|6|7|0|1|8|22|14|64|-108|-110|-99|-106|-1|-97|8|65|40|66|3208226304|1185410973696|0|8|67|17|5|6|7|0|1|8|68|17|5|6|7|0|0|-121|-123|-1|-119|8|69|17|5|6|7|0|0|-1|-127|8|70|17|5|6|7|0|1|18|-15|17|5|6|7|0|6|8|71|17|5|6|7|0|2|18|-15|17|5|6|7|0|9|8|72|14|73|8|74|17|5|6|7|0|3|8|75|14|76|8|77|14|78|8|21|17|5|6|7|0|1|8|77|17|5|6|7|0|1|8|22|14|79|-159|-161|-151|-157|-145|-149|8|80|63|-15|8|59|17|5|6|7|0|3|8|60|14|61|8|62|63|-105|8|21|17|5|6|7|0|1|8|60|17|5|6|7|0|1|8|22|14|64|-179|-181|-171|-177|-145|-169|8|34|14|81|8|36|17|5|6|7|0|5|8|37|14|38|8|39|40|66|1644953988|1322849927168|156000000|8|42|14|38|8|43|40|41|1645031161|1322849927168|8|44|14|82|-145|-189|8|48|14|49|8|83|17|5|6|7|0|0|-145|-207|8|21|17|5|6|7|0|1|8|72|17|5|6|7|0|1|8|22|14|84|-213|-215|-145|-211|-141|-143|18|-105|17|5|6|7|0|9|8|72|14|85|8|74|17|5|6|7|0|3|8|75|14|82|8|77|14|78|8|21|17|5|6|7|0|1|8|77|17|5|6|7|0|1|8|22|14|79|-237|-239|-229|-235|-223|-227|8|80|63|-15|8|59|17|5|6|7|0|3|8|60|14|61|8|62|63|-105|8|21|17|5|6|7|0|1|8|60|17|5|6|7|0|1|8|22|14|64|-257|-259|-249|-255|-223|-247|8|34|14|86|8|36|17|5|6|7|0|5|8|37|14|38|8|39|40|66|1644954002|1322849927168|170000000|8|42|14|38|8|43|40|41|1645031210|1322849927168|8|44|14|82|-223|-267|8|48|14|49|8|83|17|5|6|7|0|0|-223|-285|8|21|17|5|6|7|0|1|8|72|17|5|6|7|0|1|8|22|14|87|-291|-293|-223|-289|-141|-221|-137|-139|8|34|14|88|8|36|17|5|6|7|0|5|8|37|14|38|8|39|40|66|1644953985|1322849927168|153000000|8|42|14|38|8|43|40|41|1645031149|1322849927168|8|44|14|82|-137|-301|8|48|14|49|8|89|17|5|6|7|0|0|-137|-319|8|50|14|90|-133|-135|-1|-131|8|91|17|5|6|7|0|3|18|-15|14|92|18|-105|14|93|8|21|17|5|6|7|0|2|18|-15|17|5|6|7|0|1|8|22|14|94|-335|-337|18|-105|17|5|6|7|0|1|8|22|14|95|-335|-343|-327|-333|-1|-325|8|34|14|96|8|97|17|5|6|7|0|0|-1|-351|8|98|17|5|6|7|0|0|-1|-355|8|99|14|100|8|36|17|5|6|7|0|5|8|37|14|38|8|39|40|66|1644953677|1322849927168|845000000|8|42|14|38|8|43|40|41|1645031116|1322849927168|8|44|14|76|-1|-361|8|101|17|5|6|7|0|2|8|75|14|102|8|77|14|78|-1|-377|8|103|10|11|0|8|104|17|5|6|7|0|0|-1|-388|8|105|10|-387|8|48|14|49|8|106|14|107|8|89|17|5|6|7|0|4|18|-15|14|108|18|-105|14|109|18|19|2|14|110|8|21|17|5|6|7|0|3|18|-15|17|5|6|7|0|1|8|22|14|111|-411|-413|18|-105|17|5|6|7|0|1|8|22|14|112|-411|-419|18|-407|17|5|6|7|0|1|8|22|14|113|-411|-425|-400|-409|-1|-398|8|114|14|115|8|50|14|116|8|83|17|5|6|7|0|2|18|-15|14|117|8|21|17|5|6|7|0|1|18|-15|17|5|6|7|0|1|8|22|14|118|-443|-445|-437|-441|-1|-435|8|119|17|5|6|7|0|0|-1|-451|8|120|17|5|6|7|0|0|-1|-455|8|121|17|5|6|7|0|4|8|122|123|124|2|0|8|125|14|125|8|126|14|127|8|128|14|129|-1|-459|8|21|17|5|6|7|0|3|8|106|17|5|6|7|0|1|8|22|14|107|-474|-476|8|13|17|5|6|7|0|1|8|22|14|130|-474|-482|8|131|17|5|6|7|0|2|8|132|10|-5|8|133|10|-5|-474|-488|-1|-472|8|134|17|5|6|7|0|13|8|135|14|136|8|137|14|138|8|34|14|139|8|36|17|5|6|7|0|5|8|37|14|38|8|39|40|66|1644954426|1322849927168|594000000|8|42|14|38|8|43|40|41|1645032120|1322849927168|8|44|14|140|-498|-506|8|141|14|142|8|143|17|5|6|7|0|1|18|-15|14|96|-498|-524|8|144|14|145|8|146|17|5|6|7|0|0|-498|-532|8|147|17|5|6|7|0|0|-498|-536|8|148|14|149|8|48|14|150|8|50|14|151|8|152|14|153|-1|-496|8|154|17|5|6|7|0|1|8|155|17|5|6|7|0|0|-550|-552|-1|-548|-492|14|156|-494|14|0|0|0|"
       }, {'subst' => 'true',
           :dyn_variables => [
-          {"name" => opts[:new_active_date_dyn_var], "regexp" => opts[:new_active_date_var_regexp]}
+          {"name" => opts[:new_active_date_dyn_var], "re" => opts[:new_active_date_var_regexp]}
         ]
       }
     )

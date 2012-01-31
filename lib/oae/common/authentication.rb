@@ -178,10 +178,10 @@ class Authentication
     @request.add('/system/me?_charset_=utf-8&_=1323968258852', {},
       {
         :dyn_variables => [
-          {"name" => opts[:email_local_var_name], "regexp" => opts[:email_local_var_regex]},
-          {"name" => opts[:email_domain_var_name], "regexp" => opts[:email_domain_var_regex]},
-          {"name" => opts[:first_name_var_name], "regexp" => opts[:first_name_var_regex]},
-          {"name" => opts[:last_name_var_name], "regexp" => opts[:last_name_var_regex]}
+          {"name" => opts[:email_local_var_name], "re" => opts[:email_local_var_regex]},
+          {"name" => opts[:email_domain_var_name], "re" => opts[:email_domain_var_regex]},
+          {"name" => opts[:first_name_var_name], "re" => opts[:first_name_var_regex]},
+          {"name" => opts[:last_name_var_name], "re" => opts[:last_name_var_regex]}
         ]
       }
     )
@@ -223,8 +223,8 @@ class Authentication
       {
         'subst' => 'true',
         :dyn_variables => [
-          {"name" => opts[:uid_var_name], "regexp" => opts[:uid_var_regex]},
-          {"name" => opts[:dashboard_id_var_name], "regexp" => opts[:dashboard_id_var_regex]}
+          {"name" => opts[:uid_var_name], "re" => opts[:uid_var_regex]},
+          {"name" => opts[:dashboard_id_var_name], "re" => opts[:dashboard_id_var_regex]}
         ]
       }
     )

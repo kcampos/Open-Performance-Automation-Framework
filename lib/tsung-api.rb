@@ -184,7 +184,7 @@ class Requests < Transaction
       :ssl => self.config.ssl,
       :dyn_variables => {
         # "name"
-        # "regexp"
+        # "re"
       },
       :custom_headers => {},
       :secondary_server_req => nil,

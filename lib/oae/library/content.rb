@@ -53,7 +53,7 @@ class Content
       },
       {
         :dyn_variables => [
-          {"name" => opts[:path_var_name], "regexp" => opts[:path_var_regex]}
+          {"name" => opts[:path_var_name], "re" => opts[:path_var_regex]}
         ],
         :custom_headers => {
           'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
