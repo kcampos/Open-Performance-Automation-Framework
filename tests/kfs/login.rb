@@ -15,7 +15,7 @@ require 'drb'
 test = File.basename(__FILE__)
 tconfig = DRbObject.new nil, "druby://localhost:#{ENV['DRB_PORT']}"
 require tconfig.lib_base_dir + '/../lib/tsung-api.rb'
-require tconfig.lib_base_dir + "/#{tconfig.product}/utility/authentication.rb"
+require tconfig.lib_base_dir + "/#{tconfig.product}/common/authentication.rb"
 probability = tconfig.tests[test]
 tconfig.log.info_msg("Test: #{test}")
 tconfig.log.info_msg("Probability: #{tconfig.tests[test]}")
