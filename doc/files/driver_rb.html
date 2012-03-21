@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Fri Feb 12 10:23:48 -0700 2010</td>
+      <td>Wed Mar 21 10:26:01 -0700 2012</td>
     </tr>
     </table>
   </div>
@@ -71,12 +71,12 @@
     <div id="description">
       <h2>Synopsis</h2>
 <p>
-tsung-driver: used to generate tsung XML from api test branch and initiate
-load
+driver: used to generate tsung XML from api test branch and initiate load
 </p>
 <h2>Usage</h2>
 <p>
-driver.rb [OPTIONS] &#8230; SUITE_FILE_NAME APP_CONTEXT
+driver.rb [OPTIONS] &#8230; SUITE_FILE_NAME PRIMARY_SERVER_CONTEXT
+SECONDARY_SERVER_CONTEXT
 </p>
 <p>
 -h, &#8212;help:
@@ -85,22 +85,22 @@ driver.rb [OPTIONS] &#8230; SUITE_FILE_NAME APP_CONTEXT
     show help
 </pre>
 <p>
--c, &#8212;config [file.xml]:
-</p>
-<pre>
-    path to xml config file for everything after &lt;tsung&gt; and before &lt;sessions&gt;
-</pre>
-<p>
 -d, &#8212;debug:
 </p>
 <pre>
     enable debug logging
 </pre>
 <p>
+-t, &#8212;thinktime
+</p>
+<pre>
+    enable thinktime sleeps (simulates user input delays)
+</pre>
+<p>
 -v, &#8212;verbose:
 </p>
 <pre>
-    will dump http traffic from tsung, only is in effect in -x is used
+    will dump http traffic from tsung
 </pre>
 <p>
 -x, &#8212;execute:
@@ -115,16 +115,10 @@ driver.rb [OPTIONS] &#8230; SUITE_FILE_NAME APP_CONTEXT
     filename(path) that you want to use for output XML
 </pre>
 <p>
-SUITE_FILE_NAME:
+-s, &#8212;suite [suite file]:
 </p>
 <pre>
-    suite file name containg list of tests. File must exist in suites directory
-</pre>
-<p>
-APP_CONTEXT:
-</p>
-<pre>
-    context for the app , e.g. ks-embedded
+    suite file for performance run
 </pre>
 <h2>Examples</h2>
 
@@ -134,8 +128,8 @@ APP_CONTEXT:
       <h3 class="section-bar">Required files</h3>
 
       <div class="name-list">
+      rubygems&nbsp;&nbsp;
       optparse&nbsp;&nbsp;
-      rdoc/usage&nbsp;&nbsp;
       drb&nbsp;&nbsp;
       </div>
     </div>
