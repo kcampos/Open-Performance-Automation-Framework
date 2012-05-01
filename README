@@ -32,7 +32,7 @@ Client
 ---------------
 Unix/OSX machine
 Requires Erlang v5.6.1+
-Requires Tsung v1.3.1+ (see dependencies)
+Requires Tsung v1.4.1+ (see dependencies)
 User running Tsung needs ssh access to all clients with no passphrase
 If running into errors starting remote client see Tsung FAQ for possible solutions
 
