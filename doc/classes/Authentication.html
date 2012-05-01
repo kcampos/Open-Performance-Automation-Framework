@@ -55,8 +55,12 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../files/lib/utility/authentication_rb.html">
-                lib/utility/authentication.rb
+                <a href="../files/lib/ks/utility/authentication_rb.html">
+                lib/ks/utility/authentication.rb
+                </a>
+        <br />
+                <a href="../files/lib/oae/common/authentication_rb.html">
+                lib/oae/common/authentication.rb
                 </a>
         <br />
             </td>
@@ -99,10 +103,15 @@ operations around app authentication
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000010">load_homepage</a>&nbsp;&nbsp;
-      <a href="#M000008">login</a>&nbsp;&nbsp;
-      <a href="#M000009">logout</a>&nbsp;&nbsp;
-      <a href="#M000007">new</a>&nbsp;&nbsp;
+      <a href="#M000017">homepage</a>&nbsp;&nbsp;
+      <a href="#M000015">load_homepage</a>&nbsp;&nbsp;
+      <a href="#M000019">login</a>&nbsp;&nbsp;
+      <a href="#M000013">login</a>&nbsp;&nbsp;
+      <a href="#M000014">logout</a>&nbsp;&nbsp;
+      <a href="#M000020">logout</a>&nbsp;&nbsp;
+      <a href="#M000016">new</a>&nbsp;&nbsp;
+      <a href="#M000012">new</a>&nbsp;&nbsp;
+      <a href="#M000018">register</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -127,6 +136,11 @@ operations around app authentication
           <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
           <td class="context-item-desc"></td>
         </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">request</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
         </table>
       </div>
     </div>
@@ -137,12 +151,26 @@ operations around app authentication
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000007" class="method-detail">
-        <a name="M000007"></a>
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
 
         <div class="method-heading">
-          <a href="Authentication.src/M000007.html" target="Code" class="method-signature"
-            onclick="popupCode('Authentication.src/M000007.html');return false;">
+          <a href="Authentication.src/M000016.html" target="Code" class="method-signature"
+            onclick="popupCode('Authentication.src/M000016.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(request_obj)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="Authentication.src/M000012.html" target="Code" class="method-signature"
+            onclick="popupCode('Authentication.src/M000012.html');return false;">
           <span class="method-name">new</span><span class="method-args">(request_obj)</span>
           </a>
         </div>
@@ -153,29 +181,63 @@ operations around app authentication
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000010" class="method-detail">
-        <a name="M000010"></a>
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
 
         <div class="method-heading">
-          <a href="Authentication.src/M000010.html" target="Code" class="method-signature"
-            onclick="popupCode('Authentication.src/M000010.html');return false;">
+          <a href="Authentication.src/M000017.html" target="Code" class="method-signature"
+            onclick="popupCode('Authentication.src/M000017.html');return false;">
+          <span class="method-name">homepage</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Load <a href="Authentication.html#M000017">homepage</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="Authentication.src/M000015.html" target="Code" class="method-signature"
+            onclick="popupCode('Authentication.src/M000015.html');return false;">
           <span class="method-name">load_homepage</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Bring up homepage
+Bring up <a href="Authentication.html#M000017">homepage</a>
 </p>
         </div>
       </div>
 
-      <div id="method-M000008" class="method-detail">
-        <a name="M000008"></a>
+      <div id="method-M000019" class="method-detail">
+        <a name="M000019"></a>
 
         <div class="method-heading">
-          <a href="Authentication.src/M000008.html" target="Code" class="method-signature"
-            onclick="popupCode('Authentication.src/M000008.html');return false;">
+          <a href="Authentication.src/M000019.html" target="Code" class="method-signature"
+            onclick="popupCode('Authentication.src/M000019.html');return false;">
+          <span class="method-name">login</span><span class="method-args">(username='admin', password='admin', opts ={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Login to OAE
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="Authentication.src/M000013.html" target="Code" class="method-signature"
+            onclick="popupCode('Authentication.src/M000013.html');return false;">
           <span class="method-name">login</span><span class="method-args">(opts={})</span>
           </a>
         </div>
@@ -187,12 +249,12 @@ Login to ks
         </div>
       </div>
 
-      <div id="method-M000009" class="method-detail">
-        <a name="M000009"></a>
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
 
         <div class="method-heading">
-          <a href="Authentication.src/M000009.html" target="Code" class="method-signature"
-            onclick="popupCode('Authentication.src/M000009.html');return false;">
+          <a href="Authentication.src/M000014.html" target="Code" class="method-signature"
+            onclick="popupCode('Authentication.src/M000014.html');return false;">
           <span class="method-name">logout</span><span class="method-args">()</span>
           </a>
         </div>
@@ -200,6 +262,40 @@ Login to ks
         <div class="method-description">
           <p>
 Logout of KS
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000020" class="method-detail">
+        <a name="M000020"></a>
+
+        <div class="method-heading">
+          <a href="Authentication.src/M000020.html" target="Code" class="method-signature"
+            onclick="popupCode('Authentication.src/M000020.html');return false;">
+          <span class="method-name">logout</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Logout
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
+
+        <div class="method-heading">
+          <a href="Authentication.src/M000018.html" target="Code" class="method-signature"
+            onclick="popupCode('Authentication.src/M000018.html');return false;">
+          <span class="method-name">register</span><span class="method-args">(username, opts={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Register a <a href="Authentication.html#M000012">new</a> user
 </p>
         </div>
       </div>
