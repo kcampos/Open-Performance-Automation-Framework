@@ -54,56 +54,56 @@ class Curriculum
       :lo_cat_text => lo_cat_text,
       :lo_name => @request.config.directory["lo"]["name"],
       :admin_dep_var_name => "admin_dep_org_id",
-      :admin_dep_var_regexp => 'org.resultColumn.orgId\"\,\"\([^\"]+\)',
+      :admin_dep_var_regexp => 'org.resultColumn.orgId\"\,\"([^\"]+)',
       :proposal_dyn_var_name => "proposal_id",
-      :proposal_dyn_var_regexp => '\"proposal\"\,\"workflowNode\"\,\"PreRoute\"\,\"\([^\"]+\)',
+      :proposal_dyn_var_regexp => '\"proposal\"\,\"workflowNode\"\,\"PreRoute\"\,\"([^\"]+)',
       :proposal_doc_id_var_name => "proposal_doc_id",
-      :proposal_doc_id_var_regexp => 'workflowId\"\,\"\([^\"]+\)\"',
+      :proposal_doc_id_var_regexp => 'workflowId\"\,\"([^\"]+)\"',
       :clu_ref_dyn_var_name => "clu_ref_id",
-      :clu_ref_dyn_var_regexp => '\"id\"\,\"\([^\"]+\)',
+      :clu_ref_dyn_var_regexp => '\"id\"\,\"([^\"]+)',
       :result_com_var_name => "result_component_id",
-      :result_com_var_regexp => '\"ResultComponent 1\"\,\"\([^\"]+\)',
+      :result_com_var_regexp => '\"ResultComponent 1\"\,\"([^\"]+)',
       :enroll_est_var_name => "default_enrollment_estimate_id",
-      :enroll_est_var_regexp => 'defaultEnrollmentEstimate\"\,\"kuali.atp.duration.Week\"\,\"Week\"\,\"\([^\"]+\)',
+      :enroll_est_var_regexp => 'defaultEnrollmentEstimate\"\,\"kuali.atp.duration.Week\"\,\"Week\"\,\"([^\"]+)',
       :lab_var_name => "lab_id",
-      :lab_var_regexp => 'draft\"\,\"unitsContentOwner\"\,\"Lab\"\,\"\([^\"]+\)',
+      :lab_var_regexp => 'draft\"\,\"unitsContentOwner\"\,\"Lab\"\,\"([^\"]+)',
       :lab_fee_id_name => 'cp_lab_fee_id',
-      :lab_fee_id_regexp => 'kuali.enum.type.feeTypes.labFee\"\,\"\([^\"]+\)',
+      :lab_fee_id_regexp => 'kuali.enum.type.feeTypes.labFee\"\,\"([^\"]+)',
       :revenues_id_name => 'cp_revenues_id',
-      :revenues_id_regexp => 'revenues\"\,\"\([^\"]+\)',
+      :revenues_id_regexp => 'revenues\"\,\"([^\"]+)',
       :revenue_id_name => 'cp_revenue_id',
-      :revenue_id_regexp => 'REVENUE\"\,\"\([^\"]+\)',
+      :revenue_id_regexp => 'REVENUE\"\,\"([^\"]+)',
       :joints_var_name => "joints_num",
-      :joints_var_regexp => 'joints\"\,\"[^\"]+\"\,\"\([^\"]+\)',
+      :joints_var_regexp => 'joints\"\,\"[^\"]+\"\,\"([^\"]+)',
       :fee_info_id_dyn_var_name => 'fee_info_id',
-      :fee_info_id_dyn_var_regexp => '\"fees\"\,\"\([^\"]+\)',
+      :fee_info_id_dyn_var_regexp => '\"fees\"\,\"([^\"]+)',
       :fee_info_dyn_var_name => 'fee_info',
-      :fee_info_dyn_var_regexp => 'org.kuali.student.lum.lu.dto.CluFeeInfo\"\,\"\([^\"]+\)',
+      :fee_info_dyn_var_regexp => 'org.kuali.student.lum.lu.dto.CluFeeInfo\"\,\"([^\"]+)',
       :clu_info_dyn_var_name => 'clu_info',
-      :clu_info_dyn_var_regexp => 'org.kuali.student.lum.lu.dto.CluInfo\"\,\"\([^\"]+\)',
+      :clu_info_dyn_var_regexp => 'org.kuali.student.lum.lu.dto.CluInfo\"\,\"([^\"]+)',
       :lu_dto_clu_format_dyn_var_name => "lu_dto_clu_format",
-      :lu_dto_clu_format_dyn_var_regexp => 'org.kuali.student.lum.lu.dto.CluInfo\"\,\"Credit Course\"\,\"[^\"]+\"\,\"formats\"\,\"\([^\"]+\)',
+      :lu_dto_clu_format_dyn_var_regexp => 'org.kuali.student.lum.lu.dto.CluInfo\"\,\"Credit Course\"\,\"[^\"]+\"\,\"formats\"\,\"([^\"]+)',
       :lu_dto_clu_activities_dyn_var_name => "lu_dto_clu_activites",
-      :lu_dto_clu_activities_dyn_var_regexp => 'org.kuali.student.lum.lu.dto.CluInfo\"\,\"Credit Course\"\,\"[^\"]+\"\,\"formats\"\,\"[^\"]+\"\,\"0\"\,\"activities\"\,\"\([^\"]+\)',
+      :lu_dto_clu_activities_dyn_var_regexp => 'org.kuali.student.lum.lu.dto.CluInfo\"\,\"Credit Course\"\,\"[^\"]+\"\,\"formats\"\,\"[^\"]+\"\,\"0\"\,\"activities\"\,\"([^\"]+)',
       :outcome_id_var_name => "outcome_id",
-      :outcome_id_var_regexp => 'outcomeId\"\,\"\([^\"]+\)',
+      :outcome_id_var_regexp => 'outcomeId\"\,\"([^\"]+)',
       :lo_category_var_name => "lo_category",
-      #:lo_category_var_regexp => lo_cat_text + '\"\,\"plain\"\,\"id\"\,\"\([^\"]+\)',
-      :lo_category_var_regexp => lo_cat_text + '\"\,\"plain\"\,\"\([^\"]+\)',
+      #:lo_category_var_regexp => lo_cat_text + '\"\,\"plain\"\,\"id\"\,\"([^\"]+)',
+      :lo_category_var_regexp => lo_cat_text + '\"\,\"plain\"\,\"([^\"]+)',
       :lo_category_id_var_name => "lo_category_id",
-      :lo_category_id_var_regexp => 'lo.resultColumn.categoryId"\,\"\([^\"]+\)',
+      :lo_category_id_var_regexp => 'lo.resultColumn.categoryId"\,\"([^\"]+)',
       :lo_child_id_dyn_var_name => "lo_child_id",
-      :lo_child_id_dyn_var_regexp => 'childLo\"\,\"\([^\"]+\)',
+      :lo_child_id_dyn_var_regexp => 'childLo\"\,\"([^\"]+)',
       :single_use_lo_dyn_var_name => "single_use_lo",
-      :single_use_lo_dyn_var_regexp => 'includedSingleUseLo\"\,\"\([^\"]+\)',
+      :single_use_lo_dyn_var_regexp => 'includedSingleUseLo\"\,\"([^\"]+)',
       :atp_duration_week_var_name => 'atp_duration_week',
-      :atp_duration_week_var_regexp => 'kuali.atp.duration.Week\"\,\"Week\"\,\"\([^\"]+\)',
+      :atp_duration_week_var_regexp => 'kuali.atp.duration.Week\"\,\"Week\"\,\"([^\"]+)',
       :version_ind_id_name => 'cp_version_ind_id',
-      :version_ind_id_regexp => 'versionIndId\"\,\"\([^\"]+\)',
+      :version_ind_id_regexp => 'versionIndId\"\,\"([^\"]+)',
       :affliated_orgs_id_name => 'cp_affiliated_orgs_id',
-      :affliated_orgs_id_regexp => 'affiliatedOrgs\"\,\"\([^\"]+\)',
+      :affliated_orgs_id_regexp => 'affiliatedOrgs\"\,\"([^\"]+)',
       :action_request_id_name => 'cp_action_request_id',
-      :action_request_id_regexp => 'actionRequestId\"\,\"\([^\"]+\)'
+      :action_request_id_regexp => 'actionRequestId\"\,\"([^\"]+)'
     }
     
     # Version for the doc at each step. We'll increment on each usage
@@ -1276,51 +1276,51 @@ class Curriculum
     
     defaults = {
       :proposal_id_dyn_var => 'ep_proposal_id',
-      :proposal_id_regexp => 'proposal.resultColumn.proposalId\"\,\"\([^\"]+\)',
+      :proposal_id_regexp => 'proposal.resultColumn.proposalId\"\,\"([^\"]+)',
       #:proposal_dyn_var => 'ep_proposal',
-      #:proposal_regexp => 'proposal\"\,\"\([^\"]+\)',
+      #:proposal_regexp => 'proposal\"\,\"([^\"]+)',
       :proposal_num_dyn_var => 'ep_proposal_num',
-      :proposal_num_regexp => 'proposal\"\,\"[^\"]+\"\,\"\([^\"]+\)',
+      :proposal_num_regexp => 'proposal\"\,\"[^\"]+\"\,\"([^\"]+)',
       :workflow_id_dyn_var => 'ep_workflow_id',
-      :workflow_id_regexp => 'workflowId\"\,\"\([^\"]+\)',
+      :workflow_id_regexp => 'workflowId\"\,\"([^\"]+)',
       :id_translation_id_dyn_var => 'ep_id_translation_id',
-      :id_translation_id_regexp => 'id-translation\"\,\"\([^\"]+\)',
+      :id_translation_id_regexp => 'id-translation\"\,\"([^\"]+)',
       :code_dyn_var => 'ep_code',
-      :code_regexp => 'code\"\,\"\([^\"]+\)',
+      :code_regexp => 'code\"\,\"([^\"]+)',
       :course_num_suffix_dyn_var => 'ep_course_num_suffix',
-      :course_num_suffix_regexp => 'courseNumberSuffix\"\,\"\([^\"]+\)',
+      :course_num_suffix_regexp => 'courseNumberSuffix\"\,\"([^\"]+)',
       :lo_category_id_dyn_var => 'ep_lo_cat_id',
-      :lo_category_id_regexp => 'expirationDate\"\,\"id\"\,\"\([^\"]+\)',
+      :lo_category_id_regexp => 'expirationDate\"\,\"id\"\,\"([^\"]+)',
       :lo_category_dyn_var => 'ep_lo_cat',
-      :lo_category_regexp => 'name\"\,\"\([^\"]+\)',
+      :lo_category_regexp => 'name\"\,\"([^\"]+)',
       :lo_cat_text_dyn_var => 'ep_lo_cat_text',
-      :lo_cat_text_regexp => 'loInfo\"\,\"sequence\"\,\"0\"\,\"\([^\"]+\)',
+      :lo_cat_text_regexp => 'loInfo\"\,\"sequence\"\,\"0\"\,\"([^\"]+)',
       :lo_cat_id_dyn_var => 'ep_lo_cat_id',
-      :lo_cat_id_regexp => '\([^\"]+\)\"\,\"loRepositoryKey',
+      :lo_cat_id_regexp => '([^\"]+)\"\,\"loRepositoryKey',
       :create_id_dyn_var => 'ep_create_id',
-      :create_id_regexp => 'createId\"\,\"\([^\"]+\)',
+      :create_id_regexp => 'createId\"\,\"([^\"]+)',
       :course_title_dyn_var => 'ep_course_title',
-      :course_title_regexp => 'courseTitle\"\,\"\([^\"]+\)',
+      :course_title_regexp => 'courseTitle\"\,\"([^\"]+)',
       :oversight_org_dyn_var => 'ep_oversight_org',
-      :oversight_org_regexp => 'curriculumOversightOrgs\"\,\"[^\,]+\,\"\([^\"]+\)',
+      :oversight_org_regexp => 'curriculumOversightOrgs\"\,\"[^\,]+\,\"([^\"]+)',
       :lab_fee_id_dyn_var => 'ep_lab_fee_id',
-      :lab_fee_id_regexp => 'kuali.enum.type.feeTypes.labFee\"\,\"\([^\"]+\)',
+      :lab_fee_id_regexp => 'kuali.enum.type.feeTypes.labFee\"\,\"([^\"]+)',
       :atp_dur_week_id_dyn_var => 'ep_atp_dur_week_id',
-      :atp_dur_week_id_regexp => 'kuali.atp.duration.Week\"\,\"Week\"\,\"\([^\"]+\)',
+      :atp_dur_week_id_regexp => 'kuali.atp.duration.Week\"\,\"Week\"\,\"([^\"]+)',
       :lab_id_dyn_var => 'ep_lab_id',
-      :lab_id_regexp => 'Lab\"\,\"\([^\"]+\)',
+      :lab_id_regexp => 'Lab\"\,\"([^\"]+)',
       :grade_id_dyn_var => 'ep_grade_id',
-      :grade_id_regexp => 'kuali.resultComponent.grade[^\,]+\,\"[^\,]+\,\"\([^\"]+\)',
+      :grade_id_regexp => 'kuali.resultComponent.grade[^\,]+\,\"[^\,]+\,\"([^\"]+)',
       :person_id_dyn_var => 'ep_person_id',
-      :person_id_regexp => 'personId\"\,\"\([^\"]+\)',
+      :person_id_regexp => 'personId\"\,\"([^\"]+)',
       :joints_dyn_var => 'ep_joints',
-      :joints_regexp => 'joints\"\,\"\([^\"]+\)',
+      :joints_regexp => 'joints\"\,\"([^\"]+)',
       :subject_area_dyn_var => 'ep_subject_area',
-      :subject_area_regexp => 'subjectArea\"\,\"\([^\"]+\)',
+      :subject_area_regexp => 'subjectArea\"\,\"([^\"]+)',
       :title_dyn_var => 'ep_title',
-      :title_regexp => 'proposal\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"\([^\"]+\)',
+      :title_regexp => 'proposal\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
       :rationale_dyn_var => 'ep_rationale',
-      :rationale_regexp => 'rationale\"\,\"\([^\"]+\)',
+      :rationale_regexp => 'rationale\"\,\"([^\"]+)',
       :modify_fields => {
         :course_information => {},
         :governance => {},
@@ -1556,7 +1556,7 @@ class Curriculum
       :course_description => '',
       :course_number => '',
       :course_name_dyn_var => 'course_name_dyn_var',
-      :course_name_var_regexp => '\"\([^\"]+\)\"\,\"[^\"]+\"\,\"' + course_name + '\"'
+      :course_name_var_regexp => '\"([^\"]+)\"\,\"[^\"]+\"\,\"' + course_name + '\"'
 #NOTE: The previous regexp returns the text of the word that is 2 words behind the coures name in the comma delimitted http response. NOTE: The quotation marks surrounding the text are stripped.      
 # This word is then included in 2 HTTP Requests that are sent later.
     }
@@ -1780,15 +1780,15 @@ class Curriculum
       #NOTE: The following regexp returns the Program. NOTE: This regular expression will only work for the undergraduate Biological Sciences Program that has a Degree Type of Bachelor Science.
       # Due to the fact of duplicate programs of the same name; e.g.,Biological Sciences with a Degree Type of Bachelor of Science and Biological Sciences with a Degree Type of 
       # Doctor of Philosophy exist, a regular expression would have to be created to handle the programs that share the same Program Title; i.e., Biological Sciences
-      :program_name_var_regexp => '\(REFERENCEPROG-[^\"]+\)\"\,\"[^\"]+\"\,\"' + program_specialization + '\"',
+      :program_name_var_regexp => '(REFERENCEPROG-[^\"]+)\"\,\"[^\"]+\"\,\"' + program_specialization + '\"',
       :reqref1_name_dyn_var => 'reqref1_name_dyn_var',
       #NOTE: The following regular expression will only work if requisite1 is BSCI106 in the "Transfer Student Entry" section. There is also a BSCI106 in the Basic Program section.
       # Also, if it is a different course, the HTTP response must be viewed to help create the regular expression.
-      :reqref1_name_var_regexp => requisite1 + '\"\,\"[^\"]+\"\,\"\([^\"]+\)',
+      :reqref1_name_var_regexp => requisite1 + '\"\,\"[^\"]+\"\,\"([^\"]+)',
       :reqref2_name_dyn_var => 'reqref2_name_dyn_var',
       #NOTE: The following regular expression will only work if requisite2 is BSCI222 in the "Basic Program" section.
       # Also, if it is a different course, the HTTP response must be viewed to help create the regular expression.      
-      :reqref2_name_var_regexp => requisite2 + '\"\,\"[^\"]+\"\,\"\([^\"]+\)'
+      :reqref2_name_var_regexp => requisite2 + '\"\,\"[^\"]+\"\,\"([^\"]+)'
     }
 
     opts = defaults.merge(opts)
@@ -2611,7 +2611,43 @@ class Curriculum
       #NOTE: The following regexp returns the Program. NOTE: This regular expression will only work for the undergraduate Biological Sciences Program that has a Degree Type of Bachelor Science.
       # Due to the fact of duplicate programs of the same name; e.g.,Biological Sciences with a Degree Type of Bachelor of Science and Biological Sciences with a Degree Type of 
       # Doctor of Philosophy exist, a regular expression would have to be created to handle the programs that share the same Program Title; i.e., Biological Sciences
-      :item_name_var_regexp => '\([^\"]+\)\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"' + coursename
+      :item_name_var_regexp => '([^\"]+)\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"' + coursename,
+      :componentIds_dyn_var => 'componentIds_dyn_var',
+      :componentIds_var_regexp => '\"lu.resultColumn.luOptionalDependencyRequirementComponentIds\"\,\"([^\"]+)',
+      :bsci360_dyn_var => 'bsci360_dyn_var',
+      :bsci360_var_regexp => 'BSCI360\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci380_dyn_var => 'bsci380_dyn_var',
+      :bsci380_var_regexp => 'BSCI380\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci410_dyn_var => 'bsci410_dyn_var',
+      :bsci410_var_regexp => 'BSCI410\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci412_dyn_var => 'bsci412_dyn_var',
+      :bsci412_var_regexp => 'BSCI412\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci414_dyn_var => 'bsci414_dyn_var',
+      :bsci414_var_regexp => 'BSCI414\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci416_dyn_var => 'bsci416_dyn_var',
+      :bsci416_var_regexp => 'BSCI416\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci417_dyn_var => 'bsci417_dyn_var',
+      :bsci417_var_regexp => 'BSCI417\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci420_dyn_var => 'bsci420_dyn_var',
+      :bsci420_var_regexp => 'BSCI420\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci421_dyn_var => 'bsci421_dyn_var',
+      :bsci421_var_regexp => 'BSCI421\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci422_dyn_var => 'bsci422_dyn_var',
+      :bsci422_var_regexp => 'BSCI422\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci423_dyn_var => 'bsci423_dyn_var',
+      :bsci423_var_regexp => 'BSCI423\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci430_dyn_var => 'bsci430_dyn_var',
+      :bsci430_var_regexp => 'BSCI430\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci433_dyn_var => 'bsci433_dyn_var',
+      :bsci433_var_regexp => 'BSCI433\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci437_dyn_var => 'bsci437_dyn_var',
+      :bsci437_var_regexp => 'BSCI437\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci465_dyn_var => 'bsci465_dyn_var',
+      :bsci465_var_regexp => 'BSCI465\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :bsci471_dyn_var => 'bsci471_dyn_var',
+      :bsci471_var_regexp => 'BSCI471\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
+      :cluId_dyn_var => 'cluId_dyn_var',
+      :cluId_var_regexp => '\"lu.resultColumn.cluId\"\,\"([^\"]+)'
     }
 
     opts = defaults.merge(opts)
@@ -2660,6 +2696,7 @@ class Curriculum
     # The next HTTP Request happens after clicking the Dependency Analysis button
     # Item
     # AJAX popup while typing in item text box
+    # Type 222, but do not click "Go" yet
     for i in 1..opts[:item].length
       itr = i-1
       if(i == opts[:item].length)
@@ -2694,6 +2731,37 @@ class Curriculum
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
         'contents' => "5|0|10|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|search|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|lu.queryParam.luOptionalCluId|%%_#{opts[:item_name_dyn_var]}%%|lu.search.dependencyAnalysis|1|2|3|4|1|5|5|0|0|6|1|7|8|0|9|10|0|0|0|"
+      },
+      {
+        'subst' => 'true',
+        :dyn_variables => [
+          {"name" => opts[:componentIds_dyn_var], "re" => opts[:componentIds_var_regexp]},
+          {"name" => opts[:bsci360_dyn_var], "re" => opts[:bsci360_var_regexp]},
+          {"name" => opts[:bsci380_dyn_var], "re" => opts[:bsci380_var_regexp]},
+          {"name" => opts[:bsci410_dyn_var], "re" => opts[:bsci410_var_regexp]},
+          {"name" => opts[:bsci412_dyn_var], "re" => opts[:bsci412_var_regexp]},
+          {"name" => opts[:bsci414_dyn_var], "re" => opts[:bsci414_var_regexp]},
+          {"name" => opts[:bsci416_dyn_var], "re" => opts[:bsci416_var_regexp]},
+          {"name" => opts[:bsci417_dyn_var], "re" => opts[:bsci417_var_regexp]},
+          {"name" => opts[:bsci420_dyn_var], "re" => opts[:bsci420_var_regexp]},
+          {"name" => opts[:bsci421_dyn_var], "re" => opts[:bsci421_var_regexp]},
+          {"name" => opts[:bsci422_dyn_var], "re" => opts[:bsci422_var_regexp]},
+          {"name" => opts[:bsci423_dyn_var], "re" => opts[:bsci423_var_regexp]},
+          {"name" => opts[:bsci430_dyn_var], "re" => opts[:bsci430_var_regexp]},
+          {"name" => opts[:bsci433_dyn_var], "re" => opts[:bsci433_var_regexp]},
+          {"name" => opts[:bsci437_dyn_var], "re" => opts[:bsci437_var_regexp]},
+          {"name" => opts[:bsci465_dyn_var], "re" => opts[:bsci465_var_regexp]},
+          {"name" => opts[:bsci471_dyn_var], "re" => opts[:bsci471_var_regexp]},
+          {"name" => opts[:cluId_dyn_var], "re" => opts[:cluId_var_regexp]}
+        ]
+      }
+    )
+
+    @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
+      {
+        'method' => 'POST',
+        'content_type' => 'text/x-gwt-rpc; charset=utf-8',
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:componentIds_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
       }, {'subst' => 'true'}
     )
 
@@ -2701,128 +2769,128 @@ class Curriculum
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|0475e30e-a49b-437c-815e-fced851c372d|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci360_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|4fcc5c7e-4bea-49a4-933e-5551bbfaf1e9|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci380_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|e153f790-fd4e-484f-8df7-6fc3346cf23c|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci410_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|23628512-7b76-4426-8b46-067c0d6ad3cf|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci412_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|3f4cec57-cf8c-4aa5-91a9-61888dbb0ebd|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci414_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|39582801-3036-43c0-9278-e48f4332a7b9|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci416_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|616791d4-1739-46d4-a219-4283da0a2c69|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci417_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|18d4f308-7491-41cb-a44d-433b73cc454e|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci420_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|9d00060f-f482-4445-a05c-85db0c48a562|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci421_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|5eb41297-9db3-41be-8f37-59496d281a13|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci422_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|22a37764-7900-4d94-b169-b750192fe952|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci423_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|5eed269d-298c-4a30-916e-98d44508af71|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci430_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|0da24a86-fae3-47ed-861c-8cfa41b6e2f0|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci433_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|501c6d47-9c44-4c6a-abc7-aebba083d3a1|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci437_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|9789556c-13b3-4f25-963b-70de685d1860|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci465_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/DependencyAnalysisRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|7b030316-3398-44aa-9464-ab2db3bbf0af|1|2|3|4|1|5|6|7|1|8|"
-      }
+        'contents' => "5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|6332C2BE1BF400BEE80978F73BF78C01|org.kuali.student.lum.lu.ui.dependency.client.service.DependencyAnalysisRpcService|getRequirementComponentNL|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|%%_#{opts[:bsci471_dyn_var]}%%|1|2|3|4|1|5|6|7|1|8|"
+      }, {'subst' => 'true'}
     )
 
     @request.add_thinktime(15)
@@ -2969,16 +3037,16 @@ class Curriculum
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|6|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|5BE133251BBD52A0E2D3AED463070079|org.kuali.student.lum.common.client.widgets.CluSetManagementRpcService|getData|java.lang.String/2004016611|1269a3fa-cb27-42ae-a239-7445707b94cd|1|2|3|4|1|5|6|"
-      }
+        'contents' => "5|0|6|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|5BE133251BBD52A0E2D3AED463070079|org.kuali.student.lum.common.client.widgets.CluSetManagementRpcService|getData|java.lang.String/2004016611|%%_#{opts[:cluId_dyn_var]}%%|1|2|3|4|1|5|6|"
+      }, {'subst' => 'true'}
     )
 
     @request.add('/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/CluSetManagementRpcService',
       {
         'method' => 'POST',
         'content_type' => 'text/x-gwt-rpc; charset=utf-8',
-        'contents' => "5|0|6|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|5BE133251BBD52A0E2D3AED463070079|org.kuali.student.lum.common.client.widgets.CluSetManagementRpcService|getCluSetInformation|java.lang.String/2004016611|1269a3fa-cb27-42ae-a239-7445707b94cd|1|2|3|4|1|5|6|"
-      }
+        'contents' => "5|0|6|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|5BE133251BBD52A0E2D3AED463070079|org.kuali.student.lum.common.client.widgets.CluSetManagementRpcService|getCluSetInformation|java.lang.String/2004016611|%%_#{opts[:cluId_dyn_var]}%%|1|2|3|4|1|5|6|"
+      }, {'subst' => 'true'}
     )
 
     @request.add_thinktime(15)
@@ -3006,26 +3074,26 @@ class Curriculum
       :course_code => "BSCI",
       :nav_homepage => true,      
       :course_name_dyn_var => 'course_name_dyn_var',
-      :course_name_var_regexp => '\([^\"]+\)\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"' + course_name,
+      :course_name_var_regexp => '([^\"]+)\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"' + course_name,
       :course_ind_dyn_var => 'course_ind_dyn_var',
-      :course_ind_var_regexp => 'versionIndId\"\,\"\([^\"]+\)',
+      :course_ind_var_regexp => 'versionIndId\"\,\"([^\"]+)',
       :pass_fail_dyn_var => 'pass_fail_dyn_var',
-      :pass_fail_var_regexp => 'Pass-Fail\"\,\"\([^\"]+\)',
+      :pass_fail_var_regexp => 'Pass-Fail\"\,\"([^\"]+)',
       :description_dyn_var => 'description_dyn_var',
-      :description_var_regexp => '\"descr\"\,\"formatted\"\,\"\([^\"]+\)',
+      :description_var_regexp => '\"descr\"\,\"formatted\"\,\"([^\"]+)',
       :new_credit_id_dyn_var => 'new_credit_dyn_var',
-      :new_credit_id_var_regexp => '\"fixedCreditValue\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"\([^\"]+\)',
+      :new_credit_id_var_regexp => '\"fixedCreditValue\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
       :defaultEnrollmentEstimate_dyn_var => 'defaultEnrollmentEstimate_dyn_var',
-      :defaultEnrollmentEstimate_var_regexp => 'defaultEnrollmentEstimate\"\,\"\([^\"]+\)',
+      :defaultEnrollmentEstimate_var_regexp => 'defaultEnrollmentEstimate\"\,\"([^\"]+)',
       :lecture_dyn_var => 'lecture_dyn_var',
-      :lecture_var_regexp => '\"Lecture\"\,\"\([^\"]+\)',
+      :lecture_var_regexp => '\"Lecture\"\,\"([^\"]+)',
       :preRoute_dyn_var => 'preRoute_dyn_var',
-      :preRoute_var_regexp => 'PreRoute\"\,\"\([^\"]+\)',
+      :preRoute_var_regexp => 'PreRoute\"\,\"([^\"]+)',
       :workflowId_dyn_var => 'workflowId_dyn_var',
-      :workflowId_var_regexp => 'workflowId\"\,\"\([^\"]+\)',
+      :workflowId_var_regexp => 'workflowId\"\,\"([^\"]+)',
       :new_active_date_dyn_var => 'new_active_date_dyn_var',
-      :new_active_date_var_regexp => '\([^\"]+\)\"\,\"Standard final Exam'
-      # :course_name_var_regexp => '\"\([^\"]+\)\"\,\"[^\"]+\"\,\"' + course_name + '\"'
+      :new_active_date_var_regexp => '([^\"]+)\"\,\"Standard final Exam'
+      # :course_name_var_regexp => '\"([^\"]+)\"\,\"[^\"]+\"\,\"' + course_name + '\"'
       #NOTE: The previous regexp returns the text of the word that is 2 words behind the coures name in the comma delimitted http response. NOTE: The quotation marks surrounding the text are stripped.      
       # This word is then included in 2 HTTP Requests that are sent later.
     }
@@ -3819,32 +3887,32 @@ class Curriculum
       :modification_person => '%%_username%%', #user is the dynvar from users.csv
       :nav_homepage => true,      
       :course_name_dyn_var => 'course_name_dyn_var',
-      :course_name_var_regexp => '\([^\"]+\)\"\,\"[^\"]+\"\,\"' + course_title,
+      :course_name_var_regexp => '([^\"]+)\"\,\"[^\"]+\"\,\"' + course_title,
       :course_ind_dyn_var => 'course_ind_dyn_var',
-      :course_ind_var_regexp => 'versionIndId\"\,\"\([^\"]+\)',
+      :course_ind_var_regexp => 'versionIndId\"\,\"([^\"]+)',
       :pass_fail_dyn_var => 'pass_fail_dyn_var',
-      :pass_fail_var_regexp => 'Pass-Fail\"\,\"\([^\"]+\)',
+      :pass_fail_var_regexp => 'Pass-Fail\"\,\"([^\"]+)',
       :description_dyn_var => 'description_dyn_var',
-      :description_var_regexp => '\"descr\"\,\"formatted\"\,\"\([^\"]+\)',
+      :description_var_regexp => '\"descr\"\,\"formatted\"\,\"([^\"]+)',
       :new_credit_id_dyn_var => 'new_credit_dyn_var',
-      :new_credit_id_var_regexp => '\"fixedCreditValue\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"\([^\"]+\)',
+      :new_credit_id_var_regexp => '\"fixedCreditValue\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
       :defaultEnrollmentEstimate_dyn_var => 'defaultEnrollmentEstimate_dyn_var',
-      :defaultEnrollmentEstimate_var_regexp => 'defaultEnrollmentEstimate\"\,\"\([^\"]+\)',
+      :defaultEnrollmentEstimate_var_regexp => 'defaultEnrollmentEstimate\"\,\"([^\"]+)',
       :lecture_dyn_var => 'lecture_dyn_var',
-      :lecture_var_regexp => '\"Lecture\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"\([^\"]+\)',
+      :lecture_var_regexp => '\"Lecture\"\,\"[^\"]+\"\,\"[^\"]+\"\,\"([^\"]+)',
       :lab_dyn_var => 'lab_dyn_var',
-      :lab_var_regexp => '\"Lab\"\,\"\([^\"]+\)',
+      :lab_var_regexp => '\"Lab\"\,\"([^\"]+)',
       :preRoute_dyn_var => 'preRoute_dyn_var',
-      :preRoute_var_regexp => 'PreRoute\"\,\"\([^\"]+\)',
+      :preRoute_var_regexp => 'PreRoute\"\,\"([^\"]+)',
       :workflowId_dyn_var => 'workflowId_dyn_var',
-      :workflowId_var_regexp => 'workflowId\"\,\"\([^\"]+\)',
+      :workflowId_var_regexp => 'workflowId\"\,\"([^\"]+)',
       :new_active_date_dyn_var => 'new_active_date_dyn_var',
-      :new_active_date_var_regexp => '\([^\"]+\)\"\,\"Standard final Exam',
+      :new_active_date_var_regexp => '([^\"]+)\"\,\"Standard final Exam',
       :requisite_ind_dyn_var => 'requisite_ind_dyn_var',
-      :requisite_ind_var_regexp => 'VersionIndId\"\,\"\([^\"]+\)',
+      :requisite_ind_var_regexp => 'VersionIndId\"\,\"([^\"]+)',
       :required_dyn_var => 'required_dyn_var',
-      :required_var_regexp => '\(Must have successfully completed ' + requisite +'\)'
-      # :course_name_var_regexp => '\"\([^\"]+\)\"\,\"[^\"]+\"\,\"' + course_name + '\"'
+      :required_var_regexp => '(Must have successfully completed ' + requisite +')'
+      # :course_name_var_regexp => '\"([^\"]+)\"\,\"[^\"]+\"\,\"' + course_name + '\"'
       #NOTE: The previous regexp returns the text of the word that is 2 words behind the coures name in the comma delimitted http response. NOTE: The quotation marks surrounding the text are stripped.      
       # This word is then included in 2 HTTP Requests that are sent later.
     }
