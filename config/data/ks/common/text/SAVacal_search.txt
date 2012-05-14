@@ -1,0 +1,73 @@
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="viewId"
+
+calendarSearchView
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="formKey"
+
+c933a3de-21ca-4d7c-a7fe-0e08bb6c2db8
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="validateDirty"
+
+true
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="calendarType"
+
+AcademicCalendar
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="name"
+
+
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="year"
+
+2012
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="pageId"
+
+
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="view.currentPage.title"
+
+&nbsp;
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="jumpToName"
+
+
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="formHistory.historyParameterString"
+
+null%2Cnull%2CHome%2Chttp%3A%2F%2Fstaging2.ks.kuali.org%2Fportal.do%2Cnull%24calendarSearchView%2Cnull%2CCalendar+Search%2Chttp%3A%2F%2Fstaging2.ks.kuali.org%2Fkr-krad%2FcalendarSearch%3FmethodToCall%3Dstart%26viewId%3DcalendarSearchView%26returnLocation%3Dhttp%3A%2F%2Fstaging2.ks.kuali.org%2Fkr-krad%2Flaunch%3FviewId%3DenrollmentHomeView%26formKey%3Dc933a3de-21ca-4d7c-a7fe-0e08bb6c2db8%26showHome%3Dfalse%2Cc933a3de-21ca-4d7c-a7fe-0e08bb6c2db8
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="methodToCall"
+
+search
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="actionParameters[showHistory]"
+
+false
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="actionParameters[showHome]"
+
+false
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="showHistory"
+
+false
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="showHome"
+
+false
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="focusId"
+
+u182
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="jumpToId"
+
+u182
+-----------------------------150579533519548990971636807826
+Content-Disposition: form-data; name="renderFullView"
+
+true
+-----------------------------150579533519548990971636807826--
