@@ -4,6 +4,7 @@
     # Format: "product reference": "directory name in framework"
     ks: 'ks'
     oae: 'oae'
+    bioiq: 'bioiq'
 # Directory listing for test data in use in the tests
 :directory:
     # Product for directory data
