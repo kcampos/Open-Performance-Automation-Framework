@@ -5,3 +5,7 @@
 # Logs and databases #
 ######################
 *.log
+
+# Configs and tests#
+######################
+config/config.yaml

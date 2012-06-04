@@ -5,6 +5,11 @@
     ks: 'ks'
     oae: 'oae'
     bioiq: 'bioiq'
+:request_filters:
+    bioiq: 
+        :auth:
+            :username: 'example_user'
+            :password: 'example_pass'
 # Directory listing for test data in use in the tests
 :directory:
     # Product for directory data
