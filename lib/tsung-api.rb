@@ -251,7 +251,11 @@ class Requests < Transaction
     http = req.add_element('http', opts)
     
     # Write basic authentication for request if necessary
-    http.add_element('www_authenticate', {'userid' => auth_opt[:auth][:username], 'passwd' => auth_opt[:auth][:password]}) if(!auth_opt[:auth].empty?)
+    if(self.config.request_filters[:auth])
+      http.add_element('www_authenticate', {'userid' => self.config.request_filters[:auth][:username], 'passwd' => self.config.request_filters[:auth][:password]})
+    elsif(!auth_opt[:auth].empty?)
+      http.add_element('www_authenticate', {'userid' => auth_opt[:auth][:username], 'passwd' => auth_opt[:auth][:password]})
+    end
     
     # BUG - need a way to dynamically ingest custome headers per product
     # BUG - hardcoded to first app server

@@ -22,7 +22,7 @@ class AutoConfig
     :tsung_log_level, :secondary_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files, :ssl
     
   attr_reader :product, :suite, :directory, :config_setup, :config_dir, :suite_base_dir, :suite_dir, :test_base_dir, :test_dir, :lib_base_dir,
-    :import_base_dir, :import_dir, :data_base_dir, :data_dir
+    :import_base_dir, :import_dir, :data_base_dir, :data_dir, :request_filters
 
   
   def initialize
@@ -279,6 +279,16 @@ class AutoConfig
     @product
   end
   
+  # Set request filters scoped by product
+  def request_filters
+    if(self.config_setup[:request_filters])
+      @request_filters = (self.config_setup[:request_filters][@product] ? self.config_setup[:request_filters][@product] : {})
+    else
+      @request_filters = {}
+    end
+    @request_filters
+  end
+  
   # Set suite for this particular run
   def suite=(name)
     @suite = (validate_suite(name) ? name : nil)
@@ -515,7 +525,7 @@ class AutoConfig
     
     self.import_files = {}
     
-    Dir.foreach(@import_dir) do |file|
+    File.directory? @import_dir and Dir.foreach(@import_dir) do |file|
       next if (file !~ /.+\.format$/) #skip if anything other than a format file
       
       csv_file = file.sub('.format', '.csv')
