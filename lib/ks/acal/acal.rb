@@ -384,14 +384,13 @@ Content-Disposition: form-data; name=\"jumpToId\"
 
   private
 
-
-  def createContentsFile(filepath,filename,contents_str)
-  # ==synopsis
   # createContentsFile creates the file that is to be used in the HTTP POST for the search form and the view form.
   #
   # filepath is the path containing the file
   # filename is the name of the file that contains the form
   # contents_str is the text string containing the entire contents of the file
+  #
+  def createContentsFile(filepath,filename,contents_str)
 
     path_and_filename = filepath + filename
 
