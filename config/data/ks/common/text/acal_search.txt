@@ -1,0 +1,73 @@
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="viewId"
+
+calendarSearchView
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="formKey"
+
+3303d8ba-ff44-4302-afb7-7093ba6a1d5d
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="validateDirty"
+
+true
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="calendarType"
+
+AcademicCalendar
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="name"
+
+
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="year"
+
+2012
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="pageId"
+
+
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="view.currentPage.title"
+
+&nbsp;
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="jumpToName"
+
+
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="formHistory.historyParameterString"
+
+null%2Cnull%2CHome%2Chttp%3A%2F%2Fec2-72-44-53-140.compute-1.amazonaws.com%2Fks-embedded%2Fportal.do%2Cnull%24calendarSearchView%2Cnull%2CCalendar+Search%2Chttp%3A%2F%2Fec2-72-44-53-140.compute-1.amazonaws.com%2Fks-embedded%2Fkr-krad%2FcalendarSearch%3FviewId%3DcalendarSearchView%26returnLocation%3Dhttp%3A%2F%2Fec2-72-44-53-140.compute-1.amazonaws.com%2Fks-embedded%2Fkr-krad%2Flaunch%3FviewId%3DenrollmentHomeView%26methodToCall%3Dstart%26formKey%3D3303d8ba-ff44-4302-afb7-7093ba6a1d5d%26showHome%3Dfalse%2C3303d8ba-ff44-4302-afb7-7093ba6a1d5d
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="methodToCall"
+
+search
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="actionParameters[showHistory]"
+
+false
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="actionParameters[showHome]"
+
+false
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="showHistory"
+
+false
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="showHome"
+
+false
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="focusId"
+
+u182
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="jumpToId"
+
+u182
+-----------------------------1807130337578354438892053144
+Content-Disposition: form-data; name="renderFullView"
+
+true
+-----------------------------1807130337578354438892053144--
