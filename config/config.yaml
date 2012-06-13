@@ -57,6 +57,8 @@
         users:
             collaborator:
                 username: "fran"
+        kr:
+            name: "kr-krad"
 # Agent List
 :agents:
     - 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0.1) Gecko/20100101 Firefox/8.0.1'
