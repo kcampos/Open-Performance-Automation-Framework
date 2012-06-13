@@ -23,7 +23,21 @@ class Acal
   
   
   # View an Academic Calendar
-  # TODO:
+  #
+  # calendarName is the name of the calendar to view
+  # calendarType is the type of calendar; e.g., AcacemicCalendar
+  # testButton is the link that the user clicks on the Calendar Search results page; options are view, edit, copy, and delete
+  #
+  # This method simulates a user viewing an Academic Calendar
+  # The user has logged in and clicks the "Enrollment Home" link and then enters the name of the calendar to search for and clicks Search and then clicks the "view" button
+  # 
+  # The user's input and default values are submitted as a form for the "search" for the calendar and also for the "view" of the calendar.
+  # The following method is called to create the file that contains the form:
+  # createContentsFile filepath, filename, contents_str
+  # where
+  # filepath is the path containing the file
+  # filename is the name of the file that contains the form
+  # contents_str is the text string containing the entire contents of the file
   #
   def acal_view(calendarName, calendarType, testButton, opts={})
     
@@ -36,7 +50,7 @@ class Acal
       :kr_name => @request.config.directory["kr"]["name"],
       :search_viewId_dyn_var_name => "viewId",
       :search_viewId_dyn_var_regexp => 'name=\"viewId\" type=\"hidden\" value=\"([^\"]+)',
-      :search_formKey_dyn_var_name => "formKey",
+      :search_formKey_dyn_var_name => "search_formKey",
       :search_formKey_dyn_var_regexp => 'name=\"formKey\" type=\"hidden\" value=\"([^\"]+)',
       :search_validateDirty_dyn_var_name => "validateDirty",
       :search_validateDirty_dyn_var_regexp => 'name=\"validateDirty\" type=\"hidden\" value=\"([^\"]+)',
@@ -66,7 +80,7 @@ class Acal
       :search_renderFullView_dyn_var_regexp => 'renderFullView&#039; , &#039;([^&]+)',
       :view_viewId_dyn_var_name => "viewId",
       :view_viewId_dyn_var_regexp => 'name=\"viewId\" type=\"hidden\" value=\"([^\"]+)',
-      :view_formKey_dyn_var_name => "formKey",
+      :view_formKey_dyn_var_name => "view_formKey",
       :view_formKey_dyn_var_regexp => 'name=\"formKey\" type=\"hidden\" value=\"([^\"]+)',
       :view_validateDirty_dyn_var_name => "validateDirty",
       :view_validateDirty_dyn_var_regexp => 'name=\"validateDirty\" type=\"hidden\" value=\"([^\"]+)',
@@ -114,15 +128,13 @@ class Acal
 
     @request.add_thinktime(10)
 
-    @search_form_key = 'search_form_key'
-
     # click "Search for Calendar or Term"
       @request.add("/#{opts[:kr_name]}/calendarSearch?viewId=calendarSearchView&methodToCall=start&returnLocation=#{@request.url}/#{opts[:kr_name]}/launch?viewId=enrollmentHomeView&",
       {},
       {
         :dyn_variables => [
           {"name" => opts[:search_viewId_dyn_var_name], "re" => opts[:search_viewId_dyn_var_regexp]},
-          {"name" => @search_form_key, "re" => opts[:search_formKey_dyn_var_regexp]},
+          {"name" => opts[:search_formKey_dyn_var_name], "re" => opts[:search_formKey_dyn_var_regexp]},
           {"name" => opts[:search_validateDirty_dyn_var_name], "re" => opts[:search_validateDirty_dyn_var_regexp]},
           {"name" => opts[:search_year_dyn_var_name], "re" => opts[:search_year_dyn_var_regexp]},
           {"name" => opts[:search_pageId_dyn_var_name], "re" => opts[:search_pageId_dyn_var_regexp]},
@@ -151,7 +163,7 @@ Content-Disposition: form-data; name=\"viewId\"
 #{bodyBoundarySearch}
 Content-Disposition: form-data; name=\"formKey\"
 
-%%_#{@search_form_key}%%
+%%_#{opts[:search_formKey_dyn_var_name]}%%
 #{bodyBoundarySearch}
 Content-Disposition: form-data; name=\"validateDirty\"
 
@@ -220,30 +232,29 @@ Content-Disposition: form-data; name=\"renderFullView\"
 "
 
     # the following is necessary to ensure that a CRLF happens at the end of each line
-    contents_search=contents_search.gsub("\n","\r\n")
+    contents_search.gsub!("\n","\r\n")
 
     @request.add_thinktime(10)
 
     opts[:file_path] = "#{opts[:data_dir]}/#{opts[:directory]}/#{opts[:type]}/"
 
-    @searchFileName= "searchPost.txt"
-    createContentsFile(opts[:file_path], @searchFileName, contents_search)
-    @searchPathAndFileName = opts[:file_path] +  @searchFileName
+    searchFileName= "searchPost.txt"
+    createContentsFile(opts[:file_path], searchFileName, contents_search)
+    searchPathAndFileName = opts[:file_path] +  searchFileName
 
-    @view_form_key = "view_form_key"
-    
+
     # Do not modify the default value of "Academic Calendar" in the "Search" selection box, and enter "2012" in the Year text box and click "Search"
     @request.add("/#{opts[:kr_name]}/calendarSearch",
     {
       'method' => 'POST',
       'content_type' => "multipart/form-data; boundary=#{headerBoundarySearch}",
-      'contents_from_file' => "#{@searchPathAndFileName}"
+      'contents_from_file' => "#{searchPathAndFileName}"
       },
       {
         'subst' => 'true',
         :dyn_variables => [
           {"name" => opts[:view_viewId_dyn_var_name], "re" => opts[:view_viewId_dyn_var_regexp]},
-          {"name" => @view_form_key, "re" => opts[:view_formKey_dyn_var_regexp]},
+          {"name" => opts[:view_formKey_dyn_var_name], "re" => opts[:view_formKey_dyn_var_regexp]},
           {"name" => opts[:view_validateDirty_dyn_var_name], "re" => opts[:view_validateDirty_dyn_var_regexp]},
           {"name" => opts[:view_year_dyn_var_name], "re" => opts[:view_name_dyn_var_regexp]},
           {"name" => opts[:view_pageId_dyn_var_name], "re" => opts[:view_pageId_dyn_var_regexp]},
@@ -274,7 +285,7 @@ Content-Disposition: form-data; name=\"viewId\"
 #{bodyBoundaryView}
 Content-Disposition: form-data; name=\"formKey\"
 
-%%_#{@view_form_key}%%
+%%_#{opts[:view_formKey_dyn_var_name]}%%
 #{bodyBoundaryView}
 Content-Disposition: form-data; name=\"validateDirty\"
 
@@ -346,11 +357,11 @@ Content-Disposition: form-data; name=\"jumpToId\"
 #{bodyBoundaryView}--
 "
     # the following is necessary to ensure that a CRLF happens at the end of each line
-    contents_view=contents_view.gsub("\n","\r\n")
+    contents_view.gsub!("\n","\r\n")
 
-    @viewFileName= "viewPost.txt"
-    createContentsFile(opts[:file_path], @viewFileName, contents_view)
-    @viewPathAndFileName = opts[:file_path] +  @viewFileName
+    viewFileName= "viewPost.txt"
+    createContentsFile(opts[:file_path], viewFileName, contents_view)
+    viewPathAndFileName = opts[:file_path] +  viewFileName
 
     @request.add_thinktime(20)
 
@@ -359,7 +370,7 @@ Content-Disposition: form-data; name=\"jumpToId\"
       {
         'method' => 'POST',
         'content_type' => "multipart/form-data; boundary=#{headerBoundaryView}",
-        'contents_from_file' => "#{@viewPathAndFileName}"
+        'contents_from_file' => "#{viewPathAndFileName}"
       }, 'subst' => 'true'
       )
 
@@ -375,8 +386,12 @@ Content-Disposition: form-data; name=\"jumpToId\"
 
 
   def createContentsFile(filepath,filename,contents_str)
-# ==synopsis
-#            createContentsFile creates the file that is to be used in the HTTP POST for the search form and the view form.
+  # ==synopsis
+  # createContentsFile creates the file that is to be used in the HTTP POST for the search form and the view form.
+  #
+  # filepath is the path containing the file
+  # filename is the name of the file that contains the form
+  # contents_str is the text string containing the entire contents of the file
 
     path_and_filename = filepath + filename
 
