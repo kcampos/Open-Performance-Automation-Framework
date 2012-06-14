@@ -105,7 +105,37 @@ class Authentication
     end
     
   end
-  
+
+  def acal_login(opts={})
+    defaults = {
+      :user => 'admin',
+      :password => 'admin',
+      :thinktime => 3
+    }
+    
+    opts = defaults.merge(opts)
+
+    @request.add("/j_spring_security_check",
+      {
+        'method' => 'POST',
+        'content_type' => 'application/x-www-form-urlencoded',
+        'contents' => "j_username=#{opts[:user]}&j_password=#{opts[:password]}"
+      }, 
+        {'subst' => 'true'}
+    )
+
+    @request.add("/")
+    @request.add("/portal.do")
+
+  end
+
+  def acal_logout
+    @request.add('/backdoorlogin.do')
+    @request.add('/j_spring_security_logout')
+    @request.add('/portal.do')
+    @request.add('/login.jsp')    
+  end
+
   # Logout of KS
   def logout
     
