@@ -9,7 +9,7 @@ require 'drb'
 config = DRbObject.new nil, "druby://localhost:#{ENV['DRB_PORT']}"
 
 require config.lib_base_dir + "/tsung-api.rb"
-require config.lib_base_dir + "/#{config.product}/common/authentication.rb"
+require config.lib_base_dir + "/#{config.product}/common/explore.rb"
 require config.lib_base_dir + "/#{config.product}/common/search.rb"
 
 # Test info - default test case setup
@@ -22,17 +22,14 @@ config.log.info_msg("Probability: #{config.tests[test]}")
 sesh = Session.new(config, 'general_search', probability)
 
 # Search term
-search_term = 'the and'
+search_term = 'ere'
 
-# Login
-username = '%%_username%%'
-password = '%%_user_password%%'
-
-login_txn = sesh.add_transaction("login")
-login_req = login_txn.add_requests
-config.log.info_msg("#{test}: Loggin in as: #{username}")
-auth = Authentication.new(login_req)
-auth.login(username, password)
+# Navigate to the home page
+explore_txn = sesh.add_transaction("explore")
+explore_req = explore_txn.add_requests
+config.log.info_msg("#{test}: Loading the home page")
+explore = Explore.new(explore_req)
+explore.splash
 
 # Type search into top bar and hit enter
 search_txn = sesh.add_transaction("search")
@@ -50,10 +47,3 @@ content_search.search(search_term, {
 		:load_search_page => false,
 		:search_category => 'content'
 	})
-
-# Logout
-logout_txn = sesh.add_transaction("logout")
-logout_req = logout_txn.add_requests
-config.log.info_msg("#{test}: Logging out")
-auth = Authentication.new(logout_req)
-auth.logout
