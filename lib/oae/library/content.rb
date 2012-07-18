@@ -110,9 +110,17 @@ class Content
     
   end
   
-  # Load homepage
-  def homepage
-    
+  # Load My Library
+  def my_library(username)
+
+    @request.add('/system/staticfiles?_charset_=utf-8&f=%2Fdevwidgets%2Fmylibrary%2Fmylibrary.html&f=%2Fdevwidgets%2Fmylibrary%2Fbundles%2Fdefault.properties')
+    @request.add('/devwidgets/mylibrary/css/mylibrary.css')
+    @request.add('/devwidgets/mylibrary/javascript/mylibrary.js')
+    @request.add('/dev/images/Infinite_Scrolling_Loader_v01.gif')
+    @request.add("/var/search/pool/auth-all.json?userid=#{username}&sortOn=_lastModified&sortOrder=desc&q=&page=0&items=18&_charset_=utf-8&_=1342652534274")
+    @request.add('/dev/images/content_icon_55x55.png')
+    @request.add_thinktime(7)
+
   end
   
   
