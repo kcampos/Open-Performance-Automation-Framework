@@ -26,7 +26,7 @@ sess = Session.new(config, 'my_contacts', probability)
 username = '%%_username%%'
 password = '%%_user_password%%'
 
-login_txn = sesh.add_transaction("login")
+login_txn = sess.add_transaction("login")
 login_req = login_txn.add_requests
 config.log.info_msg("#{test}: Loggin in as: #{username}")
 auth = Authentication.new(login_req)
@@ -40,7 +40,7 @@ contacts = Contacts.new(my_contacts_req)
 contacts.my_contacts(username)
 
 # Logout
-logout_txn = sesh.add_transaction("logout")
+logout_txn = sess.add_transaction("logout")
 logout_req = logout_txn.add_requests
 config.log.info_msg("#{test}: Logging out")
 auth = Authentication.new(logout_req)

@@ -20,7 +20,7 @@ config.log.info_msg("Test: #{test}")
 config.log.info_msg("Probability: #{config.tests[test]}")
 
 # Create session
-sess = Session.new(config, 'my_memberships', probability)
+sesh = Session.new(config, 'my_memberships', probability)
 
 # Login
 username = '%%_username%%'
@@ -33,7 +33,7 @@ auth = Authentication.new(login_req)
 auth.login(username, password)
 
 # view my memberships
-my_memberships_txn = sess.add_transaction("my_memberships")
+my_memberships_txn = sesh.add_transaction("my_memberships")
 my_memberships_req = my_memberships_txn.add_requests
 config.log.info_msg("#{test}: Viewing My Memberships as: #{username}")
 memberships = Memberships.new(my_memberships_req)

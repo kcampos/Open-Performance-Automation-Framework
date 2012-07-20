@@ -40,7 +40,7 @@ content = Content.new(my_library_req)
 content.my_library(username)
 
 # Logout
-logout_txn = sesh.add_transaction("logout")
+logout_txn = sess.add_transaction("logout")
 logout_req = logout_txn.add_requests
 config.log.info_msg("#{test}: Logging out")
 auth = Authentication.new(logout_req)

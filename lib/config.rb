@@ -19,7 +19,7 @@ class AutoConfig
 
   attr_accessor :log_dir, :products, :output, :clients, :servers, :secondary_servers, 
     :phases, :agents, :debug, :execute, :intro_xml, :tests, :drb_port, :log, :log_path, :xml_writer, :xml_obj, :context, :verbose,
-    :tsung_log_level, :secondary_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files, :ssl
+    :tsung_log_level, :secondary_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files, :ssl, :dynvar_random_strings
     
   attr_reader :product, :suite, :directory, :config_setup, :config_dir, :suite_base_dir, :suite_dir, :test_base_dir, :test_dir, :lib_base_dir,
     :import_base_dir, :import_dir, :data_base_dir, :data_dir, :request_filters
@@ -39,6 +39,8 @@ class AutoConfig
     @debug            = false
     @execute          = false
     @ssl              = nil
+    
+    init_dynvar_random_strings
     
   end
 
@@ -549,4 +551,7 @@ class AutoConfig
     
   end
 
+	def init_dynvar_random_strings
+		self.dynvar_random_strings = @config_setup[:dynvar_random_strings]
+	end
 end

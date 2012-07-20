@@ -26,7 +26,7 @@ sess = Session.new(config, 'my_messages', probability)
 username = '%%_username%%'
 password = '%%_user_password%%'
 
-login_txn = sesh.add_transaction("login")
+login_txn = sess.add_transaction("login")
 login_req = login_txn.add_requests
 config.log.info_msg("#{test}: Loggin in as: #{username}")
 auth = Authentication.new(login_req)
@@ -36,14 +36,14 @@ auth.login(username, password)
 my_messages_txn = sess.add_transaction("my_messages")
 my_messages_req = my_messages_txn.add_requests
 config.log.info_msg("#{test}: Viewing My Messages as: #{username}")
-memberships = Memberships.new(my_messages_req)
-memberships.my_inbox(username)
-memberships.my_invitations(username)
-memberships.my_sent(username)
-memberships.my_trash(username)
+my_messages = Messages.new(my_messages_req)
+my_messages.my_inbox(username)
+my_messages.my_invitations(username)
+my_messages.my_sent(username)
+my_messages.my_trash(username)
 
 # Logout
-logout_txn = sesh.add_transaction("logout")
+logout_txn = sess.add_transaction("logout")
 logout_req = logout_txn.add_requests
 config.log.info_msg("#{test}: Logging out")
 auth = Authentication.new(logout_req)

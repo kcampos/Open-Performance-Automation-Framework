@@ -23,7 +23,6 @@ class Authentication
     @request.add('/')
     @request.add('/var/templates/worlds.2.json?_charset_=utf-8')
     @request.add('/system/me?_charset_=utf-8&_=1323808984919')
-    @request.add('/dev/lib/misc/l10n-179d3bddda98df1964aea5f9d97b0581/cultures/globalize.culture.en-US.js?_charset_=utf-8&_=1328045081445')
     
     @request.add('/system/batch',
       {
@@ -89,7 +88,6 @@ class Authentication
       {}, {:external => true})
     
     @request.add('/system/me?_charset_=utf-8&_=1317932031489')
-    @request.add('/dev/lib/misc/l10n/cultures/globalize.culture.en-US.js?_charset_=utf-8&_=1324512279928')
     @request.add('/system/batch?_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2Fdevwidgets%2Fcaptcha%2Fcaptcha.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fcaptcha%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D&_=1324512280255')
     @request.add('/system/batch?_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2Fdevwidgets%2Ftopnavigation%2Ftopnavigation.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ffooter%2Ffooter.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ftopnavigation%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ffooter%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D&_=1324512280290')
     
@@ -168,12 +166,7 @@ class Authentication
         'contents' => "sakaiauth%3Alogin=1&sakaiauth%3Aun=#{username}&sakaiauth%3Apw=#{password}&_charset_=utf-8"
       }, {'subst' => 'true'}
     )
-    
-    @request.add('https://rsmart.app11.hubspot.com/salog.js.aspx', {},
-      {:external => true})
-      
-    @request.add('/var/templates/worlds.2.json?_charset_=utf-8')
-      
+
     @request.add('/system/me?_charset_=utf-8&_=1323968258852', {},
       {
         :dyn_variables => [
@@ -185,66 +178,8 @@ class Authentication
       }
     )
     
-    #@request.add("/DEBUG/email_local_var_name/%%_#{opts[:email_local_var_name]}%%", {}, {'subst' => 'true'})
-    #@request.add("/DEBUG/email_domain_var_name/%%_#{opts[:email_domain_var_name]}%%", {}, {'subst' => 'true'})
-    #@request.add("/DEBUG/first_name_var_name/%%_#{opts[:first_name_var_name]}%%", {}, {'subst' => 'true'})
-    #@request.add("/DEBUG/last_name_var_name/%%_#{opts[:last_name_var_name]}%%", {}, {'subst' => 'true'})
+    @request.add('/var/widgets.json?callback=define')
     
-    
-    @request.add('/dev/lib/misc/l10n-179d3bddda98df1964aea5f9d97b0581/cultures/globalize.culture.en-US.js?_charset_=utf-8&_=1328045099234')
-    @request.add('/system/batch?_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2Fdev%2Fbundle%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdev%2Fbundle%2Fen_US.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D')
-    
-    # User specific
-    @request.add("/~#{username}/message.count.json?filters=sakai:messagebox,sakai:read&values=inbox,false&groupedby=sakai:category&_charset_=utf-8&_=1323968259638",
-      {}, {'subst' => 'true'})
-    
-    @request.add('/system/batch',
-      {
-        'method' => 'POST',
-        'content_type' => 'application/x-www-form-urlencoded; charset=UTF-8',
-        'contents' => "_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2Fdevwidgets%2Ftopnavigation%2Ftopnavigation.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fcollections%2Fcollections.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fentity%2Fentity.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Flhnavigation%2Flhnavigation.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fuserpermissions%2Fuserpermissions.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ffooter%2Ffooter.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ftopnavigation%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ftopnavigation%2Fbundles%2Fen_US.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fcollections%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fentity%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Flhnavigation%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fuserpermissions%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ffooter%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ffooter%2Fbundles%2Fen_US.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D"
-      }
-    )
-    
-    # User specific
-    @request.add("/~#{username}/public/pubspace.infinity.json?_charset_=utf-8&_=1323968259894", {}, {'subst' => 'true'})
-    
-    # User specific
-    @request.add("/~#{username}/private/privspace.infinity.json?_charset_=utf-8&_=1323968260714", {}, 
-      {
-        'subst' => 'true',
-        :dyn_variables => [
-          {"name" => opts[:uid_var_name], "re" => opts[:uid_var_regex]},
-          {"name" => opts[:dashboard_id_var_name], "re" => opts[:dashboard_id_var_regex]}
-        ]
-      }
-    )
-    
-    @request.add('/system/batch',
-      {
-        'method' => 'POST',
-        'content_type' => 'application/x-www-form-urlencoded; charset=UTF-8',
-        'contents' => "_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2Fdevwidgets%2Facceptterms%2Facceptterms.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fnewaddcontent%2Fnewaddcontent.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fsendmessage%2Fsendmessage.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Faddtocontacts%2Faddtocontacts.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fjoingroup%2Fjoingroup.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fjoinrequestbuttons%2Fjoinrequestbuttons.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ftooltip%2Ftooltip.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Faccountpreferences%2Faccountpreferences.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fchangepic%2Fchangepic.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fsavecontent%2Fsavecontent.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Faddpeoplegroups%2Faddpeoplegroups.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fnewsharecontent%2Fnewsharecontent.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fpersoninfo%2Fpersoninfo.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Facceptterms%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fnewaddcontent%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fsendmessage%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Faddtocontacts%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fjoingroup%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fjoinrequestbuttons%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ftooltip%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Faccountpreferences%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fchangepic%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fchangepic%2Fbundles%2Fen_US.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fsavecontent%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Faddpeoplegroups%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fnewsharecontent%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fpersoninfo%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D"
-      }
-    )
-    
-    
-    
-    #@request.add("/DEBUG/uid_var_name/%%_#{opts[:uid_var_name]}%%", {}, {'subst' => 'true'})
-    #@request.add("/DEBUG/dashboard_id_var_name/%%_#{opts[:dashboard_id_var_name]}%%", {}, {'subst' => 'true'})
-    
-    @request.add('/system/batch?_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2Fdevwidgets%2Fsakaidocs%2Fsakaidocs.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fsakaidocs%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D&_=1328045101791')
-    @request.add('/system/batch?_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2Fdevwidgets%2Fversions%2Fversions.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fversions%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D&_=1328045104262')
-    @request.add('/system/batch?_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2Fdevwidgets%2Fcarousel%2Fcarousel.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fdashboard%2Fdashboard.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fcarousel%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fdashboard%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D&_=1328045104496')
-    @request.add('/system/batch?_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2Fvar%2Fsearch%2Fpool%2Fme%2Frelated-content.json%22%2C%22method%22%3A%22GET%22%2C%22parameters%22%3A%7B%22items%22%3A11%2C%22_charset_%22%3A%22utf-8%22%7D%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fvar%2Fcontacts%2Frelated-contacts.json%22%2C%22method%22%3A%22GET%22%2C%22parameters%22%3A%7B%22items%22%3A11%2C%22_charset_%22%3A%22utf-8%22%7D%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fvar%2Fsearch%2Fmyrelatedgroups.json%22%2C%22method%22%3A%22GET%22%2C%22parameters%22%3A%7B%22items%22%3A11%2C%22_charset_%22%3A%22utf-8%22%7D%2C%22_charset_%22%3A%22utf-8%22%7D%5D&_=1328045105256')
-    @request.add('/system/batch?_charset_=utf-8&requests=%5B%7B%22url%22%3A%22%2Fdevwidgets%2Frecentchangedcontent%2Frecentchangedcontent.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Frecentmemberships%2Frecentmemberships.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Frecentcontactsnew%2Frecentcontactsnew.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Frecentchangedcontent%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Frecentmemberships%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Frecentcontactsnew%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D&_=1328045105385')
-    
-    # User specific
-    @request.add("/var/search/pool/manager-viewer.json?userid=#{username}&page=0&items=1&sortOn=_lastModified&sortOrder=desc&_charset_=utf-8&_=1323968264029",
-      {}, {'subst' => 'true'})
-      
-    @request.add('/var/contacts/find-all.json?page=0&items=100&_charset_=utf-8')
-        
     # Accept terms
     if(opts[:accept_terms])
       @request.add('/system/ucam/acceptterms?unchanged&_charset_=utf-8',

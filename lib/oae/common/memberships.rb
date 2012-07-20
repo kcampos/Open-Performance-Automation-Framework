@@ -17,12 +17,34 @@ class Memberships
   end
 
   # Load my memberships
-  def my_memberships(username)
+  def my_memberships(username, opts={})
+  
+  	defaults = {
+  		:my_memberships_batch_requests => '%%_my_memberships_batch_requests%%',
+  		:my_memberships_members_batch_requests => '%%_my_memberships_members_batch_requests%%'
+  	}
+  
+  	opts = defaults.merge(opts)
+  
+		@request.add('/var/templates/worlds.2.json?_charset_=utf-8')
+		@request.add("/~#{username}/public/pubspace.infinity.json?_charset_=utf-8&_=1342719476262", {}, { 'subst' => 'true' })
+		@request.add("/~#{username}/private/privspace.infinity.json?_charset_=utf-8&_=1342719476434", {}, { 'subst' => 'true' })
 
-    @request.add('/system/staticfiles?_charset_=utf-8&f=%2Fdevwidgets%2Fmymemberships%2Fmymemberships.html&f=%2Fdevwidgets%2Fmymemberships%2Fbundles%2Fdefault.properties')
-    @request.add('/devwidgets/mymemberships/css/mymemberships.css')
-    @request.add('/devwidgets/mymemberships/javascript/mymemberships.js')
-    @request.add('/dev/images/memberships_icon_60x55.png')
+		@request.add('/system/batch',
+      {
+        'method' => 'POST',
+        'content_type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+        'contents' => "_charset_=utf-8&requests=#{opts[:my_memberships_batch_requests]}"
+      }, { 'subst' => 'true' }
+    )
+
+		@request.add('/system/batch',
+      {
+        'method' => 'POST',
+        'content_type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+        'contents' => "_charset_=utf-8&requests=#{opts[:my_memberships_members_batch_requests]}"
+      }, { 'subst' => 'true' }
+    )
 
   end
 
