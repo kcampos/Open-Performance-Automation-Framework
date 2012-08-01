@@ -23,7 +23,6 @@ Requires Ruby v1.8.6+
 rdoc required for documentation
 Requires Perl v5.8.8+
 Template.pm module required to generate html statistics
-Subversion v1.5.7+
 Checkout code: Testing Framework Builds
 Environment variables:
 DRB_PORT=9000
