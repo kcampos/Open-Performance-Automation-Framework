@@ -60,13 +60,7 @@ class Session < TsungSessions
       config.log.debug_msg("Session-> entering write_xml_elements...")
       @@session_element[@name][:element] = self.config.sessions_element.add_element('session', {"name" => @name, "probability" => @probability, "type" => @type})
       @@session_element[@name][:written] = true
-      
-      # User db
-      # Dyn vars
-      #dynvars = @@session_element[@name][:element].add_element('setdynvars', {"sourcetype" => "file", "fileid" => "userdb", "delimiter" => ",", "order" => "iter"})
-      #dynvars.add_element('var', {"name" => "username"})
-      #dynvars.add_element('var', {"name" => "user_password"})
-      
+
       # Add elements for each import file
       config.import_files.each_key do |import_file|
         
@@ -77,8 +71,18 @@ class Session < TsungSessions
         
       end
       
+      # Add random string generators
+      config.dynvar_random_strings.each_key do |var_id|
+        config.log.debug_msg("Adding random variable #{var_id} with length #{config.dynvar_random_strings[var_id]['length']}")
+        dynvars = @@session_element[@name][:element].add_element('setdynvars', {
+          'sourcetype' => 'random_string',
+          'length' => config.dynvar_random_strings[var_id]['length']
+        })
+        
+        dynvars.add_element('var', { 'name' => var_id })
+      end
     end
-    
+
     @transactions = []
     
     config.log.debug_msg("Created session: #{self.to_s}")

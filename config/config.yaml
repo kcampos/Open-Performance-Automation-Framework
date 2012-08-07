@@ -68,3 +68,13 @@
     - "Mozilla/4.0 (Windows; MSIE 6.0; Windows NT 6.0)"
     # FireFox 3.5.7 - Vista
     - "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US)"
+# Random strings
+:dynvar_random_strings:
+    # Variables keyed by the variable name
+    rnd_first_name:
+        length: "13"
+    rnd_last_name:
+        length: "13"
+    rnd_tag:
+        length: "6"
+	

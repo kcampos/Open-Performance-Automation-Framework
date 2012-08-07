@@ -41,17 +41,23 @@ class Search
     
     case opts[:search_category]
     when 'all'
-      @request.add("/var/search/general.json?q=#{query}&tags=&sortOn=_lastModified&sortOrder=desc&page=0&items=18&_charset_=utf-8&_=1342558141063")
+      @request.add("/var/search/general.json?q=#{query}&tags=&sortOn=_lastModified&sortOrder=desc&page=0&items=18&_charset_=utf-8&_=1342558141063",
+          {}, { 'subst' => 'true' })
     when 'content'
-      @request.add("/var/search/pool/all.infinity.json?q=#{query}&tags=&sortOn=_lastModified&sortOrder=desc&page=0&items=18&_charset_=utf-8&_=1342558155346")
+      @request.add("/var/search/pool/all.infinity.json?q=#{query}&tags=&sortOn=_lastModified&sortOrder=desc&page=0&items=18&_charset_=utf-8&_=1342558155346",
+          {}, { 'subst' => 'true' })
     when 'people'
-      @request.add("/var/search/users.infinity.json?q=#{query}&tags=&sortOn=_lastModified&sortOrder=desc&page=0&items=18&_charset_=utf-8&_=1342558158607")
+      @request.add("/var/search/users.infinity.json?q=#{query}&tags=&sortOn=_lastModified&sortOrder=desc&page=0&items=18&_charset_=utf-8&_=1342558158607",
+          {}, { 'subst' => 'true' })
     when 'groups'
-      @request.add("/var/search/groups.infinity.json?q=#{query}&tags=&sortOn=_lastModified&sortOrder=desc&category=group&page=0&items=18&_charset_=utf-8&_=1342558161747")
+      @request.add("/var/search/groups.infinity.json?q=#{query}&tags=&sortOn=_lastModified&sortOrder=desc&category=group&page=0&items=18&_charset_=utf-8&_=1342558161747",
+          {}, { 'subst' => 'true' })
     when 'courses'
-      @request.add("/var/search/groups.infinity.json?q=#{query}&tags=&sortOn=_lastModified&sortOrder=desc&category=course&page=0&items=18&_charset_=utf-8&_=1342558164687")
+      @request.add("/var/search/groups.infinity.json?q=#{query}&tags=&sortOn=_lastModified&sortOrder=desc&category=course&page=0&items=18&_charset_=utf-8&_=1342558164687",
+          {}, { 'subst' => 'true' })
     when 'research_projects'
-      @request.add("/var/search/groups.infinity.json?q=#{query}&tags=&sortOn=_lastModified&sortOrder=desc&category=research&page=0&items=18&_charset_=utf-8&_=1342558167607")
+      @request.add("/var/search/groups.infinity.json?q=#{query}&tags=&sortOn=_lastModified&sortOrder=desc&category=research&page=0&items=18&_charset_=utf-8&_=1342558167607",
+          {}, { 'subst' => 'true' })
     end
     
     if (opts[:load_search_page])
