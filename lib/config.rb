@@ -485,7 +485,7 @@ class AutoConfig
     
     # Monitoring
     # TODO: would be nice to support more than just munin
-    if (!self.monitored_servers.empty?)
+    if (self.monitored_servers and !self.monitored_servers.empty?)
       monitored_servers = self.tsung_element.add_element('monitoring')
       self.monitored_servers.each do |monitored_server|
         monitored_server_xml = monitored_servers.add_element('monitor',
