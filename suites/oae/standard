@@ -1,0 +1,9 @@
+# Format: test_name,probability
+accept_contact.rb,2
+customize_profile.rb,1
+general_search.rb,25
+invite_contact.rb,2
+my_contacts.rb,13
+my_library.rb,27
+my_memberships.rb,20
+my_messages.rb,10

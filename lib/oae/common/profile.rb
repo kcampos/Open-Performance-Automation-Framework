@@ -25,6 +25,18 @@ class Profile
 
   end
   
+  # View the user's profile
+  def view(username)
+		@request.add("/~#{username}", {}, { 'subst' => 'true' })
+		@request.add('/var/widgets.json?callback=define')
+		@request.add('/system/me?_charset_=utf-8')
+		@request.add("/~#{username}/public/authprofile.profile.json?_charset_=utf-8&_=1342701233567", {}, { 'subst' => 'true' })
+		@request.add('/var/templates/worlds.2.json?_charset_=utf-8')
+		@request.add('/var/contacts/find-all.json?page=0&items=100&_charset_=utf-8')
+		@request.add("/~#{username}/public/pubspace.infinity.json?_charset_=utf-8&_=1342701234350", {}, { 'subst' => 'true' })
+		@request.add("/~#{username}/public/authprofile.profile.json?_charset_=utf-8&_=1342701234842", {}, { 'subst' => 'true' })
+  end
+  
   
   # Edit profile
   # username, first_name, last_name, and email should all be dynamic variables
