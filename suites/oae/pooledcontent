@@ -1,0 +1,5 @@
+# Format: test_name,probability
+# Example: login.rb,100
+pooledcontent100K.rb,70
+pooledcontent1M.rb,20
+pooledcontent10M.rb,10
