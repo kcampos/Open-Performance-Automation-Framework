@@ -256,24 +256,98 @@ class Content
 
   end
 
-  def tag()
+  def tag(opts = {})
+
+    defaults = {
+      :pooledcontent_var_name => "pooledcontent_add_path_uid"
+    }
+
+    opts = defaults.merge(opts)
+
 #    CLICK TAG AREA
 #
-#    <request><http url='/dev/lib/jquery/plugins/jquery.autoSuggest.sakai-edited.js' version='1.1' if_modified_since='Tue, 07 Aug 2012 15:31:27 GMT' method='GET'></http></request>
-#    <request><http url='/system/staticfiles?_charset_=utf-8&amp;f=%2Fdevwidgets%2Fassignlocation%2Fassignlocation.html&amp;f=%2Fdevwidgets%2Fassignlocation%2Fbundles%2Fdefault.properties' version='1.1' method='GET'></http></request>
+    @request.add("/dev/lib/jquery/plugins/jquery.autoSuggest.sakai-edited.js",
+      {},
+      {}
+    )
+
+    @request.add("/system/staticfiles?_charset_=utf-8&f=%2Fdevwidgets%2Fassignlocation%2Fassignlocation.html&f=%2Fdevwidgets%2Fassignlocation%2Fbundles%2Fdefault.properties",
+      {},
+      {}
+    )
+
 #    <request><http url='/devwidgets/assignlocation/css/assignlocation.css' version='1.1' if_modified_since='Tue, 07 Aug 2012 15:31:27 GMT' method='GET'></http></request>
+    @request.add("/devwidgets/assignlocation/css/assignlocation.css",
+      {},
+      {}
+    )
 #    <request><http url='/devwidgets/assignlocation/javascript/assignlocation.js' version='1.1' if_modified_since='Tue, 07 Aug 2012 15:31:27 GMT' method='GET'></http></request>
+    @request.add("/devwidgets/assignlocation/javascript/assignlocation.js",
+      {},
+      {}
+    )
 #    <request><http url='/dev/lib/jquery/plugins/jsTree/jquery.jstree.sakai-edit.js' version='1.1' if_modified_since='Tue, 07 Aug 2012 15:31:27 GMT' method='GET'></http></request>
+    @request.add("/dev/lib/jquery/plugins/jsTree/jquery.jstree.sakai-edit.js",
+      {},
+      {}
+    )
 #
 #    TAG
 #
 #    <request><http url='/p/mAQEMW75ec' version='1.1'  contents='%3Aoperation=tag&amp;key=%2Ftags%2Ftag2&amp;_charset_=utf-8' content_type='application/x-www-form-urlencoded' method='POST'></http></request>
+    @request.add("/p/%%_#{opts[:pooledcontent_var_name]}%%",
+      {
+        'method' => 'POST',
+        'content_type' => 'application/x-www-form-urlencoded',
+        'contents' => '%3Aoperation=tag&key=%2Ftags%2Ftag2&_charset_=utf-8'
+      },
+      {
+        'subst' => 'true'
+      }
+    )
 #    <request><http url='/p/mAQEMW75ec.activity.json' version='1.1'  contents='sakai%3Aactivity-appid=content&amp;sakai%3Aactivity-templateid=default&amp;sakai%3AactivityMessage=UPDATED_TAGS&amp;_charset_=utf-8' content_type='application/x-www-form-urlencoded' method='POST'></http></request>
+    @request.add("/p/%%_#{opts[:pooledcontent_var_name]}%%.activity.json",
+      {
+        'method' => 'POST',
+        'content_type' => 'application/x-www-form-urlencoded',
+        'contents' => 'sakai%3Aactivity-appid=content&sakai%3Aactivity-templateid=default&sakai%3AactivityMessage=UPDATED_TAGS&_charset_=utf-8'
+      },
+      {
+        'subst' => 'true'
+      }
+    )
   end
 
-  def deleteTag()
+  def deleteTag(opts = {})
+
+    defaults = {
+      :pooledcontent_var_name => "pooledcontent_add_path_uid"
+    }
+
+    opts = defaults.merge(opts)
+
 #    <request><http url='/p/mAQEMW75ec' version='1.1'  contents='key=%2Ftags%2Ftesting&amp;%3Aoperation=deletetag&amp;_charset_=utf-8' content_type='application/x-www-form-urlencoded' method='POST'></http></request>
+    @request.add("/p/%%_#{opts[:pooledcontent_var_name]}%%",
+      {
+        'method' => 'POST',
+        'content_type' => 'application/x-www-form-urlencoded',
+        'contents' => 'key=%2Ftags%2Ftag2&%3Aoperation=deletetag&_charset_=utf-8'
+      },
+      {
+        'subst' => 'true'
+      }
+    )
 #    <request><http url='/p/mAQEMW75ec.activity.json' version='1.1'  contents='sakai%3Aactivity-appid=content&amp;sakai%3Aactivity-templateid=default&amp;sakai%3AactivityMessage=UPDATED_TAGS&amp;_charset_=utf-8' content_type='application/x-www-form-urlencoded' method='POST'></http></request>
+    @request.add("/p/%%_#{opts[:pooledcontent_var_name]}%%.activity.json",
+      {
+        'method' => 'POST',
+        'content_type' => 'application/x-www-form-urlencoded',
+        'contents' => 'sakai%3Aactivity-appid=content&sakai%3Aactivity-templateid=default&sakai%3AactivityMessage=UPDATED_TAGS&_charset_=utf-8'
+      },
+      {
+        'subst' => 'true'
+      }
+    )
   end
 
   # Load My Library

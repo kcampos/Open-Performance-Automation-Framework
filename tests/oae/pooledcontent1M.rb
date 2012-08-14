@@ -51,8 +51,10 @@ create_pooledcontent_req = create_pooledcontent_txn.add_requests
 config.log.info_msg("#{test}: creating pooled content item")
 content = Content.new(create_pooledcontent_req)
 content.createFileFromMyLibrary(username, opts)
-content.addComment();
-content.deleteComment();
+content.addComment()
+content.deleteComment()
+content.tag()
+content.deleteTag()
 
 config.log.info_msg("#{test}: subst string for content id - #{opts[:content_id_subst]}")
 
