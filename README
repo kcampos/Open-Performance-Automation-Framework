@@ -23,7 +23,6 @@ Requires Ruby v1.8.6+
 rdoc required for documentation
 Requires Perl v5.8.8+
 Template.pm module required to generate html statistics
-Subversion v1.5.7+
 Checkout code: Testing Framework Builds
 Environment variables:
 DRB_PORT=9000
@@ -32,7 +31,7 @@ Client
 ---------------
 Unix/OSX machine
 Requires Erlang v5.6.1+
-Requires Tsung v1.3.1+ (see dependencies)
+Requires Tsung v1.4.1+ (see dependencies)
 User running Tsung needs ssh access to all clients with no passphrase
 If running into errors starting remote client see Tsung FAQ for possible solutions
 

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>find (Curriculum)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ks/curriculum/curriculum.rb, line 1551</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">course_code</span>, <span class="ruby-identifier">course_name</span>,  <span class="ruby-identifier">opts</span>={})
+    
+    <span class="ruby-identifier">defaults</span> = {
+      <span class="ruby-identifier">:nav_homepage</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>,
+      <span class="ruby-identifier">:find_person</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'%%_username%%'</span>, <span class="ruby-comment cmt">#user is the dynvar from users.csv</span>
+      <span class="ruby-identifier">:course_description</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">''</span>,
+      <span class="ruby-identifier">:course_number</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">''</span>,
+      <span class="ruby-identifier">:course_name_dyn_var</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'course_name_dyn_var'</span>,
+      <span class="ruby-identifier">:course_name_var_regexp</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'\&quot;\([^\&quot;]+\)\&quot;\,\&quot;[^\&quot;]+\&quot;\,\&quot;'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">course_name</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'\&quot;'</span>
+<span class="ruby-comment cmt">#NOTE: The previous regexp returns the text of the word that is 2 words behind the coures name in the comma delimitted http response. NOTE: The quotation marks surrounding the text are stripped.      </span>
+<span class="ruby-comment cmt"># This word is then included in 2 HTTP Requests that are sent later.</span>
+    }
+
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">opts</span>)
+  
+    <span class="ruby-comment cmt"># Navigate to Curriculum Mgmt</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">homepage</span>() <span class="ruby-keyword kw">unless</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:nav_homepage</span>])
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add_thinktime</span>(<span class="ruby-value">3</span>)
+
+    <span class="ruby-comment cmt"># Enter Course Code BSCI and click Search</span>
+    <span class="ruby-comment cmt"># Search Criteria</span>
+    <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;proposal&quot;</span>)
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService'</span>,
+        {
+          <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+          <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+          <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|13|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|648421FAE6C751B6B3D6A2EC5262F586|org.kuali.student.common.ui.client.service.SearchRpcService|search|org.kuali.student.core.search.dto.SearchRequest|org.kuali.student.core.search.dto.SearchRequest/3917446114|java.lang.Boolean/476441737|java.util.ArrayList/3821976829|org.kuali.student.core.search.dto.SearchParam/3876231949|proposal.queryParam.proposalOptionalName|#{course_code}|proposal.search.generic|proposal.resultColumn.proposalOptionalName|1|2|3|4|1|5|6|0|7|0|8|1|9|10|0|11|12|13|0|0|&quot;</span>
+        }
+      )
+    <span class="ruby-keyword kw">elsif</span>(<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;course&quot;</span>)
+      <span class="ruby-comment cmt"># Only searching by title/name</span>
+      <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">course_code</span>.<span class="ruby-identifier">empty?</span>)
+        <span class="ruby-identifier">contents</span> =  <span class="ruby-node">&quot;5|0|18|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|search|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.lang.Integer/3438268394|java.lang.Boolean/476441737|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|lu.queryParam.luOptionalType|kuali.lu.type.CreditCourse|lu.queryParam.luOptionalState|java.lang.String/2004016611|Approved|Active|Retired|lu.search.mostCurrent.union|lu.resultColumn.luOptionalCode|1|2|3|4|1|5|5|6|10|7|0|8|2|9|10|0|11|9|12|8|3|13|14|13|15|13|16|0|17|18|0|6|0|&quot;</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">contents</span> =  <span class="ruby-node">&quot;5|0|20|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|search|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.lang.Integer/3438268394|java.lang.Boolean/476441737|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|lu.queryParam.luOptionalCode|#{course_code}|lu.queryParam.luOptionalType|kuali.lu.type.CreditCourse|lu.queryParam.luOptionalState|java.lang.String/2004016611|Approved|Active|Retired|lu.search.mostCurrent.union|lu.resultColumn.luOptionalCode|1|2|3|4|1|5|5|6|10|7|0|8|3|9|10|0|11|9|12|0|13|9|14|8|3|15|16|15|17|15|18|0|19|20|0|6|0|&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+      
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService'</span>,
+        {
+          <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+          <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+          <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">contents</span>
+        },
+        {
+          <span class="ruby-identifier">:dyn_variables</span> =<span class="ruby-operator">&gt;</span> [
+            {<span class="ruby-value str">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:course_name_dyn_var</span>], <span class="ruby-value str">&quot;re&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:course_name_var_regexp</span>]}
+          ]
+        }
+      )
+
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add_thinktime</span>(<span class="ruby-value">3</span>)
+      
+      <span class="ruby-comment cmt"># Click on Name=Insects - Code=BSCI 120 and click Select</span>
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/CourseRpcService'</span>,
+        {
+          <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+          <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+          <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|7|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|3C9BBAD14113E13A72476EEE8100687B|org.kuali.student.lum.lu.ui.course.client.service.CourseRpcService|getMetadata|java.lang.String/2004016611|java.util.Map||1|2|3|4|2|5|6|7|0|&quot;</span>
+        }
+      )
+     
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/statementRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|6|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|335FF062A700107AB2A642B325C6C5C5|org.kuali.student.lum.program.client.rpc.StatementRpcService|getStatementTypesForStatementTypeForCourse|java.lang.String/2004016611|kuali.statement.type.course|1|2|3|4|1|5|6|&quot;</span>
+        }
+      )
+
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|11|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|cachingSearch|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|enumeration.queryParam.enumerationType|kuali.lu.campusLocation|enumeration.management.search|enumeration.resultColumn.sortKey|1|2|3|4|1|5|5|0|0|6|1|7|8|0|9|10|11|0|0|&quot;</span>
+        }
+      )
+
+    <span class="ruby-comment cmt"># DUPE      </span>
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|11|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|cachingSearch|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|enumeration.queryParam.enumerationType|kuali.lu.campusLocation|enumeration.management.search|enumeration.resultColumn.sortKey|1|2|3|4|1|5|5|0|0|6|1|7|8|0|9|10|11|0|0|&quot;</span>
+        }
+      )
+      
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|cachingSearch|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.util.ArrayList/3821976829|atp.search.atpSeasonTypes|atp.resultColumn.atpSeasonTypeName|1|2|3|4|1|5|5|0|0|6|0|7|8|0|0|&quot;</span>
+        }
+      )
+
+    <span class="ruby-comment cmt"># DUPE       </span>
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|cachingSearch|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.util.ArrayList/3821976829|atp.search.atpSeasonTypes|atp.resultColumn.atpSeasonTypeName|1|2|3|4|1|5|5|0|0|6|0|7|8|0|0|&quot;</span>
+        }
+      )
+
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|18|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|cachingSearch|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|lrc.queryParam.resultComponent.type|kuali.resultComponentType.grade.finalGrade|lrc.queryParam.resultComponent.idRestrictionList|java.lang.String/2004016611|kuali.resultComponent.grade.letter|kuali.resultComponent.grade.passFail|kuali.resultComponent.grade.satisfactory|kuali.resultComponent.grade.completedNotation|kuali.resultComponent.grade.percentage|lrc.search.resultComponent|lrc.resultColumn.resultComponent.id|1|2|3|4|1|5|5|0|0|6|2|7|8|0|9|7|10|6|5|11|12|11|13|11|14|11|15|11|16|0|17|18|0|0|&quot;</span>
+        }
+      )
+      
+    <span class="ruby-comment cmt"># DUPE </span>
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|18|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|cachingSearch|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|lrc.queryParam.resultComponent.type|kuali.resultComponentType.grade.finalGrade|lrc.queryParam.resultComponent.idRestrictionList|java.lang.String/2004016611|kuali.resultComponent.grade.letter|kuali.resultComponent.grade.passFail|kuali.resultComponent.grade.satisfactory|kuali.resultComponent.grade.completedNotation|kuali.resultComponent.grade.percentage|lrc.search.resultComponent|lrc.resultColumn.resultComponent.id|1|2|3|4|1|5|5|0|0|6|2|7|8|0|9|7|10|6|5|11|12|11|13|11|14|11|15|11|16|0|17|18|0|0|&quot;</span>
+        }
+      )
+
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|11|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|cachingSearch|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|enumeration.queryParam.enumerationType|kuali.lu.campusLocation|enumeration.management.search|enumeration.resultColumn.sortKey|1|2|3|4|1|5|5|0|0|6|1|7|8|0|9|10|11|0|0|&quot;</span>
+        }
+      )
+      
+    <span class="ruby-comment cmt"># DUPE       </span>
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|11|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|cachingSearch|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|enumeration.queryParam.enumerationType|kuali.lu.campusLocation|enumeration.management.search|enumeration.resultColumn.sortKey|1|2|3|4|1|5|5|0|0|6|1|7|8|0|9|10|11|0|0|&quot;</span>
+        }
+      )
+        
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|cachingSearch|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.util.ArrayList/3821976829|atp.search.atpSeasonTypes|atp.resultColumn.atpSeasonTypeName|1|2|3|4|1|5|5|0|0|6|0|7|8|0|0|&quot;</span>
+        }
+      )
+        
+    <span class="ruby-comment cmt"># DUPE       </span>
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService'</span>,
+        {
+          <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+          <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+          <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|cachingSearch|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.util.ArrayList/3821976829|atp.search.atpSeasonTypes|atp.resultColumn.atpSeasonTypeName|1|2|3|4|1|5|5|0|0|6|0|7|8|0|0|&quot;</span>
+        }
+      )
+      
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|18|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|cachingSearch|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|lrc.queryParam.resultComponent.type|kuali.resultComponentType.grade.finalGrade|lrc.queryParam.resultComponent.idRestrictionList|java.lang.String/2004016611|kuali.resultComponent.grade.letter|kuali.resultComponent.grade.passFail|kuali.resultComponent.grade.satisfactory|kuali.resultComponent.grade.completedNotation|kuali.resultComponent.grade.percentage|lrc.search.resultComponent|lrc.resultColumn.resultComponent.id|1|2|3|4|1|5|5|0|0|6|2|7|8|0|9|7|10|6|5|11|12|11|13|11|14|11|15|11|16|0|17|18|0|0|&quot;</span>
+        }
+      )
+
+    <span class="ruby-comment cmt"># DUPE       </span>
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SearchRpcService'</span>,
+        {
+          <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+          <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+          <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|18|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|DB85114A8D2B33860498043707FB831D|org.kuali.student.common.ui.client.service.SearchRpcService|cachingSearch|org.kuali.student.common.search.dto.SearchRequest/2597477947|java.util.ArrayList/3821976829|org.kuali.student.common.search.dto.SearchParam/1222427352|lrc.queryParam.resultComponent.type|kuali.resultComponentType.grade.finalGrade|lrc.queryParam.resultComponent.idRestrictionList|java.lang.String/2004016611|kuali.resultComponent.grade.letter|kuali.resultComponent.grade.passFail|kuali.resultComponent.grade.satisfactory|kuali.resultComponent.grade.completedNotation|kuali.resultComponent.grade.percentage|lrc.search.resultComponent|lrc.resultColumn.resultComponent.id|1|2|3|4|1|5|5|0|0|6|2|7|8|0|9|7|10|6|5|11|12|11|13|11|14|11|15|11|16|0|17|18|0|0|&quot;</span>
+        }
+      )
+
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/CourseRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|6|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|3C9BBAD14113E13A72476EEE8100687B|org.kuali.student.lum.lu.ui.course.client.service.CourseRpcService|getData|java.lang.String/2004016611|%%_#{opts[:course_name_dyn_var]}%%|1|2|3|4|1|5|6|&quot;</span>
+        },{<span class="ruby-value str">'subst'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span>}
+      )
+
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/CourseRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|7|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|3C9BBAD14113E13A72476EEE8100687B|org.kuali.student.lum.lu.ui.course.client.service.CourseRpcService|isLatestVersion|java.lang.String/2004016611|java.lang.Long/4227064769|a359cb8b-508d-41e2-a32b-64a50456e8be|1|2|3|4|2|5|6|7|6|1|0|&quot;</span>
+        }
+      )
+
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/statementRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|6|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|335FF062A700107AB2A642B325C6C5C5|org.kuali.student.lum.program.client.rpc.StatementRpcService|getStatementTypesForStatementTypeForCourse|java.lang.String/2004016611|kuali.statement.type.course|1|2|3|4|1|5|6|&quot;</span>
+        }
+      )
+        
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SecurityRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|7|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|13BFCB3640903B473D12816447D1469D|org.kuali.student.common.ui.client.service.SecurityRpcService|checkAdminPermission|java.lang.String/2004016611|#{opts[:find_person]}|cluModifyItem|1|2|3|4|2|5|5|6|7|&quot;</span>
+        }, {<span class="ruby-value str">'subst'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span>}
+        )
+
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/CourseRpcService'</span>,
+        {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|3C9BBAD14113E13A72476EEE8100687B|org.kuali.student.lum.lu.ui.course.client.service.CourseRpcService|getCourseStatements|java.lang.String/2004016611|%%_#{opts[:course_name_dyn_var]}%%|KUALI.RULE|en|1|2|3|4|3|5|5|5|6|7|8|&quot;</span>
+        },{<span class="ruby-value str">'subst'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span>}
+      )
+
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add_thinktime</span>(<span class="ruby-value">3</span>)
+      
+      <span class="ruby-comment cmt">#Click Detailed View tab -- NOTE: no HTTP Request is sent</span>
+
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add_thinktime</span>(<span class="ruby-value">15</span>)
+
+    <span class="ruby-keyword kw">end</span>
+    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

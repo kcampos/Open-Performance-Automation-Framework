@@ -17,12 +17,12 @@ include Common
 
 class AutoConfig
 
-  attr_accessor :log_dir, :products, :output, :clients, :servers, :secondary_servers, 
+  attr_accessor :log_dir, :products, :output, :clients, :servers, :secondary_servers, :monitored_servers,
     :phases, :agents, :debug, :execute, :intro_xml, :tests, :drb_port, :log, :log_path, :xml_writer, :xml_obj, :context, :verbose,
-    :tsung_log_level, :secondary_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files, :ssl
+    :tsung_log_level, :secondary_context, :tsung_element, :sessions_element, :sso, :thinktime, :import_files, :ssl, :dynvar_random_strings
     
   attr_reader :product, :suite, :directory, :config_setup, :config_dir, :suite_base_dir, :suite_dir, :test_base_dir, :test_dir, :lib_base_dir,
-    :import_base_dir, :import_dir, :data_base_dir, :data_dir
+    :import_base_dir, :import_dir, :data_base_dir, :data_dir, :request_filters
 
   
   def initialize
@@ -39,6 +39,8 @@ class AutoConfig
     @debug            = false
     @execute          = false
     @ssl              = nil
+    
+    init_dynvar_random_strings
     
   end
 
@@ -129,6 +131,21 @@ class AutoConfig
       self.secondary_servers[ref_name] = "#{host}:#{port}"
     end
     
+    #
+    # Servers to monitor with Munin
+    #
+    # TODO: Would be good to be able to configured SNMP and other erlang. But not necessary right now.
+    #
+    print "Server hosts to monitor with Munin [hostname1, hostname2, ...] "
+    monitor_type = "munin"
+    monitored_servers = gets.chomp!
+    
+    if (monitored_servers.empty?)
+      self.log.debug_msg "You will not monitor any servers."
+    else
+      self.monitored_servers = monitored_servers.split(/,/)
+      self.log.debug_msg "You will be monitoring servers with munin: #{self.monitored_servers}"
+    end
     
     #
     # Contexts
@@ -279,6 +296,16 @@ class AutoConfig
     @product
   end
   
+  # Set request filters scoped by product
+  def request_filters
+    if(self.config_setup[:request_filters])
+      @request_filters = (self.config_setup[:request_filters][@product] ? self.config_setup[:request_filters][@product] : {})
+    else
+      @request_filters = {}
+    end
+    @request_filters
+  end
+  
   # Set suite for this particular run
   def suite=(name)
     @suite = (validate_suite(name) ? name : nil)
@@ -394,6 +421,13 @@ class AutoConfig
     xml_doc.elements.each("tsung/servers/server") { |element| self.servers << element.attributes.values_at("host", "port").join(':') }
     self.log.debug_msg "Servers: #{self.servers}"
     
+    # Grab monitors
+    self.monitored_servers = []
+    xml_doc.elements.each("tsung/monitoring/monitor[@type=munin]") do |element|
+      self.monitored_servers << element.attributes["host"]
+    end
+    self.log.debug_msg "Monitoring with Munin: #{self.monitored_servers}"
+    
     # Grab phases
     self.phases = {}
     xml_doc.elements.each("tsung/load/arrivalphase") do |element|
@@ -450,7 +484,14 @@ class AutoConfig
     end
     
     # Monitoring
-    # TODO: we have no option in setup to configure monitoring
+    # TODO: would be nice to support more than just munin
+    if (self.monitored_servers and !self.monitored_servers.empty?)
+      monitored_servers = self.tsung_element.add_element('monitoring')
+      self.monitored_servers.each do |monitored_server|
+        monitored_server_xml = monitored_servers.add_element('monitor',
+            { 'type' => 'munin', 'host' => monitored_server })
+      end
+    end
     
     # Load
     load = self.tsung_element.add_element('load')
@@ -515,7 +556,7 @@ class AutoConfig
     
     self.import_files = {}
     
-    Dir.foreach(@import_dir) do |file|
+    File.directory? @import_dir and Dir.foreach(@import_dir) do |file|
       next if (file !~ /.+\.format$/) #skip if anything other than a format file
       
       csv_file = file.sub('.format', '.csv')
@@ -539,4 +580,7 @@ class AutoConfig
     
   end
 
+	def init_dynvar_random_strings
+		self.dynvar_random_strings = @config_setup[:dynvar_random_strings]
+	end
 end

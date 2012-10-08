@@ -60,13 +60,7 @@ class Session < TsungSessions
       config.log.debug_msg("Session-> entering write_xml_elements...")
       @@session_element[@name][:element] = self.config.sessions_element.add_element('session', {"name" => @name, "probability" => @probability, "type" => @type})
       @@session_element[@name][:written] = true
-      
-      # User db
-      # Dyn vars
-      #dynvars = @@session_element[@name][:element].add_element('setdynvars', {"sourcetype" => "file", "fileid" => "userdb", "delimiter" => ",", "order" => "iter"})
-      #dynvars.add_element('var', {"name" => "username"})
-      #dynvars.add_element('var', {"name" => "user_password"})
-      
+
       # Add elements for each import file
       config.import_files.each_key do |import_file|
         
@@ -77,8 +71,18 @@ class Session < TsungSessions
         
       end
       
+      # Add random string generators
+      config.dynvar_random_strings.each_key do |var_id|
+        config.log.debug_msg("Adding random variable #{var_id} with length #{config.dynvar_random_strings[var_id]['length']}")
+        dynvars = @@session_element[@name][:element].add_element('setdynvars', {
+          'sourcetype' => 'random_string',
+          'length' => config.dynvar_random_strings[var_id]['length']
+        })
+        
+        dynvars.add_element('var', { 'name' => var_id })
+      end
     end
-    
+
     @transactions = []
     
     config.log.debug_msg("Created session: #{self.to_s}")
@@ -251,7 +255,11 @@ class Requests < Transaction
     http = req.add_element('http', opts)
     
     # Write basic authentication for request if necessary
-    http.add_element('www_authenticate', {'userid' => auth_opt[:auth][:username], 'passwd' => auth_opt[:auth][:password]}) if(!auth_opt[:auth].empty?)
+    if(self.config.request_filters[:auth])
+      http.add_element('www_authenticate', {'userid' => self.config.request_filters[:auth][:username], 'passwd' => self.config.request_filters[:auth][:password]})
+    elsif(!auth_opt[:auth].empty?)
+      http.add_element('www_authenticate', {'userid' => auth_opt[:auth][:username], 'passwd' => auth_opt[:auth][:password]})
+    end
     
     # BUG - need a way to dynamically ingest custome headers per product
     # BUG - hardcoded to first app server

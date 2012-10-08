@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>search (Organization)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ks/organization/organization.rb, line 143</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">search</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">opts</span>={})
+    
+    <span class="ruby-identifier">defaults</span> = {
+      <span class="ruby-identifier">:ajax_num_char</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">length</span> <span class="ruby-comment cmt">#number of chars to type before selecting org from popup</span>
+    }
+    
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">opts</span>)
+    
+    <span class="ruby-comment cmt"># AJAX popup while typing in org name</span>
+    <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">in</span> <span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:ajax_num_char</span>]
+      <span class="ruby-identifier">itr</span> = <span class="ruby-identifier">i</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.core.organization.ui.OrgEntry/rpcservices/SearchRpcService'</span>,
+        {
+          <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+          <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+          <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|12|#{@request.url}/org.kuali.student.core.organization.ui.OrgEntry/|9C6F936F4CEB3E5CBB16043EFF7A3F6A|org.kuali.student.common.ui.client.service.SearchRpcService|search|org.kuali.student.core.search.dto.SearchRequest|org.kuali.student.core.search.dto.SearchRequest/3917446114|java.lang.Boolean/476441737|java.util.ArrayList/3821976829|org.kuali.student.core.search.dto.SearchParam/3876231949|org.queryParam.orgOptionalLongName|#{name[0..itr]}|org.search.generic|1|2|3|4|1|5|6|0|7|0|8|1|9|10|0|11|12|0|0|0|&quot;</span>
+        }
+      )
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># Search committed</span>
+    
+    <span class="ruby-comment cmt"># Not sure if these requests have hardcoded ID info about a specific org &quot;Fisheries Dept&quot; -- FIX</span>
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.core.organization.ui.OrgEntry/rpcservices/OrgRpcService'</span>,
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|6|#{@request.url}/org.kuali.student.core.organization.ui.OrgEntry/|AE88E9E993C2C04C4BAC534CC092D550|org.kuali.student.core.organization.ui.client.service.OrgRpcService|fetchOrg|java.lang.String|deea07ad-7219-4ecf-966d-1bbbcc05242d|1|2|3|4|1|5|6|&quot;</span>
+      }
+    )
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.core.organization.ui.OrgEntry/rpcservices/OrgRpcService'</span>,
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|6|#{@request.url}/org.kuali.student.core.organization.ui.OrgEntry/|AE88E9E993C2C04C4BAC534CC092D550|org.kuali.student.core.organization.ui.client.service.OrgRpcService|getOrgPositionPersonRelation|java.lang.String|deea07ad-7219-4ecf-966d-1bbbcc05242d|1|2|3|4|1|5|6|&quot;</span>
+      }
+    )
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.core.organization.ui.OrgEntry/rpcservices/OrgRpcService'</span>,
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|4|#{@request.url}/org.kuali.student.core.organization.ui.OrgEntry/|AE88E9E993C2C04C4BAC534CC092D550|org.kuali.student.core.organization.ui.client.service.OrgRpcService|getOrgTypes|1|2|3|4|0|&quot;</span>
+      }
+    )
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.core.organization.ui.OrgEntry/rpcservices/SearchRpcService'</span>,
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|12|#{@request.url}/org.kuali.student.core.organization.ui.OrgEntry/|9C6F936F4CEB3E5CBB16043EFF7A3F6A|org.kuali.student.common.ui.client.service.SearchRpcService|search|org.kuali.student.core.search.dto.SearchRequest|org.kuali.student.core.search.dto.SearchRequest/3917446114|java.lang.Boolean/476441737|java.util.ArrayList/3821976829|org.kuali.student.core.search.dto.SearchParam/3876231949|org.queryParam.orgOptionalId|abcd4670-ba9f-42ac-b4ed-35409a68e35a|org.search.generic|1|2|3|4|1|5|6|0|7|0|8|1|9|10|0|11|12|0|0|0|&quot;</span>
+      }
+    )
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.core.organization.ui.OrgEntry/rpcservices/OrgRpcService'</span>,
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|4|#{@request.url}/org.kuali.student.core.organization.ui.OrgEntry/|AE88E9E993C2C04C4BAC534CC092D550|org.kuali.student.core.organization.ui.client.service.OrgRpcService|getOrgOrgRelationTypes|1|2|3|4|0|&quot;</span>
+      }
+    )
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.core.organization.ui.OrgEntry/rpcservices/SearchRpcService'</span>,
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|12|#{@request.url}/org.kuali.student.core.organization.ui.OrgEntry/|9C6F936F4CEB3E5CBB16043EFF7A3F6A|org.kuali.student.common.ui.client.service.SearchRpcService|search|org.kuali.student.core.search.dto.SearchRequest|org.kuali.student.core.search.dto.SearchRequest/3917446114|java.lang.Boolean/476441737|java.util.ArrayList/3821976829|org.kuali.student.core.search.dto.SearchParam/3876231949|org.queryParam.orgOptionalId|abcd4670-ba9f-42ac-b4ed-35409a68e35a|org.search.generic|1|2|3|4|1|5|6|0|7|0|8|1|9|10|0|11|12|0|0|0|&quot;</span>
+      }
+    )
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.core.organization.ui.OrgEntry/rpcservices/OrgRpcService'</span>,
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|4|#{@request.url}/org.kuali.student.core.organization.ui.OrgEntry/|AE88E9E993C2C04C4BAC534CC092D550|org.kuali.student.core.organization.ui.client.service.OrgRpcService|getOrgOrgRelationTypes|1|2|3|4|0|&quot;</span>
+      }
+    )
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.core.organization.ui.OrgEntry/rpcservices/SearchRpcService'</span>,
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|12|#{@request.url}/org.kuali.student.core.organization.ui.OrgEntry/|9C6F936F4CEB3E5CBB16043EFF7A3F6A|org.kuali.student.common.ui.client.service.SearchRpcService|search|org.kuali.student.core.search.dto.SearchRequest|org.kuali.student.core.search.dto.SearchRequest/3917446114|java.lang.Boolean/476441737|java.util.ArrayList/3821976829|org.kuali.student.core.search.dto.SearchParam/3876231949|org.queryParam.orgOptionalId|ed6c5aad-9388-4c5a-bfe9-fe53ee0c6d0c|org.search.generic|1|2|3|4|1|5|6|0|7|0|8|1|9|10|0|11|12|0|0|0|&quot;</span>
+      }
+    )
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.core.organization.ui.OrgEntry/rpcservices/OrgRpcService'</span>,
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|4|#{@request.url}/org.kuali.student.core.organization.ui.OrgEntry/|AE88E9E993C2C04C4BAC534CC092D550|org.kuali.student.core.organization.ui.client.service.OrgRpcService|getOrgOrgRelationTypes|1|2|3|4|0|&quot;</span>
+      }
+    )
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.core.organization.ui.OrgEntry/rpcservices/SearchRpcService'</span>,
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|12|#{@request.url}/org.kuali.student.core.organization.ui.OrgEntry/|9C6F936F4CEB3E5CBB16043EFF7A3F6A|org.kuali.student.common.ui.client.service.SearchRpcService|search|org.kuali.student.core.search.dto.SearchRequest|org.kuali.student.core.search.dto.SearchRequest/3917446114|java.lang.Boolean/476441737|java.util.ArrayList/3821976829|org.kuali.student.core.search.dto.SearchParam/3876231949|org.queryParam.orgOptionalId|ed6c5aad-9388-4c5a-bfe9-fe53ee0c6d0c|org.search.generic|1|2|3|4|1|5|6|0|7|0|8|1|9|10|0|11|12|0|0|0|&quot;</span>
+      }
+    )
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.core.organization.ui.OrgEntry/rpcservices/OrgRpcService'</span>,
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|4|#{@request.url}/org.kuali.student.core.organization.ui.OrgEntry/|AE88E9E993C2C04C4BAC534CC092D550|org.kuali.student.core.organization.ui.client.service.OrgRpcService|getOrgOrgRelationTypes|1|2|3|4|0|&quot;</span>
+      }
+    )
+    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

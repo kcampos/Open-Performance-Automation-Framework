@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (Session)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/tsung-api.rb, line 50</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">config</span>, <span class="ruby-identifier">session_name</span>, <span class="ruby-identifier">probability</span>=<span class="ruby-value str">'100%'</span>, <span class="ruby-identifier">type</span>=<span class="ruby-value str">'ts_http'</span>)
+    <span class="ruby-identifier">config</span>.<span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug_msg</span>(<span class="ruby-value str">&quot;Session-&gt; entering initialize...&quot;</span>)
+    <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">config</span>)
+    <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">session_name</span>
+    <span class="ruby-ivar">@probability</span> = <span class="ruby-identifier">probability</span>
+    <span class="ruby-ivar">@type</span> = <span class="ruby-identifier">type</span>
+    <span class="ruby-ivar">@@session_element</span>[<span class="ruby-ivar">@name</span>] = {} <span class="ruby-keyword kw">if</span>(<span class="ruby-operator">!</span><span class="ruby-ivar">@@session_element</span>[<span class="ruby-ivar">@name</span>])
+    
+    <span class="ruby-comment cmt"># Check if this specific session element has been written</span>
+    <span class="ruby-keyword kw">if</span>(<span class="ruby-operator">!</span><span class="ruby-ivar">@@session_element</span>[<span class="ruby-ivar">@name</span>][<span class="ruby-identifier">:written</span>])
+      <span class="ruby-identifier">config</span>.<span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug_msg</span>(<span class="ruby-value str">&quot;Session-&gt; entering write_xml_elements...&quot;</span>)
+      <span class="ruby-ivar">@@session_element</span>[<span class="ruby-ivar">@name</span>][<span class="ruby-identifier">:element</span>] = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">sessions_element</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'session'</span>, {<span class="ruby-value str">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@name</span>, <span class="ruby-value str">&quot;probability&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@probability</span>, <span class="ruby-value str">&quot;type&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@type</span>})
+      <span class="ruby-ivar">@@session_element</span>[<span class="ruby-ivar">@name</span>][<span class="ruby-identifier">:written</span>] = <span class="ruby-keyword kw">true</span>
+      
+      <span class="ruby-comment cmt"># User db</span>
+      <span class="ruby-comment cmt"># Dyn vars</span>
+      <span class="ruby-comment cmt">#dynvars = @@session_element[@name][:element].add_element('setdynvars', {&quot;sourcetype&quot; =&gt; &quot;file&quot;, &quot;fileid&quot; =&gt; &quot;userdb&quot;, &quot;delimiter&quot; =&gt; &quot;,&quot;, &quot;order&quot; =&gt; &quot;iter&quot;})</span>
+      <span class="ruby-comment cmt">#dynvars.add_element('var', {&quot;name&quot; =&gt; &quot;username&quot;})</span>
+      <span class="ruby-comment cmt">#dynvars.add_element('var', {&quot;name&quot; =&gt; &quot;user_password&quot;})</span>
+      
+      <span class="ruby-comment cmt"># Add elements for each import file</span>
+      <span class="ruby-identifier">config</span>.<span class="ruby-identifier">import_files</span>.<span class="ruby-identifier">each_key</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">import_file</span><span class="ruby-operator">|</span>
+        
+        <span class="ruby-identifier">dynvars</span> = <span class="ruby-ivar">@@session_element</span>[<span class="ruby-ivar">@name</span>][<span class="ruby-identifier">:element</span>].<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'setdynvars'</span>, 
+          {<span class="ruby-value str">&quot;sourcetype&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;file&quot;</span>, <span class="ruby-value str">&quot;fileid&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">import_files</span>[<span class="ruby-identifier">import_file</span>][<span class="ruby-identifier">:id</span>], <span class="ruby-value str">&quot;delimiter&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;,&quot;</span>, <span class="ruby-value str">&quot;order&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">import_files</span>[<span class="ruby-identifier">import_file</span>][<span class="ruby-identifier">:order</span>]})
+        
+        <span class="ruby-identifier">config</span>.<span class="ruby-identifier">import_files</span>[<span class="ruby-identifier">import_file</span>][<span class="ruby-identifier">:vars</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">var</span><span class="ruby-operator">|</span> <span class="ruby-identifier">dynvars</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'var'</span>, {<span class="ruby-value str">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">var</span>}) }
+        
+      <span class="ruby-keyword kw">end</span>
+      
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-ivar">@transactions</span> = []
+    
+    <span class="ruby-identifier">config</span>.<span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug_msg</span>(<span class="ruby-node">&quot;Created session: #{self.to_s}&quot;</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

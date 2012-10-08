@@ -110,9 +110,10 @@ class Content
     
   end
   
-  # Load homepage
-  def homepage
-    
+  # Load My Library
+  def my_library(username)
+    @request.add("/var/search/pool/auth-all.json?userid=#{username}&sortOn=_lastModified&sortOrder=desc&q=&page=0&items=18&_charset_=utf-8&_=1342652534274",
+    		{}, { 'subst' => 'true' })
   end
   
   

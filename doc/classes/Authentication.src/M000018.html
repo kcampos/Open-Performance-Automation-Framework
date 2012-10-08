@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>register (Authentication)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/oae/common/authentication.rb, line 58</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">register</span>(<span class="ruby-identifier">username</span>, <span class="ruby-identifier">opts</span>={})
+    
+    <span class="ruby-identifier">defaults</span> = {
+      <span class="ruby-identifier">:load_homepage</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>,
+      <span class="ruby-identifier">:password</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;password&quot;</span>,
+      <span class="ruby-identifier">:password_confirm</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;password&quot;</span>,
+      <span class="ruby-identifier">:first_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Test&quot;</span>,
+      <span class="ruby-identifier">:last_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;User&quot;</span>,
+      <span class="ruby-identifier">:email</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{username}%40test.com&quot;</span>,
+      <span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Mr.&quot;</span>,
+      <span class="ruby-identifier">:institution</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;rSmart&quot;</span>,
+      <span class="ruby-identifier">:role</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Administrator&quot;</span>,
+      <span class="ruby-identifier">:phone</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;555-555-5555&quot;</span>,
+      <span class="ruby-identifier">:lms</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Blackboard&quot;</span>
+    }
+    
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">opts</span>)
+    
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">homepage</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:load_homepage</span>])
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add_thinktime</span>(<span class="ruby-value">5</span>)
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/register'</span>)
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">&quot;http://rsmart.app11.hubspot.com/salog.js.aspx&quot;</span>,
+      {}, {<span class="ruby-identifier">:external</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})
+      
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">&quot;http://rsmart.app11.hubspot.com/salog20.js?v=2.15&quot;</span>,
+      {}, {<span class="ruby-identifier">:external</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})
+      
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">&quot;http://www.google.com/recaptcha/api/js/recaptcha_ajax.js&quot;</span>, <span class="ruby-comment cmt">#304</span>
+      {}, {<span class="ruby-identifier">:external</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/system/me?_charset_=utf-8&amp;_=1317932031489'</span>)
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/dev/lib/misc/l10n/cultures/globalize.culture.en-US.js?_charset_=utf-8&amp;_=1324512279928'</span>)
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/system/batch?_charset_=utf-8&amp;requests=%5B%7B%22url%22%3A%22%2Fdevwidgets%2Fcaptcha%2Fcaptcha.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fcaptcha%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D&amp;_=1324512280255'</span>)
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/system/batch?_charset_=utf-8&amp;requests=%5B%7B%22url%22%3A%22%2Fdevwidgets%2Ftopnavigation%2Ftopnavigation.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ffooter%2Ffooter.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ftopnavigation%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ffooter%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D&amp;_=1324512280290'</span>)
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/system/batch'</span>,
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'application/x-www-form-urlencoded; charset=UTF-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;_charset_=utf-8&amp;requests=%5B%7B%22url%22%3A%22%2Fdevwidgets%2Facceptterms%2Facceptterms.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ffileupload%2Ffileupload.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fnewaddcontent%2Fnewaddcontent.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fsendmessage%2Fsendmessage.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Faddtocontacts%2Faddtocontacts.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fjoingroup%2Fjoingroup.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fjoinrequestbuttons%2Fjoinrequestbuttons.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ftooltip%2Ftooltip.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Faccountpreferences%2Faccountpreferences.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fchangepic%2Fchangepic.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fsavecontent%2Fsavecontent.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fnewsharecontent%2Fnewsharecontent.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fpersoninfo%2Fpersoninfo.html%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Facceptterms%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ffileupload%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fnewaddcontent%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fsendmessage%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Faddtocontacts%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fjoingroup%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fjoinrequestbuttons%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Ftooltip%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Faccountpreferences%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fchangepic%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fsavecontent%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fnewsharecontent%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%2C%7B%22url%22%3A%22%2Fdevwidgets%2Fpersoninfo%2Fbundles%2Fdefault.properties%22%2C%22method%22%3A%22GET%22%2C%22_charset_%22%3A%22utf-8%22%7D%5D&quot;</span>
+      }
+    )
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/system/captcha?_charset_=utf-8'</span>)
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add_thinktime</span>(<span class="ruby-value">5</span>)
+    
+    <span class="ruby-comment cmt"># Filling out - forward lookup</span>
+    <span class="ruby-comment cmt">#giving 404 - if using dyn variable substitution we have to parse out the part of user ID that's not dynamic</span>
+    <span class="ruby-identifier">lookup</span> = <span class="ruby-identifier">username</span>.<span class="ruby-identifier">match</span>(<span class="ruby-value str">'^([^%%]+)'</span>).<span class="ruby-identifier">to_s</span>
+    <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">in</span> <span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">lookup</span>.<span class="ruby-identifier">length</span>
+      <span class="ruby-identifier">itr</span> = <span class="ruby-identifier">i</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-node">&quot;/system/userManager/user.exists.html?userid=#{lookup[0..itr]}&amp;_charset_=utf-8&amp;_=1317945057343&quot;</span>, 
+        {}, { <span class="ruby-value str">'subst'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span> }
+      )    
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add_thinktime</span>(<span class="ruby-value">25</span>)
+    
+    <span class="ruby-comment cmt"># Submit form</span>
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/system/userManager/user.create.html'</span>,
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'application/x-www-form-urlencoded; charset=UTF-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;_charset_=utf-8&amp;locale=en_US&amp;timezone=America%2FPhoenix&amp;pwd=#{opts[:password]}&amp;pwdConfirm=#{opts[:password_confirm]}&amp;firstName=#{opts[:first_name]}&amp;lastName=#{opts[:last_name]}&amp;email=#{opts[:email]}&amp;%3Aname=#{username}&amp;%3Asakai%3Aprofile-import=%7B%22basic%22%3A%7B%22elements%22%3A%7B%22firstName%22%3A%7B%22value%22%3A%22#{opts[:first_name]}%22%7D%2C%22lastName%22%3A%7B%22value%22%3A%22#{opts[:last_name]}%22%7D%2C%22email%22%3A%7B%22value%22%3A%22#{opts[:email]}%22%7D%7D%2C%22access%22%3A%22everybody%22%7D%2C%22email%22%3A%22#{opts[:email]}%22%7D&amp;%3Acreate-auth=reCAPTCHA.net&amp;%3Arecaptcha-challenge=03AHJ_Vuvbk6sMH8HixXQkpvZ39wx-6hYbl5ZHFcpkxJh3_ZRBiSYxXOQWPdLPKb9F3FSpnYfZyo4huD37kHg8z3E3IsOfjotxlOh7tv4wnlVxzOtSe-7SOiNWHRmt00t7ah01jFYNczwj98zBooVQmkLL-RNsd8Axmg&amp;%3Arecaptcha-response=tiaprw+For&amp;%3Aregistration=%7B%22hubspotutk%22%3A%22d2374244454e4d6f8c00c49801db7495%22%2C%22title%22%3A%22#{opts[:title]}%22%2C%22institution%22%3A%22#{opts[:institution]}%22%2C%22role%22%3A%22#{opts[:role]}%22%2C%22phone%22%3A%22#{opts[:phone]}%22%2C%22currentLms%22%3A%22#{opts[:lms]}%22%2C%22contactPreferences%22%3A%7B%7D%7D&quot;</span>,
+        <span class="ruby-identifier">:auth</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:username</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'admin'</span>, <span class="ruby-identifier">:password</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'admin'</span>}
+      }, { <span class="ruby-value str">'subst'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span> }
+    )
+    
+    
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">login</span>(<span class="ruby-identifier">username</span>, <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:password</span>], {<span class="ruby-identifier">:load_homepage</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">:thinktime</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>})
+    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_config_xml (AutoConfig)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/config.rb, line 424</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_config_xml</span>
+
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug_msg</span> <span class="ruby-value str">&quot;Entering write_config_xml...&quot;</span>
+    <span class="ruby-comment cmt"># FIX: don't hardcode dtd path</span>
+    <span class="ruby-identifier">dtd</span> = <span class="ruby-identifier">get_dtd_path</span>
+    <span class="ruby-identifier">xml_doc</span> = <span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;&lt;?xml version='1.0?&gt;&lt;!DOCTYPE tsung SYSTEM '#{dtd}'&gt;&quot;</span>)
+    <span class="ruby-comment cmt"># Store xml doc object in config </span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">xml_obj</span> = <span class="ruby-identifier">xml_doc</span>
+    
+    <span class="ruby-identifier">tsung_opts</span> = {
+      <span class="ruby-value str">&quot;loglevel&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{self.tsung_log_level}&quot;</span>,
+      <span class="ruby-value str">&quot;version&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;1.0&quot;</span>
+    }
+    <span class="ruby-identifier">tsung_opts</span>[<span class="ruby-value str">&quot;dumptraffic&quot;</span>] = <span class="ruby-value str">&quot;true&quot;</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">verbose</span>)
+    
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tsung_element</span> = <span class="ruby-identifier">xml_doc</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'tsung'</span>, <span class="ruby-identifier">tsung_opts</span>)
+    
+    <span class="ruby-comment cmt"># Clients</span>
+    <span class="ruby-identifier">clients</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tsung_element</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'clients'</span>)
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">clients</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">client</span><span class="ruby-operator">|</span> <span class="ruby-identifier">clients</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'client'</span>, {<span class="ruby-value str">&quot;host&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">client</span>, <span class="ruby-value str">&quot;use_controller_vm&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;true&quot;</span>})}
+    
+    <span class="ruby-comment cmt"># Servers</span>
+    <span class="ruby-identifier">servers</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tsung_element</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'servers'</span>)
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">servers</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">server</span><span class="ruby-operator">|</span>
+      (<span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span>) = <span class="ruby-identifier">server</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">':'</span>)
+      <span class="ruby-identifier">servers</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'server'</span>, {<span class="ruby-value str">&quot;host&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">host</span>, <span class="ruby-value str">&quot;port&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">port</span>, <span class="ruby-value str">&quot;type&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;tcp&quot;</span>})
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># Monitoring</span>
+    <span class="ruby-comment cmt"># TODO: we have no option in setup to configure monitoring</span>
+    
+    <span class="ruby-comment cmt"># Load</span>
+    <span class="ruby-identifier">load</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tsung_element</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'load'</span>)
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">phases</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">phase</span>, <span class="ruby-identifier">detail</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">arrival_phase</span> = <span class="ruby-identifier">load</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'arrivalphase'</span>, {<span class="ruby-value str">&quot;phase&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">phase</span>, <span class="ruby-value str">&quot;duration&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">detail</span>[<span class="ruby-identifier">:duration</span>], <span class="ruby-value str">&quot;unit&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">detail</span>[<span class="ruby-identifier">:unit</span>]})
+      <span class="ruby-identifier">arrival_phase</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'users'</span>, {<span class="ruby-value str">&quot;interarrival&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">detail</span>[<span class="ruby-identifier">:user_interval</span>], <span class="ruby-value str">&quot;unit&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">detail</span>[<span class="ruby-identifier">:user_unit</span>]})
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># Options - user agent</span>
+    <span class="ruby-identifier">options</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tsung_element</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'options'</span>)
+    <span class="ruby-identifier">option</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'option'</span>, {<span class="ruby-value str">&quot;type&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;ts_http&quot;</span>, <span class="ruby-value str">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;user_agent&quot;</span>})
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">agents</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">agent</span>, <span class="ruby-identifier">probability</span><span class="ruby-operator">|</span> 
+      <span class="ruby-identifier">ua</span> = <span class="ruby-identifier">option</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'user_agent'</span>, {<span class="ruby-value str">&quot;probability&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">probability</span>})
+      <span class="ruby-identifier">ua</span>.<span class="ruby-identifier">add_text</span>(<span class="ruby-identifier">agent</span>)
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># BUG -HARDCODED</span>
+    <span class="ruby-identifier">parse_import_files</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">import_files</span>.<span class="ruby-identifier">each_key</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">import_file</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">options</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'option'</span>, {<span class="ruby-value str">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;file_server&quot;</span>, <span class="ruby-value str">&quot;id&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">import_files</span>[<span class="ruby-identifier">import_file</span>][<span class="ruby-identifier">:id</span>], <span class="ruby-value str">&quot;value&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{@import_dir}/#{import_file}&quot;</span>})
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># DEBUG</span>
+    <span class="ruby-comment cmt">#self.log.debug_msg &quot;XML doc&quot;</span>
+    <span class="ruby-comment cmt">#xml_doc.write($stdout, 2)</span>
+    <span class="ruby-comment cmt">#tsung.document.write($stdout, 2)</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug_msg</span> <span class="ruby-value str">&quot;Exiting write_config_xml...&quot;</span>
+    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

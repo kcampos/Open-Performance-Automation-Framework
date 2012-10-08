@@ -1,0 +1,77 @@
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="viewId"
+
+%%_viewId%%
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="formKey"
+
+%%_view_formKey%%
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="validateDirty"
+
+%%_validateDirty%%
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="calendarType"
+
+AcademicCalendar
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="name"
+
+2011-2012 Academic Calendar
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="year"
+
+%%_year%%
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="pageId"
+
+%%_pageId%%
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="view.currentPage.header.headerText"
+
+&nbsp;
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="jumpToName"
+
+%%_jumpToName%%
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="formHistory.historyParameterString"
+
+%%_formHistoryHistoryParamString%%
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="methodToCall"
+
+view
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="actionParameters[selectedLineIndex]"
+
+%%_actionParmsSelectedLineIndex%%
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="actionParameters[showHistory]"
+
+%%_actionParmsShowHist%%
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="actionParameters[selectedCollectionPath]"
+
+%%_actionParmsSelectedCollectionPath%%
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="actionParameters[showHome]"
+
+%%_actionParmsShowHome%%
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="showHistory"
+
+%%_showHistory%%
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="showHome"
+
+%%_showHome%%
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="focusId"
+
+%%_focusId%%
+-----------------------------2012-06-1314:13:36-07001111110
+Content-Disposition: form-data; name="jumpToId"
+
+%%_jumpToId%%
+-----------------------------2012-06-1314:13:36-07001111110--

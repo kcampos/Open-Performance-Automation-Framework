@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>add (Requests)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/tsung-api.rb, line 172</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">opts</span>={}, <span class="ruby-identifier">req_opts</span>={})
+    
+    <span class="ruby-identifier">defaults</span> = {
+      <span class="ruby-value str">&quot;method&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'GET'</span>,
+      <span class="ruby-value str">&quot;version&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'1.1'</span>,
+      <span class="ruby-value str">&quot;url&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">url</span>,
+      <span class="ruby-identifier">:auth</span> =<span class="ruby-operator">&gt;</span> {} <span class="ruby-comment cmt">#accepts {:username =&gt; 'user_id', :password =&gt; 'pass'} hash</span>
+    }
+    
+    <span class="ruby-comment cmt"># This is used to tell Tsung if we want a dynamic substitution</span>
+    <span class="ruby-identifier">req_defaults</span> = {
+      <span class="ruby-value str">&quot;subst&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'false'</span>,
+      <span class="ruby-identifier">:ssl</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">ssl</span>,
+      <span class="ruby-identifier">:dyn_variables</span> =<span class="ruby-operator">&gt;</span> {
+        <span class="ruby-comment cmt"># &quot;name&quot;</span>
+        <span class="ruby-comment cmt"># &quot;re&quot;</span>
+      },
+      <span class="ruby-identifier">:custom_headers</span> =<span class="ruby-operator">&gt;</span> {},
+      <span class="ruby-identifier">:secondary_server_req</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>,
+      <span class="ruby-identifier">:external</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
+    }
+
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">opts</span>)
+    <span class="ruby-identifier">req_opts</span> = <span class="ruby-identifier">req_defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">req_opts</span>)
+    <span class="ruby-ivar">@http_mode</span> = (<span class="ruby-identifier">req_opts</span>[<span class="ruby-identifier">:ssl</span>] <span class="ruby-operator">?</span> <span class="ruby-value str">'https'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'http'</span>)
+        
+    <span class="ruby-comment cmt"># Split the hashes to take our dyn_variable</span>
+    <span class="ruby-comment cmt">#dyn_variables = req_opts.reject{|k,v| k == &quot;subst&quot;}[:dyn_variables]</span>
+    <span class="ruby-identifier">auth_opt</span> = <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:auth</span>}
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">reject!</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:auth</span>}
+    <span class="ruby-identifier">dyn_variables</span> = <span class="ruby-identifier">req_opts</span>[<span class="ruby-identifier">:dyn_variables</span>]
+    <span class="ruby-identifier">custom_headers</span> = <span class="ruby-identifier">req_opts</span>[<span class="ruby-identifier">:custom_headers</span>]
+    <span class="ruby-identifier">secondary_server_req</span> = <span class="ruby-identifier">req_opts</span>[<span class="ruby-identifier">:secondary_server_req</span>]
+    <span class="ruby-identifier">external</span> = <span class="ruby-identifier">req_opts</span>[<span class="ruby-identifier">:external</span>]
+    <span class="ruby-identifier">req_opts</span>.<span class="ruby-identifier">delete_if</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;subst&quot;</span>}
+    
+    
+    <span class="ruby-comment cmt"># Make sure we have a proper URL format</span>
+    <span class="ruby-identifier">base_url</span> = <span class="ruby-value str">''</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug_msg</span>(<span class="ruby-node">&quot;URL: #{url}\nLast Req External - Beg: #{@@last_req_external}&quot;</span>)
+    
+    <span class="ruby-comment cmt"># Secondary server request</span>
+    <span class="ruby-keyword kw">if</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">secondary_server_req</span>.<span class="ruby-identifier">nil?</span>)
+      <span class="ruby-comment cmt"># Secondary server, just set it to fully qualified hostname</span>
+      <span class="ruby-identifier">base_url</span> = <span class="ruby-node">&quot;#{@http_mode}://#{secondary_server_req}&quot;</span>
+      <span class="ruby-identifier">base_url</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;/#{self.config.secondary_context}&quot;</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-operator">!</span><span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">secondary_context</span>.<span class="ruby-identifier">empty?</span>)
+      <span class="ruby-identifier">base_url</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">'/'</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">url</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp re">/^\//</span>)
+      <span class="ruby-ivar">@@last_req_fq</span> = <span class="ruby-keyword kw">true</span>
+    
+    <span class="ruby-keyword kw">elsif</span>(<span class="ruby-identifier">url</span> <span class="ruby-operator">!~</span> <span class="ruby-node">/^#{http_mode}/</span>)
+      
+      <span class="ruby-comment cmt"># Take care of last request external</span>
+      <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@@last_req_external</span> <span class="ruby-keyword kw">or</span> (<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">ssl</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@@last_req_fq</span>))
+        <span class="ruby-comment cmt"># We need to make the request fully qualified</span>
+        <span class="ruby-identifier">base_url</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">url</span>
+        <span class="ruby-ivar">@@last_req_fq</span> = <span class="ruby-keyword kw">true</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">base_url</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;/#{self.config.context}&quot;</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">url</span> <span class="ruby-operator">!~</span> <span class="ruby-node">/^\/#{self.config.context}/</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">context</span>.<span class="ruby-identifier">empty?</span>)
+      <span class="ruby-keyword kw">end</span>
+      
+      <span class="ruby-identifier">base_url</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">'/'</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">url</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp re">/^\//</span>)
+      
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-identifier">url</span> = <span class="ruby-identifier">base_url</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">url</span>
+    <span class="ruby-identifier">opts</span>[<span class="ruby-value str">&quot;url&quot;</span>] = <span class="ruby-identifier">url</span>
+    
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug_msg</span>(<span class="ruby-node">&quot;New URL: #{url}&quot;</span>)
+        
+    <span class="ruby-comment cmt"># Building request string soley for list method</span>
+    <span class="ruby-identifier">req_str</span> = <span class="ruby-node">&quot;&lt;http url='#{url}' version='#{opts[:version]}' method='#{opts[:method]}'&quot;</span>
+    <span class="ruby-identifier">req_str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot; content_type='#{opts[:content_type]}'&quot;</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:content_type</span>])
+    <span class="ruby-identifier">req_str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot; contents='#{opts[:contents]}'&quot;</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:contents</span>])
+    <span class="ruby-identifier">req_str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&gt;&quot;</span>
+
+    <span class="ruby-identifier">req</span> = <span class="ruby-ivar">@xml_element</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'request'</span>, <span class="ruby-identifier">req_opts</span>)
+    <span class="ruby-identifier">dyn_variables</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dyn_var</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">req</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'dyn_variable'</span>, <span class="ruby-identifier">dyn_var</span>)
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">http</span> = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'http'</span>, <span class="ruby-identifier">opts</span>)
+    
+    <span class="ruby-comment cmt"># Write basic authentication for request if necessary</span>
+    <span class="ruby-identifier">http</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'www_authenticate'</span>, {<span class="ruby-value str">'userid'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">auth_opt</span>[<span class="ruby-identifier">:auth</span>][<span class="ruby-identifier">:username</span>], <span class="ruby-value str">'passwd'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">auth_opt</span>[<span class="ruby-identifier">:auth</span>][<span class="ruby-identifier">:password</span>]}) <span class="ruby-keyword kw">if</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">auth_opt</span>[<span class="ruby-identifier">:auth</span>].<span class="ruby-identifier">empty?</span>)
+    
+    <span class="ruby-comment cmt"># BUG - need a way to dynamically ingest custome headers per product</span>
+    <span class="ruby-comment cmt"># BUG - hardcoded to first app server</span>
+    <span class="ruby-identifier">custom_headers</span>[<span class="ruby-value str">'Referer'</span>] = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">url</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">product</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'oae'</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">custom_headers</span>[<span class="ruby-value str">'Referer'</span>])
+        
+    <span class="ruby-keyword kw">if</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">custom_headers</span>.<span class="ruby-identifier">empty?</span>)
+      <span class="ruby-identifier">custom_headers</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">http</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'http_header'</span>, {<span class="ruby-value str">'name'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">key</span>, <span class="ruby-value str">'value'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">value</span>})
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># Set external flag if necessary</span>
+    <span class="ruby-ivar">@@last_req_external</span> = (<span class="ruby-identifier">external</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">true</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">false</span>)
+    <span class="ruby-identifier">external</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug_msg</span>(<span class="ruby-value str">&quot;EXTERNAL: true&quot;</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug_msg</span>(<span class="ruby-value str">&quot;EXTERNAL: false&quot;</span>)
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug_msg</span>(<span class="ruby-node">&quot;Last Req External - End: #{@@last_req_external}&quot;</span>)
+    
+    <span class="ruby-ivar">@list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">req_str</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

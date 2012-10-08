@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>login (Authentication)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ks/utility/authentication.rb, line 23</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">login</span>(<span class="ruby-identifier">opts</span>={})
+    
+    <span class="ruby-identifier">defaults</span> = {
+      <span class="ruby-identifier">:user</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'admin'</span>,
+      <span class="ruby-identifier">:password</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'admin'</span>,
+      <span class="ruby-identifier">:thinktime</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">3</span>
+    }
+    
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">opts</span>)
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/'</span>)
+    
+    <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@request</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">sso</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>)
+      
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-node">&quot;/j_spring_security_check?j_username=#{opts[:user]}&amp;amp;j_password=#{opts[:password]}&quot;</span>,
+        {}, {<span class="ruby-value str">'subst'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span>})
+            
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/index.html'</span>)
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/LUMMain.jsp'</span>)
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'org.kuali.student.lum.lu.ui.main.LUMMain/org.kuali.student.lum.lu.ui.main.LUMMain.nocache.js'</span>)
+      
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/ServerPropertiesRpcService'</span>,
+        {
+          <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+          <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+          <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|4|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|5002099C37B5D013EC8762ACCBD03E69|org.kuali.student.common.ui.client.service.ServerPropertiesRpcService|getContextPath|1|2|3|4|0|&quot;</span>
+        }
+      )
+      
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SecurityRpcService'</span>,
+        {
+          <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+          <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+          <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|4|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|13BFCB3640903B473D12816447D1469D|org.kuali.student.common.ui.client.service.SecurityRpcService|getPrincipalUsername|1|2|3|4|0|&quot;</span>
+        }
+      )
+      
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/MetadataRpcService'</span>,
+        {
+          <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+          <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+          <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|6|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|3C721122BF64327C2BB379CD5224A091|org.kuali.student.common.ui.client.service.MetadataRpcService|getMetadata|java.lang.String/2004016611|search|1|2|3|4|3|5|5|5|6|0|0|&quot;</span>
+        }
+      )
+      
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/ServerPropertiesRpcService'</span>,
+        {
+          <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+          <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+          <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|14|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|5002099C37B5D013EC8762ACCBD03E69|org.kuali.student.common.ui.client.service.ServerPropertiesRpcService|get|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|application.url|ks.rice.docSearch.serviceAddress|lum.application.url|ks.rice.url|ks.rice.label|ks.application.version|ks.gwt.codeServer|1|2|3|4|1|5|6|7|7|8|9|10|11|12|13|14|&quot;</span>
+        }
+      )
+      
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/ServerPropertiesRpcService'</span>,
+        {
+          <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+          <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+          <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|8|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|5002099C37B5D013EC8762ACCBD03E69|org.kuali.student.common.ui.client.service.ServerPropertiesRpcService|get|java.util.List|java.util.Arrays$ArrayList/1243019747|[Ljava.lang.String;/2600011424|ks.rice.actionList.serviceAddress|1|2|3|4|1|5|6|7|1|8|&quot;</span>
+        }
+      )
+      
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/org.kuali.student.lum.lu.ui.main.LUMMain/rpcservices/SecurityRpcService'</span>,
+        {
+          <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+          <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/x-gwt-rpc; charset=utf-8'</span>,
+          <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;5|0|7|#{@request.url}/org.kuali.student.lum.lu.ui.main.LUMMain/|13BFCB3640903B473D12816447D1469D|org.kuali.student.common.ui.client.service.SecurityRpcService|checkAdminPermission|java.lang.String/2004016611|#{opts[:user]}|useCurriculumReview|1|2|3|4|2|5|5|6|7|&quot;</span>
+        }, 
+          {<span class="ruby-value str">'subst'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span>}
+      )
+      
+      
+      <span class="ruby-comment cmt"># Rice</span>
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/kew/ActionList.do'</span>, {}, {<span class="ruby-identifier">:secondary_server_req</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">secondary_servers</span>[<span class="ruby-value str">'rice'</span>], <span class="ruby-identifier">:external</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-node">&quot;/j_spring_security_check?j_username=#{opts[:user]}&amp;amp;j_password=#{opts[:password]}&quot;</span>, 
+        {}, {<span class="ruby-value str">'subst'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span>, <span class="ruby-identifier">:secondary_server_req</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">secondary_servers</span>[<span class="ruby-value str">'rice'</span>], <span class="ruby-identifier">:external</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})
+
+      <span class="ruby-comment cmt"># this may be a dupe since it redirects here...check the logs</span>
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/kew/ActionList.do'</span>, {}, {<span class="ruby-identifier">:secondary_server_req</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">secondary_servers</span>[<span class="ruby-value str">'rice'</span>], <span class="ruby-identifier">:external</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})
+      
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">ks_url_escaped</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-node">&quot;#{@request.url}/j_spring_cas_security_check&quot;</span>, <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;[^#{URI::PATTERN::UNRESERVED}]&quot;</span>))
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-node">&quot;#{@request.config.sso}/login?service=#{ks_url_escaped}&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

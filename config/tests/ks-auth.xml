@@ -1,0 +1,37 @@
+<?xml version='1.0'?>
+<!DOCTYPE tsung SYSTEM "/opt/local/share/tsung/tsung-1.0.dtd">
+<tsung loglevel='notice' version='1.0'>
+  <clients>
+    <client use_controller_vm='true' host='lt3.uits.uconn.edu'/>
+  </clients>
+  <servers>
+    <server port='80' type='tcp' host='dev.kfs.uconn.edu'/>
+  </servers>
+  <load>
+    <arrivalphase phase='1' unit='minute' duration='5'>
+      <users unit='second' interarrival='6'/>
+    </arrivalphase>
+  </load>
+  <options>
+    <option type='ts_http' name='user_agent'>
+      <user_agent probability='100'>
+        Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0.1) Gecko/20100101
+        Firefox/8.0.1
+      </user_agent>
+    </option>
+    <option name='file_server' value='/home/ltuser/Open-Performance-Automation-Framework/config/import/oae/users.csv' id='users'/>
+  </options>
+  <sessions>
+    <session type='ts_http' name='customize_dashbaord' probability='100'>
+      <setdynvars sourcetype='file' fileid='users' delimiter=',' order='iter'>
+        <var name='username'/>
+        <var name='user_password'/>
+      </setdynvars>
+      <transaction name='login'>
+        <request subst='false'>
+          <http method='GET' version='1.1' url='/'/>
+        </request>
+      </transaction>
+    </session>
+  </sessions>
+</tsung>

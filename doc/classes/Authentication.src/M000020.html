@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>logout (Authentication)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/oae/common/authentication.rb, line 271</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">logout</span>
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/logout'</span>)
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/var/templates/worlds.2.json?_charset_=utf-8'</span>)
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/var/presence.json'</span>,
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'application/x-www-form-urlencoded; charset=UTF-8'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;sakai%3Astatus=offline&amp;_charset_=utf-8&quot;</span>
+      }
+    )
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/system/me?_charset_=utf-8&amp;_=1323971191834'</span>)
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/system/sling/logout?resource=/dev/index.html&amp;_charset_=utf-8'</span>)
+    
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">homepage</span>
+    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

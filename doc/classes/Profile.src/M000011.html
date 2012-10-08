@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>edit (Profile)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/oae/common/profile.rb, line 31</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">edit</span>(<span class="ruby-identifier">username</span>, <span class="ruby-identifier">first_name</span>, <span class="ruby-identifier">last_name</span>, <span class="ruby-identifier">email</span>, <span class="ruby-identifier">opts</span> = {})
+    
+    <span class="ruby-identifier">defaults</span> = {
+      <span class="ruby-identifier">:load_homepage</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>,
+      <span class="ruby-identifier">:sections</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>
+    }
+    
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">opts</span>)
+    
+    <span class="ruby-comment cmt"># Substitute @ for url encode</span>
+    <span class="ruby-identifier">email</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/\@/</span>, <span class="ruby-value str">'%40'</span>)
+    
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">homepage</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:load_homepage</span>])
+    
+    <span class="ruby-comment cmt"># Iterate through each section we are updating</span>
+    <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:sections</span>].<span class="ruby-identifier">each_key</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">section</span><span class="ruby-operator">|</span>
+      
+      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add_thinktime</span>(<span class="ruby-value">5</span>)
+      
+      <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">section</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:basic_information</span>)
+        <span class="ruby-comment cmt"># Basic Information</span>
+        <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:sections</span>][<span class="ruby-identifier">:basic_information</span>][<span class="ruby-identifier">:tags</span>])
+                    
+          <span class="ruby-comment cmt"># Editing tags</span>
+          <span class="ruby-comment cmt"># Bug only support 1 right now</span>
+          <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-node">&quot;/~#{username}/public/authprofile&quot;</span>,
+            {
+              <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+              <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'application/x-www-form-urlencoded; charset=UTF-8'</span>,
+              <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;key=%2Ftags%2F#{opts[:sections][:basic_information][:tags].first}&amp;%3Aoperation=tag&amp;_charset_=utf-8&quot;</span>
+            }, {<span class="ruby-value str">'subst'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span>}
+          )
+          
+          <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-node">&quot;/~#{username}/public/authprofile/basic.profile.json&quot;</span>,
+            {
+              <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+              <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'application/x-www-form-urlencoded; charset=UTF-8'</span>,
+              <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;%3Aoperation=import&amp;%3AcontentType=json&amp;%3Areplace=true&amp;%3AreplaceProperties=true&amp;_charset_=utf-8&amp;%3AremoveTree=true&amp;%3Acontent=%7B%22access%22%3A%22everybody%22%2C%22elements%22%3A%7B%22lastName%22%3A%7B%22value%22%3A%22#{last_name}%22%7D%2C%22email%22%3A%7B%22value%22%3A%22#{email}%22%7D%2C%22firstName%22%3A%7B%22value%22%3A%22#{first_name}%22%7D%2C%22preferredName%22%3A%7B%22value%22%3A%22%22%7D%7D%7D&quot;</span>
+            }, {<span class="ruby-value str">'subst'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span>}
+          )
+          
+          <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-node">&quot;/~#{username}/public/authprofile/userprogress&quot;</span>,
+            {
+              <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+              <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'application/x-www-form-urlencoded; charset=UTF-8'</span>,
+              <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;%3Aoperation=import&amp;%3AcontentType=json&amp;%3Areplace=true&amp;%3AreplaceProperties=true&amp;_charset_=utf-8&amp;%3AremoveTree=true&amp;%3Acontent=%7B%22access%22%3A%22everybody%22%2C%22elements%22%3A%7B%22lastName%22%3A%7B%22value%22%3A%22#{last_name}%22%7D%2C%22email%22%3A%7B%22value%22%3A%22#{email}%22%7D%2C%22firstName%22%3A%7B%22value%22%3A%22#{first_name}%22%7D%2C%22preferredName%22%3A%7B%22value%22%3A%22%22%7D%7D%7D&quot;</span>
+            }, {<span class="ruby-value str">'subst'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span>}
+          )
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      
+    <span class="ruby-keyword kw">end</span>
+    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

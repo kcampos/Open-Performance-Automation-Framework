@@ -4,7 +4,7 @@
     # Format: "product reference": "directory name in framework"
     ks: 'ks'
     oae: 'oae'
-    kfs: 'kfs'
+    bioiq: 'bioiq'
 # Directory listing for test data in use in the tests
 :directory:
     # Product for directory data
@@ -57,6 +57,8 @@
         users:
             collaborator:
                 username: "fran"
+        kr:
+            name: "kr-krad"
 # Agent List
 :agents:
     - 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0.1) Gecko/20100101 Firefox/8.0.1'
@@ -66,3 +68,13 @@
     - "Mozilla/4.0 (Windows; MSIE 6.0; Windows NT 6.0)"
     # FireFox 3.5.7 - Vista
     - "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US)"
+# Random strings
+:dynvar_random_strings:
+    # Variables keyed by the variable name
+    rnd_first_name:
+        length: "13"
+    rnd_last_name:
+        length: "13"
+    rnd_tag:
+        length: "6"
+	

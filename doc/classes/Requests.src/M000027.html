@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (Requests)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/tsung-api.rb, line 140</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">txn_name</span>, <span class="ruby-identifier">config</span>, <span class="ruby-identifier">session_name</span>, <span class="ruby-identifier">probability</span>=<span class="ruby-value str">'100%'</span>, <span class="ruby-identifier">type</span>=<span class="ruby-value str">'ts_http'</span>)
+    <span class="ruby-identifier">config</span>.<span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug_msg</span>(<span class="ruby-value str">&quot;Requests-&gt; entering initialize...&quot;</span>)
+    <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">txn_name</span>, <span class="ruby-identifier">config</span>, <span class="ruby-identifier">session_name</span>, <span class="ruby-identifier">probability</span>, <span class="ruby-identifier">type</span>)
+    <span class="ruby-ivar">@list</span> = [] <span class="ruby-comment cmt"># request list</span>
+    <span class="ruby-ivar">@xml_element</span> = <span class="ruby-ivar">@@transaction_element</span>[<span class="ruby-identifier">txn_name</span>][<span class="ruby-identifier">:element</span>]
+    
+    <span class="ruby-comment cmt"># Create request URL for rpc hack</span>
+    <span class="ruby-comment cmt"># Only works with 1 server BUG</span>
+    <span class="ruby-ivar">@http_mode</span> = (<span class="ruby-identifier">config</span>.<span class="ruby-identifier">ssl</span> <span class="ruby-value">? </span><span class="ruby-value str">'https'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'http'</span>)
+    <span class="ruby-comment cmt">#@url = &quot;#{http_mode}://#{config.servers[0]}&quot;</span>
+    <span class="ruby-comment cmt">#@url &lt;&lt; &quot;/#{config.context}&quot; if(!config.context.empty?)</span>
+    <span class="ruby-comment cmt">#config.log.debug_msg(&quot;Request base URL: #{@url}&quot;)</span>
+    <span class="ruby-identifier">config</span>.<span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug_msg</span>(<span class="ruby-value str">&quot;Created Request container&quot;</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

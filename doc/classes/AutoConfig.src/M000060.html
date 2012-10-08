@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>validate_suite (AutoConfig)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/config.rb, line 313</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_suite</span>(<span class="ruby-identifier">suite</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">suite</span>)
+    
+    <span class="ruby-identifier">errors</span> = <span class="ruby-value str">&quot;&quot;</span>
+    <span class="ruby-identifier">prob_total</span> = <span class="ruby-value">0</span>
+    
+    <span class="ruby-comment cmt"># Parse file for proper format</span>
+    <span class="ruby-keyword kw">begin</span>
+      <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-node">&quot;#{self.suite_dir}/#{suite}&quot;</span>, <span class="ruby-value str">&quot;r&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">suite_file</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">while</span>(<span class="ruby-identifier">line</span> = <span class="ruby-identifier">suite_file</span>.<span class="ruby-identifier">gets</span>)
+          <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">line</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp re">/^\w+\.rb\,(\d+)$/</span>) <span class="ruby-comment cmt">#should be in format: testname.rb,100</span>
+            <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\#/</span>) <span class="ruby-comment cmt"># skip if it's a comment</span>
+            <span class="ruby-identifier">errors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;Incorrect format here: #{line}&quot;</span>
+          <span class="ruby-keyword kw">end</span>
+          <span class="ruby-identifier">prob_total</span><span class="ruby-operator">+=</span><span class="ruby-identifier">$1</span>.<span class="ruby-identifier">to_i</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">rescue</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{suite} suite does not exist&quot;</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-identifier">errors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;Probability does not add up to 100&quot;</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">prob_total</span> <span class="ruby-operator">!=</span> <span class="ruby-value">100</span>)
+    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">errors</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">errors</span>)
+    
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">empty?</span>    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

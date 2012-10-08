@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>doc_search (Utility)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ks/utility/utility.rb, line 20</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">doc_search</span>(<span class="ruby-identifier">opts</span>={})
+    
+    <span class="ruby-identifier">defaults</span> = {
+      <span class="ruby-identifier">:initiator</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;&quot;</span>,
+      <span class="ruby-identifier">:doc_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;&quot;</span>,
+      <span class="ruby-identifier">:date_created_from</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-comment cmt"># Format 04%2F02%2F2010,</span>
+      <span class="ruby-identifier">:date_created_to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;&quot;</span>,
+      <span class="ruby-identifier">:saved_search_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;&quot;</span>
+    }
+    
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">opts</span>)
+  
+    <span class="ruby-comment cmt"># Doc search link</span>
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/kew/DocumentSearch.do'</span>, {}, {<span class="ruby-identifier">:secondary_server_req</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">secondary_servers</span>[<span class="ruby-value str">'rice'</span>], <span class="ruby-identifier">:external</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})
+    
+    <span class="ruby-comment cmt"># Login as admin</span>
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/kew/DocumentSearch.do'</span>, 
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'application/x-www-form-urlencoded'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;__login_user=admin&quot;</span>
+      }, 
+      {<span class="ruby-identifier">:secondary_server_req</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">secondary_servers</span>[<span class="ruby-value str">'rice'</span>], <span class="ruby-identifier">:external</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>}
+    )
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/dwr/interface/DocumentTypeService.js'</span>, {}, {<span class="ruby-identifier">:secondary_server_req</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">secondary_servers</span>[<span class="ruby-value str">'rice'</span>], <span class="ruby-identifier">:external</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/dwr/interface/PersonService.js'</span>, {}, {<span class="ruby-identifier">:secondary_server_req</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">secondary_servers</span>[<span class="ruby-value str">'rice'</span>], <span class="ruby-identifier">:external</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})
+    
+    <span class="ruby-comment cmt"># Criteria</span>
+    
+    <span class="ruby-comment cmt"># Submit</span>
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/kr/lookup.do'</span>, 
+      {
+        <span class="ruby-value str">'method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'POST'</span>,
+        <span class="ruby-value str">'content_type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'application/x-www-form-urlencoded'</span>,
+        <span class="ruby-value str">'contents'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;backLocation=&amp;amp;formKey=&amp;amp;lookupableImplServiceName=docSearchCriteriaDTOLookupable&amp;amp;businessObjectClassName=org.kuali.rice.kew.docsearch.DocSearchCriteriaDTO&amp;amp;conversionFields=&amp;amp;hideReturnLink=No&amp;amp;suppressActions=No&amp;amp;multipleValues=No&amp;amp;lookupAnchor=&amp;amp;readOnlyFields=&amp;amp;referencesToRefresh=&amp;amp;hasReturnableRow=No&amp;amp;docNum=#{opts[:doc_id]}&amp;amp;showMaintenanceLinks=No&amp;amp;savedSearchName=#{opts[:saved_search_name]}&amp;amp;docTypeFullName=&amp;amp;initiator=#{opts[:initiator]}&amp;amp;routeHeaderId=&amp;amp;fromDateCreated=#{opts[:date_created_from]}&amp;amp;toDateCreated=#{opts[:date_created_to]}&amp;amp;namedSearch=&amp;amp;isAdvancedSearch=NO&amp;amp;superUserSearch=NO&amp;amp;methodToCall.search.x=39&amp;amp;methodToCall.search.y=8&amp;amp;methodToCall.search=search&amp;amp;tabStatesSize=-1&amp;amp;oldDocTypeFieldName=&quot;</span>
+      }, 
+      {<span class="ruby-identifier">:secondary_server_req</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">secondary_servers</span>[<span class="ruby-value str">'rice'</span>], <span class="ruby-identifier">:external</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>}
+    )
+    
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/dwr/interface/PersonService.js'</span>, {}, {<span class="ruby-identifier">:secondary_server_req</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">secondary_servers</span>[<span class="ruby-value str">'rice'</span>], <span class="ruby-identifier">:external</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})
+    <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value str">'/dwr/interface/DocumentTypeService.js'</span>, {}, {<span class="ruby-identifier">:secondary_server_req</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">secondary_servers</span>[<span class="ruby-value str">'rice'</span>], <span class="ruby-identifier">:external</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})
+    
+      
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
