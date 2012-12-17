@@ -16,7 +16,6 @@ require config.lib_base_dir + "/tsung-api.rb"
 require config.lib_base_dir + "/#{config.product}/utility/authentication.rb"
 require config.lib_base_dir + "/#{config.product}/curriculum/curriculum.rb"
 
-
 # Test info - default test case setup
 test = File.basename(__FILE__)
 probability = config.tests[test]
@@ -34,7 +33,7 @@ li_txn = sesh.add_transaction("login")
 li_req = li_txn.add_requests
 config.log.info_msg("#{test}: Logging in as: #{username}/#{password}")
 auth = Authentication.new(li_req)
-auth.login({:user => username, :password => password})
+auth.login({:user => username, :password => password, :primary_context => config.context, :secondary_context => config.secondary_context} )
 
 # Create blank proposal
 cp_txn = sesh.add_transaction("create_proposal")
